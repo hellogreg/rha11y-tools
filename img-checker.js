@@ -9,7 +9,7 @@ javascript: (() => {
   const svgs = document.querySelectorAll("svg");
 
   for (const svg of svgs) {
-    svg.style.outline = "#ccFF00 solid 8px";
+    svg.style.outline = "#ffff00 solid 8px";
   }
 
   var allNodes = document.getElementsByTagName("*");
@@ -22,7 +22,7 @@ javascript: (() => {
 
       const shadowSvgs = node.shadowRoot.querySelectorAll("svg");
       for (const shadowSvg of shadowSvgs) {
-        shadowSvg.style.outline = "#0099ff solid 8px";
+        shadowSvg.style.outline = "#ffffff solid 8px";
       }
     }
   }

@@ -1,5 +1,5 @@
 javascript: (function () {
-  var jsCode = document.createElement("script");
-  jsCode.setAttribute("src", "http://example.com/path/to/file.js");
-  document.body.appendChild(jsCode);
+  var bookletCode = document.createElement("script");
+  bookletCode.setAttribute("src", "https://hellogreg.github.io/rha11y-tools/img-checker.js");
+  document.body.appendChild(bookletCode);
 })();
