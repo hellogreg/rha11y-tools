@@ -7,7 +7,7 @@ javascript: (() => {
   }
 
   function getAltAttribute(img) {
-    return el.getAttribute("alt") || "[Decorative Image]";
+    return img.getAttribute("alt") || "[Decorative Image]";
   }
 
   function isImageAccessible(img) {
