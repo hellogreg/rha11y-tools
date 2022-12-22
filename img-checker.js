@@ -11,7 +11,7 @@ javascript: (() => {
     svg.style.outline = "#ffff00 solid 8px";
   }
 
-  var els = document.getElementsByTagName("*");
+  var els = document.querySelectorAll("*");
   for (el of els) {
     if (el.shadowRoot) {
       const shadowImages = el.shadowRoot.querySelectorAll("img");
