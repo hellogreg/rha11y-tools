@@ -1,9 +1,9 @@
 javascript: (() => {
   console.log("Initiating image test bookmarklet.");
 
-  function highlightElement(img, color) {
+  function highlightElement(el, color) {
     color = color || "#ffffff";
-    img.style.outline = color + " solid 8px";
+    el.style.outline = color + " solid 8px";
   }
 
   const imgs = document.querySelectorAll("img");
@@ -16,17 +16,17 @@ javascript: (() => {
     svg.style.outline = "#ff0 solid 8px";
   }
 
-  var els = document.querySelectorAll("*");
-  for (el of els) {
-    if (el.shadowRoot) {
-      const imgs = el.shadowRoot.querySelectorAll("img");
+  var nodes = document.querySelectorAll("*");
+  for (node of nodes) {
+    if (node.shadowRoot) {
+      const imgs = node.shadowRoot.querySelectorAll("img");
       for (const img of imgs) {
         highlightElement(img, "#0a0");
       }
 
-      const svgs = el.shadowRoot.querySelectorAll("svg");
+      const svgs = node.shadowRoot.querySelectorAll("svg");
       for (const svg of svgs) {
-        svg.style.outline = highlightElement(img, "#06f");
+        highlightElement(svg, "#06f");
       }
     }
   }
