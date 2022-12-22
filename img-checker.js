@@ -2,11 +2,12 @@ javascript: (() => {
   console.log("Initiating image test bookmarklet.");
 
   function isElementAriaHidden(el) {
-    let hidden = !!el.ariaHidden;
-    // TODO: Check if any parent elements are aria hidden?
-    // TODO: look for hidden attribute
+    let hidden = false;
+    hidden = el.ariaHidden; // Check for aria-hidden="true"
+    hidden = hidden || el.hidden; // Check for hidden attribute
+    hidden = hidden || el.getAttribute("role") === "presentation";
+    // TODO: Check if any parent elements are aria-hidden="true"?
     // TODO: Check for display: none
-    // TODO: Check for role="presentation"
     // TODO: What other ways could it be hidden???
     return hidden;
   }
@@ -24,7 +25,7 @@ javascript: (() => {
       console.log("Image is aria-hidden.");
       isAccessible = true;
     } else {
-      console.log("Alt tag needed!");
+      console.log("Image requires alt attribute.");
     }
     return isAccessible;
   }
