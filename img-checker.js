@@ -22,7 +22,7 @@ javascript: (() => {
 
       const shadowSvgs = node.shadowRoot.querySelectorAll("svg");
       for (const shadowSvg of shadowSvgs) {
-        shadowSvg.style.outline = "#ffffff solid 8px";
+        shadowSvg.style.outline = "#0066ff solid 8px";
       }
     }
   }
