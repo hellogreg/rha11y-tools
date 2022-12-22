@@ -2,12 +2,17 @@ javascript: (() => {
   console.log("Initiating image test bookmarklet.");
 
   function isElementAriaHidden(el) {
-    let hidden = false;
+    let hidden = !!el.ariaHidden;
+    // TODO: Check if any parent elements are aria hidden?
+    // TODO: look for hidden attribute
+    // TODO: Check for display: none
+    // TODO: Check for role="presentation"
+    // TODO: What other ways could it be hidden???
     return hidden;
   }
 
   function getAltAttribute(img) {
-    return img.getAttribute("alt") || "[Decorative Image]";
+    return img.getAttribute("alt") || "[decorative image]";
   }
 
   function isImageAccessible(img) {
@@ -34,7 +39,7 @@ javascript: (() => {
   const imgs = document.querySelectorAll("img");
   for (const img of imgs) {
     console.dir(img);
-    console.log("Accessble: " + isImageAccessible(img));
+    console.log("Accessible: " + isImageAccessible(img));
     highlightElement(img, "#f90");
   }
 
