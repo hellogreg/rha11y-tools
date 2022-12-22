@@ -1,9 +1,9 @@
 javascript: (() => {
   console.log("Initiating image test bookmarklet.");
 
-  const images = document.querySelectorAll("img");
-  for (const image of images) {
-    image.style.outline = "#ff9900 solid 8px";
+  const imgs = document.querySelectorAll("img");
+  for (const img of imgs) {
+    img.style.outline = "#ff9900 solid 8px";
   }
 
   const svgs = document.querySelectorAll("svg");
@@ -14,14 +14,14 @@ javascript: (() => {
   var els = document.querySelectorAll("*");
   for (el of els) {
     if (el.shadowRoot) {
-      const shadowImages = el.shadowRoot.querySelectorAll("img");
-      for (const shadowImage of shadowImages) {
-        shadowImage.style.outline = "#00aa00 solid 8px";
+      const imgs = el.shadowRoot.querySelectorAll("img");
+      for (const img of imgs) {
+        img.style.outline = "#00aa00 solid 8px";
       }
 
-      const shadowSvgs = el.shadowRoot.querySelectorAll("svg");
-      for (const shadowSvg of shadowSvgs) {
-        shadowSvg.style.outline = "#0066ff solid 8px";
+      const svgs = el.shadowRoot.querySelectorAll("svg");
+      for (const svg of svgs) {
+        svg.style.outline = "#0066ff solid 8px";
       }
     }
   }
