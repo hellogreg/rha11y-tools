@@ -1,14 +1,19 @@
 javascript: (() => {
   console.log("Initiating image test bookmarklet.");
 
+  function highlightElement(img, color) {
+    color = color || "#ffffff";
+    img.style.outline = color + " solid 8px";
+  }
+
   const imgs = document.querySelectorAll("img");
   for (const img of imgs) {
-    img.style.outline = "#ff9900 solid 8px";
+    img.style.outline = "#f90 solid 8px";
   }
 
   const svgs = document.querySelectorAll("svg");
   for (const svg of svgs) {
-    svg.style.outline = "#ffff00 solid 8px";
+    svg.style.outline = "#ff0 solid 8px";
   }
 
   var els = document.querySelectorAll("*");
@@ -16,13 +21,15 @@ javascript: (() => {
     if (el.shadowRoot) {
       const imgs = el.shadowRoot.querySelectorAll("img");
       for (const img of imgs) {
-        img.style.outline = "#00aa00 solid 8px";
+        highlightElement(img, "#0a0");
       }
 
       const svgs = el.shadowRoot.querySelectorAll("svg");
       for (const svg of svgs) {
-        svg.style.outline = "#0066ff solid 8px";
+        svg.style.outline = highlightElement(img, "#06f");
       }
     }
   }
+
+  console.log("Concluding image test bookmarklet.");
 })();
