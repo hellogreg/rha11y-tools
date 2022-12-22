@@ -11,7 +11,7 @@ javascript: (() => {
   const imgs = document.querySelectorAll("img");
   for (const img of imgs) {
     highlightElement(img, "#f90");
-    console.dir(img);
+    console.dir(!!img.hasAttribute("alt"));
   }
 
   // Get all non-shadow svgs
