@@ -1,14 +1,19 @@
 javascript: (() => {
   console.log("Initiating image test bookmarklet.");
 
-  function highlightElement(el, color) {
-    color = color || "#ffffff";
-    el.style.setProperty("outline", color + " solid 8px", "important");
+  function isHidden {
+    let hidden = false;
+    return hidden;
   }
 
   function getAccessibleName(el) {
-    let name = el.getAttribute("alt") || "*null*";
+    let name = el.getAttribute("alt") || "[Decorative Image]";
     return name;
+  }
+
+  function highlightElement(el, color) {
+    color = color || "#ffffff";
+    el.style.setProperty("outline", color + " solid 8px", "important");
   }
 
   // Get all non-shadow imgs
@@ -16,8 +21,15 @@ javascript: (() => {
   const imgs = document.querySelectorAll("img");
   for (const img of imgs) {
     highlightElement(img, "#f90");
-    console.log(!!img.hasAttribute("alt"));
-    console.log(getAccessibleName(img));
+    if (img.hasAttribute("alt")) {
+      console.log("Element has accessible name: " + getAccessibleName(img));
+    } else if (isHidden(img))  {
+        console.log("Element is hidden.");
+    } else {
+      console.log("Alt tag needed!");
+    }
+    console.log("Element is hidden: " + isHidden(img));
+    console.dir(img);
   }
 
   // Get all non-shadow svgs
