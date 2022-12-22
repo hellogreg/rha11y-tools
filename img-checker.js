@@ -1,14 +1,28 @@
 javascript: (() => {
   console.log("Initiating image test bookmarklet.");
 
-  function isHidden(el) {
+  function isElementAriaHidden(el) {
     let hidden = false;
     return hidden;
   }
 
-  function getAccessibleName(el) {
+  function getAltAttribute(img) {
     let name = el.getAttribute("alt") || "[Decorative Image]";
     return name;
+  }
+
+  function isImageAccessible(img) {
+    let isAccessible = false;
+    if (img.hasAttribute("alt")) {
+      console.log("Element has alt attribute: " + getAltAttribute(img));
+      isAccessible = true;
+    } else if (isElementAriaHidden(img)) {
+      console.log("Element is aria-hidden.");
+      isAccessible = true;
+    } else {
+      console.log("Alt tag needed!");
+    }
+    return isAccessible;
   }
 
   function highlightElement(el, color) {
@@ -20,16 +34,9 @@ javascript: (() => {
   //
   const imgs = document.querySelectorAll("img");
   for (const img of imgs) {
-    highlightElement(img, "#f90");
-    if (img.hasAttribute("alt")) {
-      console.log("Element has accessible name: " + getAccessibleName(img));
-    } else if (isHidden(img)) {
-      console.log("Element is hidden.");
-    } else {
-      console.log("Alt tag needed!");
-    }
-    console.log("Element is hidden: " + isHidden(img));
     console.dir(img);
+    console.log("Accessble: " + isImageAccessible(img));
+    highlightElement(img, "#f90");
   }
 
   // Get all non-shadow svgs
