@@ -17,7 +17,7 @@ javascript: (() => {
   }
 
   var nodes = document.querySelectorAll("*");
-  for (node of nodes) {
+  for (const node of nodes) {
     if (node.shadowRoot) {
       const imgs = node.shadowRoot.querySelectorAll("img");
       for (const img of imgs) {
