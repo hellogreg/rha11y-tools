@@ -3,7 +3,7 @@ javascript: (() => {
 
   function highlightElement(el, color) {
     color = color || "#ffffff";
-    el.style.outline = color + " solid 8px";
+    el.style.setProperty("outline", color + " solid 8px", "important");
   }
 
   const imgs = document.querySelectorAll("img");
