@@ -18,10 +18,10 @@ javascript: (() => {
   function isImageAccessible(img) {
     let isAccessible = false;
     if (img.hasAttribute("alt")) {
-      console.log("Element has alt attribute: " + getAltAttribute(img));
+      console.log("Image has alt attribute: " + getAltAttribute(img));
       isAccessible = true;
     } else if (isElementAriaHidden(img)) {
-      console.log("Element is aria-hidden.");
+      console.log("Image is aria-hidden.");
       isAccessible = true;
     } else {
       console.log("Alt tag needed!");
