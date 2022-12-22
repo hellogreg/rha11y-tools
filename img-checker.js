@@ -8,12 +8,12 @@ javascript: (() => {
 
   const imgs = document.querySelectorAll("img");
   for (const img of imgs) {
-    img.style.outline = "#f90 solid 8px";
+    highlightElement(img, "#f90");
   }
 
   const svgs = document.querySelectorAll("svg");
   for (const svg of svgs) {
-    svg.style.outline = "#ff0 solid 8px";
+    highlightElement(svg, "#ff0");
   }
 
   var nodes = document.querySelectorAll("*");
