@@ -1,7 +1,7 @@
 javascript: (() => {
   console.log("Initiating image test bookmarklet.");
 
-  function isHidden {
+  function isHidden(el) {
     let hidden = false;
     return hidden;
   }
@@ -23,8 +23,8 @@ javascript: (() => {
     highlightElement(img, "#f90");
     if (img.hasAttribute("alt")) {
       console.log("Element has accessible name: " + getAccessibleName(img));
-    } else if (isHidden(img))  {
-        console.log("Element is hidden.");
+    } else if (isHidden(img)) {
+      console.log("Element is hidden.");
     } else {
       console.log("Alt tag needed!");
     }
