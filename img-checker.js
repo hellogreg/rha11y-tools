@@ -6,12 +6,18 @@ javascript: (() => {
     el.style.setProperty("outline", color + " solid 8px", "important");
   }
 
+  function getAccessibleName(el) {
+    let name = el.getAttribute("alt") || "*null*";
+    return name;
+  }
+
   // Get all non-shadow imgs
   //
   const imgs = document.querySelectorAll("img");
   for (const img of imgs) {
     highlightElement(img, "#f90");
-    console.dir(!!img.hasAttribute("alt"));
+    console.log(!!img.hasAttribute("alt"));
+    console.log(getAccessibleName(img));
   }
 
   // Get all non-shadow svgs
