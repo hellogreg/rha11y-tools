@@ -50,7 +50,9 @@ javascript: (() => {
     // TODO: https://stackoverflow.com/questions/56912948/how-to-get-role-presentation-elements
     log(svg.ariaRoleDescription);
     let title = svg.querySelector("svg > title");
-    //dir(title);
+    log(title);
+    log(!!svg.querySelector("svg[role='presentation']"));
+    log(!!svg.querySelector("svg[role='img']"));
 
     return isAccessible;
   }
