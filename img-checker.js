@@ -1,5 +1,16 @@
 javascript: (() => {
-  console.log("Initiating image test bookmarklet.");
+  function log(m) {
+    m = m !== undefined ? m : "-----------------";
+    console.log(m);
+  }
+
+  function dir(m) {
+    if (m) {
+      console.dir(m);
+    }
+  }
+
+  log("Initiating image test bookmarklet.");
 
   function isElementAriaHidden(el) {
     let hidden = false;
@@ -18,15 +29,29 @@ javascript: (() => {
 
   function isImageAccessible(img) {
     let isAccessible = false;
+    dir(img);
+
     if (img.hasAttribute("alt")) {
-      console.log("Image has alt attribute: " + getAltAttribute(img));
+      log("Image has alt attribute: " + getAltAttribute(img));
       isAccessible = true;
     } else if (isElementAriaHidden(img)) {
-      console.log("Image is aria-hidden.");
+      log("Image is aria-hidden.");
       isAccessible = true;
     } else {
-      console.log("Image requires alt attribute.");
+      log("Image requires alt attribute.");
     }
+    return isAccessible;
+  }
+
+  function isSvgAccessible(svg) {
+    let isAccessible = false;
+    //dir(svg);
+
+    // TODO: https://stackoverflow.com/questions/56912948/how-to-get-role-presentation-elements
+    log(svg.ariaRoleDescription);
+    let title = svg.querySelector("svg > title");
+    //dir(title);
+
     return isAccessible;
   }
 
@@ -39,8 +64,7 @@ javascript: (() => {
   //
   const imgs = document.querySelectorAll("img");
   for (const img of imgs) {
-    console.dir(img);
-    console.log("Accessible: " + isImageAccessible(img));
+    //log("Accessible: " + isImageAccessible(img));
     highlightElement(img, "#f90");
   }
 
@@ -48,6 +72,7 @@ javascript: (() => {
   //
   const svgs = document.querySelectorAll("svg");
   for (const svg of svgs) {
+    log("Accessible: " + isSvgAccessible(svg));
     highlightElement(svg, "#ff0");
   }
 
@@ -68,5 +93,5 @@ javascript: (() => {
     }
   }
 
-  console.log("Concluding image test bookmarklet.");
+  log("Concluding image test bookmarklet.");
 })();
