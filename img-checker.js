@@ -14,7 +14,7 @@ javascript: (() => {
 
   function isElementAriaHidden(el) {
     let hidden = false;
-    hidden = el.ariaHidden; // Check for aria-hidden="true"
+    hidden = hidden || el.ariaHidden; // Check for aria-hidden="true"
     hidden = hidden || el.hidden; // Check for hidden attribute
     hidden = hidden || el.getAttribute("role") === "presentation";
     // TODO: Check if any parent elements are aria-hidden="true"?
@@ -47,12 +47,11 @@ javascript: (() => {
     let isAccessible = false;
     //dir(svg);
 
-    // TODO: https://stackoverflow.com/questions/56912948/how-to-get-role-presentation-elements
-    log(svg.ariaRoleDescription);
     let title = svg.querySelector("svg > title");
-    log(title);
-    log(!!svg.querySelector("svg[role='presentation']"));
-    log(!!svg.querySelector("svg[role='img']"));
+    let hasTitle = title && title.textContent;
+    let hasRoleImg = svg.getAttribute("role") === "img";
+
+    isAccessible = isAccessible || (hasTitle && hasRoleImg);
 
     return isAccessible;
   }
