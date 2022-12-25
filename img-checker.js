@@ -1,23 +1,29 @@
 javascript: (() => {
+  const outputMessagesDefault = true;
+  let outputMessages = outputMessages;
+
   function log(m) {
-    m = m !== undefined ? m : "-----------------";
-    console.log(m);
+    if (outputMessages) {
+      m = m !== undefined ? m : "-----------------";
+      console.log(m);
+    }
   }
 
   function dir(m) {
-    if (m) {
+    if (outputMessages && m) {
       console.dir(m);
     }
   }
 
   log("Initiating image test bookmarklet.");
 
-  function isElementAriaHidden(el) {
+  // Test all ways elements can be hidden from assistive tech...
+  function isElementHiddenFromAT(el) {
     let hidden = false;
     hidden = hidden || el.ariaHidden; // Check for aria-hidden="true"
     hidden = hidden || el.hidden; // Check for hidden attribute
     hidden = hidden || el.getAttribute("role") === "presentation";
-    // TODO: Check if any parent elements are aria-hidden="true"?
+    // TODO: Check if any parent elements are aria-hidden="true"? If so, turn outputMessages to false when running tests on parents.
     // TODO: Check for display: none
     // TODO: What other ways could it be hidden???
     return hidden;
@@ -34,11 +40,11 @@ javascript: (() => {
     if (img.hasAttribute("alt")) {
       log("Image has alt attribute: " + getAltAttribute(img));
       isAccessible = true;
-    } else if (isElementAriaHidden(img)) {
-      log("Image is aria-hidden.");
+    } else if (isElementHiddenFromAT(img)) {
+      log("Image is hidden from assistive tech.");
       isAccessible = true;
     } else {
-      log("Image requires alt attribute.");
+      log("Image is not accessible.");
     }
     return isAccessible;
   }
@@ -93,6 +99,8 @@ javascript: (() => {
       }
     }
   }
+
+  // TODO: Create init function to run img location/test functions.
 
   log("Concluding image test bookmarklet.");
 })();
