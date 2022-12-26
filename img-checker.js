@@ -1,6 +1,6 @@
 javascript: (() => {
   const outputMessagesDefault = true;
-  let outputMessages = outputMessages;
+  let outputMessages = outputMessagesDefault;
 
   function log(m) {
     if (outputMessages) {
@@ -17,35 +17,66 @@ javascript: (() => {
 
   log("Initiating image test bookmarklet.");
 
-  // Test all ways elements can be hidden from assistive tech...
-  function isElementHiddenFromAT(el) {
-    let hidden = false;
-    hidden = hidden || el.ariaHidden; // Check for aria-hidden="true"
-    hidden = hidden || el.hidden; // Check for hidden attribute
-    hidden = hidden || el.getAttribute("role") === "presentation";
-    // TODO: Check if any parent elements are aria-hidden="true"? If so, turn outputMessages to false when running tests on parents.
-    // TODO: Check for display: none
-    // TODO: What other ways could it be hidden???
-    return hidden;
+  function getAllParents(node) {
+    var arr = [];
+    for (var n in node) {
+      node = node.parentNode;
+      if (node.nodeName == "BODY")
+        // return if the element is the body element
+        break;
+      arr.push(node);
+      log(node.nodeName);
+    }
+  }
+
+  function hasAltAttribute(img) {
+    return img.hasAttribute("alt");
   }
 
   function getAltAttribute(img) {
     return img.getAttribute("alt") || "[decorative image]";
   }
 
-  function isImageAccessible(img) {
-    let isAccessible = false;
-    dir(img);
+  // Test all ways elements can be hidden from assistive tech...
+  function isElementHiddenFromAT(el) {
+    let hidden = false;
+    hidden = hidden || el.ariaHidden; // Check for aria-hidden="true"
+    hidden = hidden || el.hidden; // Check for hidden attribute
+    hidden = hidden || el.getAttribute("role") === "presentation";
+    log("Checking " + el.nodeName);
+    // TODO: Check if any parent elements are aria-hidden="true"? If so, turn outputMessages to false when running tests on parents.
+    //getAllParents(el);
+    let par = el.parentNode;
+    if (par.nodeName !== "BODY") {
+      log(par.nodeName);
+      isElementHiddenFromAT(par);
+    }
 
-    if (img.hasAttribute("alt")) {
+    // TODO: Check for display: none
+    // TODO: What other ways could it be hidden???
+    return hidden;
+  }
+
+  function isImgAccessible(img) {
+    let isAccessible = false;
+    log(img.src);
+
+    if (hasAltAttribute(img)) {
+      isAccessible = true;
       log("Image has alt attribute: " + getAltAttribute(img));
+    }
+
+    if (isElementHiddenFromAT(img)) {
       isAccessible = true;
-    } else if (isElementHiddenFromAT(img)) {
       log("Image is hidden from assistive tech.");
-      isAccessible = true;
+    }
+
+    if (isAccessible) {
+      log("Image is accessible.");
     } else {
       log("Image is not accessible.");
     }
+
     return isAccessible;
   }
 
@@ -67,40 +98,44 @@ javascript: (() => {
     el.style.setProperty("outline", color + " solid 8px", "important");
   }
 
-  // Get all non-shadow imgs
-  //
-  const imgs = document.querySelectorAll("img");
-  for (const img of imgs) {
-    //log("Accessible: " + isImageAccessible(img));
-    highlightElement(img, "#f90");
-  }
+  function checkNonShadowImages() {
+    // Get all non-shadow imgs
+    const imgs = document.querySelectorAll("img");
+    for (const img of imgs) {
+      log("Accessible: " + isImgAccessible(img));
+      highlightElement(img, "#f90");
+    }
 
-  // Get all non-shadow svgs
-  //
-  const svgs = document.querySelectorAll("svg");
-  for (const svg of svgs) {
-    log("Accessible: " + isSvgAccessible(svg));
-    highlightElement(svg, "#ff0");
+    // Get all non-shadow svgs
+    const svgs = document.querySelectorAll("svg");
+    for (const svg of svgs) {
+      log("Accessible: " + isSvgAccessible(svg));
+      highlightElement(svg, "#ff0");
+    }
   }
 
   // Get every img and svg that's in a shadowRoot.
-  //
-  var nodes = document.querySelectorAll("*");
-  for (const node of nodes) {
-    if (node.shadowRoot) {
-      const imgs = node.shadowRoot.querySelectorAll("img");
-      for (const img of imgs) {
-        highlightElement(img, "#0a0");
-      }
+  function checkShadowImages() {
+    var nodes = document.querySelectorAll("*");
+    for (const node of nodes) {
+      if (node.shadowRoot) {
+        const imgs = node.shadowRoot.querySelectorAll("img");
+        for (const img of imgs) {
+          highlightElement(img, "#0a0");
+        }
 
-      const svgs = node.shadowRoot.querySelectorAll("svg");
-      for (const svg of svgs) {
-        highlightElement(svg, "#06f");
+        const svgs = node.shadowRoot.querySelectorAll("svg");
+        for (const svg of svgs) {
+          highlightElement(svg, "#06f");
+        }
       }
     }
   }
 
-  // TODO: Create init function to run img location/test functions.
+  (function init() {
+    checkNonShadowImages();
+    checkShadowImages();
+  })();
 
   log("Concluding image test bookmarklet.");
 })();
