@@ -40,16 +40,25 @@ javascript: (() => {
   // Test all ways elements can be hidden from assistive tech...
   function isElementHiddenFromAT(el) {
     let hidden = false;
-    hidden = hidden || el.ariaHidden; // Check for aria-hidden="true"
-    hidden = hidden || el.hidden; // Check for hidden attribute
-    hidden = hidden || el.getAttribute("role") === "presentation";
+
+    function isHidden(e) {
+      let h = false;
+      h = h || el.ariaHidden; // Check for aria-hidden="true"
+      h = h || el.hidden; // Check for hidden attribute
+      h = h || el.getAttribute("role") === "presentation";
+      log("testing isHidden");
+      return h;
+    }
+
+    hidden = hidden || isHidden(el);
+
     log("Checking " + el.nodeName);
     // TODO: Check if any parent elements are aria-hidden="true"? If so, turn outputMessages to false when running tests on parents.
-    //getAllParents(el);
+    //TODO: use for in like getAllParents(el);
     let par = el.parentNode;
     if (par.nodeName !== "BODY") {
       log(par.nodeName);
-      isElementHiddenFromAT(par);
+      hidden = hidden || isHidden(par);
     }
 
     // TODO: Check for display: none
