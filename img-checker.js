@@ -20,68 +20,83 @@ javascript: (() => {
   log("Initiating image test bookmarklet.");
   log();
 
+  function highlightElement(element, color) {
+    color = color || "#eee";
+    element.style.setProperty("outline", color + " solid 8px", "important");
+  }
+
   function hasAltAttribute(img) {
     hasAlt = img.hasAttribute("alt");
     log("Has alt attribute: " + hasAlt);
     if (hasAlt) {
-      log("Image's alt value: " + img.getAttribute("alt") || "[decorative]");
+      log("Image alt value: " + img.getAttribute("alt") || "[decorative]");
     }
     return hasAlt;
   }
 
   // Test all ways elements can be hidden from assistive tech...
   function isImageHidden(element) {
-    let hidden = false;
-
     function isHidden(el) {
-      let hid = false;
+      let hid;
 
-      hid = hid || el.ariaHidden; // aria-hidden="true"
-      hid = hid || el.hidden; // hidden attribute
-      hid = hid || el.getAttribute("role") === "presentation"; // role="presentation"
-      hid = hid || getComputedStyle(el).display === "none"; // display: none
+      // Checks hidden attribute
+      hid = hid || el.hidden;
+
+      // Checks aria-hidden="true" with Firefox workaround for ariaHidden.
+      hid = hid || el.ariaHidden || el.getAttribute("aria-hidden") === "true";
+
+      // Checks role="presentation"
+      hid = hid || el.getAttribute("role") === "presentation";
+
+      // Checks inline and external styles for display: none
+      hid = hid || getComputedStyle(el).display === "none";
+
       // TODO: Any other ways it could be hidden?
 
-      log(el.nodeName + " is hidden: " + hid);
       return hid;
     }
 
     function areAnyParentsHidden(el) {
-      let hid = false;
+      let hid;
       let parent = el.parentNode;
-      log("Checking if parents are hidden");
+
       while (!hid && parent.nodeName !== "BODY" && parent.nodeName) {
         hid = hid || isHidden(parent);
         parent = parent.parentNode;
       }
+
       return hid;
     }
 
-    hidden = hidden || isHidden(element);
+    let hidden = isHidden(element);
+    log("Image hidden from AT: " + hidden);
 
-    hidden = hidden || areAnyParentsHidden(element);
+    if (!hidden) {
+      hidden = hidden || areAnyParentsHidden(element);
+      log("Parent hidden from AT: " + hidden);
+    }
 
     return hidden;
   }
 
-  function isImgAccessible(img) {
-    let isAccessible = false;
+  function checkImgA11y(img) {
     log("Checking if image is accessible");
     log(img.src);
 
-    isAccessible = isAccessible || hasAltAttribute(img) || isImageHidden(img);
+    let isAccessible = hasAltAttribute(img) || isImageHidden(img);
 
+    log("Accessible: " + isAccessible);
     if (isAccessible) {
-      log("Image is accessible.");
+      highlightElement(img, "#09f");
     } else {
-      log("Image is not accessible.");
+      highlightElement(img, "#f90");
     }
 
-    return isAccessible;
+    log();
   }
 
-  function isSvgAccessible(svg) {
-    let isAccessible = false;
+  function checkSvgA11y(svg) {
+    let isAccessible;
     //dir(svg);
 
     let title = svg.querySelector("svg > title");
@@ -93,24 +108,17 @@ javascript: (() => {
     return isAccessible;
   }
 
-  function highlightElement(element, color) {
-    color = color || "#ffffff";
-    element.style.setProperty("outline", color + " solid 8px", "important");
-  }
-
   function checkNonShadowImages() {
     // Get all non-shadow imgs
     const imgs = document.querySelectorAll("img");
     for (const img of imgs) {
-      log("Accessible: " + isImgAccessible(img));
-      highlightElement(img, "#f90");
-      log();
+      checkImgA11y(img);
     }
 
     // Get all non-shadow svgs
     const svgs = document.querySelectorAll("svg");
     for (const svg of svgs) {
-      log("Accessible: " + isSvgAccessible(svg));
+      log("Accessible: " + checkSvgA11y(svg));
       highlightElement(svg, "#ff0");
       log();
     }
@@ -123,14 +131,12 @@ javascript: (() => {
       if (node.shadowRoot) {
         const imgs = node.shadowRoot.querySelectorAll("img");
         for (const img of imgs) {
-          log("Accessible: " + isImgAccessible(img));
-          highlightElement(img, "#0a0");
-          log();
+          checkImgA11y(img);
         }
 
         const svgs = node.shadowRoot.querySelectorAll("svg");
         for (const svg of svgs) {
-          log("Accessible: " + isSvgAccessible(svg));
+          log("Accessible: " + checkSvgA11y(svg));
           highlightElement(svg, "#06f");
           log();
         }
