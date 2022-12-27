@@ -1,4 +1,6 @@
 javascript: (() => {
+  // alt decision tree: https://www.w3.org/WAI/tutorials/images/decision-tree/
+
   const outputMessagesDefault = true;
   let outputMessages = outputMessagesDefault;
 
@@ -16,69 +18,58 @@ javascript: (() => {
   }
 
   log("Initiating image test bookmarklet.");
-
-  function getAllParents(node) {
-    var arr = [];
-    for (var n in node) {
-      node = node.parentNode;
-      if (node.nodeName == "BODY")
-        // return if the element is the body element
-        break;
-      arr.push(node);
-      log(node.nodeName);
-    }
-  }
+  log();
 
   function hasAltAttribute(img) {
-    return img.hasAttribute("alt");
-  }
-
-  function getAltAttribute(img) {
-    return img.getAttribute("alt") || "[decorative image]";
+    hasAlt = img.hasAttribute("alt");
+    log("Has alt attribute: " + hasAlt);
+    if (hasAlt) {
+      log("Image's alt value: " + img.getAttribute("alt") || "[decorative]");
+    }
+    return hasAlt;
   }
 
   // Test all ways elements can be hidden from assistive tech...
-  function isElementHiddenFromAT(el) {
+  function isImageHidden(element) {
     let hidden = false;
 
-    function isHidden(e) {
-      let h = false;
-      h = h || el.ariaHidden; // Check for aria-hidden="true"
-      h = h || el.hidden; // Check for hidden attribute
-      h = h || el.getAttribute("role") === "presentation";
-      log("testing isHidden");
-      return h;
+    function isHidden(el) {
+      let hid = false;
+
+      hid = hid || el.ariaHidden; // aria-hidden="true"
+      hid = hid || el.hidden; // hidden attribute
+      hid = hid || el.getAttribute("role") === "presentation"; // role="presentation"
+      hid = hid || getComputedStyle(el).display === "none"; // display: none
+      // TODO: Any other ways it could be hidden?
+
+      log(el.nodeName + " is hidden: " + hid);
+      return hid;
     }
 
-    hidden = hidden || isHidden(el);
-
-    log("Checking " + el.nodeName);
-    // TODO: Check if any parent elements are aria-hidden="true"? If so, turn outputMessages to false when running tests on parents.
-    //TODO: use for in like getAllParents(el);
-    let par = el.parentNode;
-    if (par.nodeName !== "BODY") {
-      log(par.nodeName);
-      hidden = hidden || isHidden(par);
+    function areAnyParentsHidden(el) {
+      let hid = false;
+      let parent = el.parentNode;
+      log("Checking if parents are hidden");
+      while (!hid && parent.nodeName !== "BODY" && parent.nodeName) {
+        hid = hid || isHidden(parent);
+        parent = parent.parentNode;
+      }
+      return hid;
     }
 
-    // TODO: Check for display: none
-    // TODO: What other ways could it be hidden???
+    hidden = hidden || isHidden(element);
+
+    hidden = hidden || areAnyParentsHidden(element);
+
     return hidden;
   }
 
   function isImgAccessible(img) {
     let isAccessible = false;
+    log("Checking if image is accessible");
     log(img.src);
 
-    if (hasAltAttribute(img)) {
-      isAccessible = true;
-      log("Image has alt attribute: " + getAltAttribute(img));
-    }
-
-    if (isElementHiddenFromAT(img)) {
-      isAccessible = true;
-      log("Image is hidden from assistive tech.");
-    }
+    isAccessible = isAccessible || hasAltAttribute(img) || isImageHidden(img);
 
     if (isAccessible) {
       log("Image is accessible.");
@@ -102,9 +93,9 @@ javascript: (() => {
     return isAccessible;
   }
 
-  function highlightElement(el, color) {
+  function highlightElement(element, color) {
     color = color || "#ffffff";
-    el.style.setProperty("outline", color + " solid 8px", "important");
+    element.style.setProperty("outline", color + " solid 8px", "important");
   }
 
   function checkNonShadowImages() {
@@ -113,6 +104,7 @@ javascript: (() => {
     for (const img of imgs) {
       log("Accessible: " + isImgAccessible(img));
       highlightElement(img, "#f90");
+      log();
     }
 
     // Get all non-shadow svgs
@@ -120,6 +112,7 @@ javascript: (() => {
     for (const svg of svgs) {
       log("Accessible: " + isSvgAccessible(svg));
       highlightElement(svg, "#ff0");
+      log();
     }
   }
 
@@ -130,12 +123,16 @@ javascript: (() => {
       if (node.shadowRoot) {
         const imgs = node.shadowRoot.querySelectorAll("img");
         for (const img of imgs) {
+          log("Accessible: " + isImgAccessible(img));
           highlightElement(img, "#0a0");
+          log();
         }
 
         const svgs = node.shadowRoot.querySelectorAll("svg");
         for (const svg of svgs) {
+          log("Accessible: " + isSvgAccessible(svg));
           highlightElement(svg, "#06f");
+          log();
         }
       }
     }
