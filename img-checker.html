@@ -10,6 +10,11 @@
   </head>
   <body>
     <h1>A11y image tests</h1>
+    Drag this link to your bookmarks bar:
+    <a
+      href='javascript: (function () {var bookletCode = document.createElement("script");bookletCode.setAttribute("src", "https://rha11y-tools.netlify.app/img-checker.js");document.body.appendChild(bookletCode);})();'
+      >rha11yimg</a
+    >
     <h2>Images in components</h2>
     <div class="cards">
       <div>
@@ -47,7 +52,7 @@
         <ul>
           <li>No alt</li>
           <li>Not hidden from AT</li>
-          <li>Hidden parent</li>
+          <li>AT-hidden parent</li>
           <li>Should <strong>pass</strong></li>
         </ul>
       </div>
@@ -95,7 +100,7 @@
         <ul>
           <li>No alt</li>
           <li>Not hidden from AT</li>
-          <li>Hidden parent</li>
+          <li>AT-hidden parent</li>
           <li>Should <strong>pass</strong></li>
         </ul>
       </div>
@@ -148,6 +153,6 @@
       </div>
     </div>
 
-    <script src="img-checker.js"></script>
+    <!--script src="img-checker.js"></script-->
   </body>
 </html>

@@ -23,9 +23,6 @@ javascript: (() => {
     }
   }
 
-  log("Initiating image test bookmarklet.");
-  log();
-
   function highlightElement(element, color) {
     color = color || "#eee";
     element.style.setProperty("outline", color + " solid 8px", "important");
@@ -178,10 +175,10 @@ javascript: (() => {
 
   (function init() {
     setTimeout(() => {
+      log("Initiating image test bookmarklet.");
+      log();
       checkNonShadowImages();
       checkShadowImages();
-    }, 1000);
+    }, 0); // Can set delay in testing
   })();
-
-  log("Concluding image test bookmarklet.");
 })();
