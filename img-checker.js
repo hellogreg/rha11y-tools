@@ -96,14 +96,10 @@ javascript: (() => {
   }
 
   function checkSvgA11y(svg) {
-    let isAccessible;
-    //dir(svg);
-
     let title = svg.querySelector("svg > title");
     let hasTitle = title && title.textContent;
     let hasRoleImg = svg.getAttribute("role") === "img";
-
-    isAccessible = isAccessible || (hasTitle && hasRoleImg);
+    let isAccessible = hasTitle && hasRoleImg;
 
     return isAccessible;
   }
