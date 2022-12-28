@@ -10,11 +10,27 @@
   </head>
   <body>
     <h1>A11y image tests</h1>
-    <template id="wc-container">
-      <slot name="wc-content"><img src="testsvg.svg?test=svg00" /></slot>
-    </template>
-    <wc-container></wc-container>
-    <wc-container><img slot="wc-content" src="testimg.jpg?test=img00" /></wc-container>
+    <h2>Images in components</h2>
+    <div class="cards">
+      <div>
+        <wc-img></wc-img>
+        <ul>
+          <li>Image web component</li>
+          <li>Has empty alt</li>
+          <li>Should <strong>pass</strong></li>
+        </ul>
+      </div>
+      <div>
+        <wc-div></wc-div>
+        <ul>
+          <li>Image component...</li>
+          <li>Nested inside component...</li>
+          <li>Inside another component</li>
+          <li>Has empty alt</li>
+          <li>Should <strong>pass</strong></li>
+        </ul>
+      </div>
+    </div>
     <h2>External non-shadow JPGs</h2>
     <div class="cards">
       <div>
@@ -23,6 +39,7 @@
           <li>No alt</li>
           <li>Not hidden from AT</li>
           <li>No hidden parent</li>
+          <li>Should <strong>fail</strong></li>
         </ul>
       </div>
       <div>
@@ -31,6 +48,7 @@
           <li>No alt</li>
           <li>Not hidden from AT</li>
           <li>Hidden parent</li>
+          <li>Should <strong>pass</strong></li>
         </ul>
       </div>
       <div>
@@ -39,6 +57,7 @@
           <li>Empty alt</li>
           <li>Not hidden from AT</li>
           <li>No hidden parent</li>
+          <li>Should <strong>pass</strong></li>
         </ul>
       </div>
       <div>
@@ -47,6 +66,7 @@
           <li>alt with value</li>
           <li>Not hidden from AT</li>
           <li>No hidden parent</li>
+          <li>Should <strong>pass</strong></li>
         </ul>
       </div>
       <div>
@@ -55,6 +75,7 @@
           <li>No alt</li>
           <li>role="presentation"</li>
           <li>No hidden parent</li>
+          <li>Should <strong>pass</strong></li>
         </ul>
       </div>
     </div>
@@ -66,6 +87,7 @@
           <li>No alt</li>
           <li>Not hidden from AT</li>
           <li>No hidden parent</li>
+          <li>Should <strong>fail</strong></li>
         </ul>
       </div>
       <div>
@@ -74,6 +96,7 @@
           <li>No alt</li>
           <li>Not hidden from AT</li>
           <li>Hidden parent</li>
+          <li>Should <strong>pass</strong></li>
         </ul>
       </div>
       <div>
@@ -82,6 +105,7 @@
           <li>Empty alt</li>
           <li>Not hidden from AT</li>
           <li>No hidden parent</li>
+          <li>Should <strong>pass</strong></li>
         </ul>
       </div>
       <div>
@@ -90,6 +114,7 @@
           <li>alt with value</li>
           <li>Not hidden from AT</li>
           <li>No hidden parent</li>
+          <li>Should <strong>pass</strong></li>
         </ul>
       </div>
       <div>
@@ -98,6 +123,7 @@
           <li>No alt</li>
           <li>role="presentation"</li>
           <li>No hidden parent</li>
+          <li>Should <strong>pass</strong></li>
         </ul>
       </div>
     </div>
@@ -121,21 +147,7 @@
         </svg>
       </div>
     </div>
-    <script>
-      customElements.define(
-        "wc-container",
-        class extends HTMLElement {
-          constructor() {
-            super();
 
-            const template = document.getElementById("wc-container");
-            const templateContent = template.content;
-
-            this.attachShadow({ mode: "open" }).appendChild(templateContent.cloneNode(true));
-          }
-        }
-      );
-    </script>
     <script src="img-checker.js"></script>
   </body>
 </html>

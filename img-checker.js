@@ -1,5 +1,11 @@
 javascript: (() => {
   // alt decision tree: https://www.w3.org/WAI/tutorials/images/decision-tree/
+  // Access lit components with renderRoot? https://lit.dev/docs/components/shadow-dom/
+  //
+  // How to account for shadowroots that are hidden, or whose parents are hidden?
+  // It's easy to run isElementHidden on them and then skip any checking, but
+  // then the images within won't be marked as passing a11y checks.
+  // Unless we make a function/parameter to just find and mark them as passing.
 
   const outputMessagesDefault = true;
   let outputMessages = outputMessagesDefault;
@@ -29,13 +35,14 @@ javascript: (() => {
     hasAlt = img.hasAttribute("alt");
     log("Has alt attribute: " + hasAlt);
     if (hasAlt) {
-      log("Image alt value: " + img.getAttribute("alt") || "[decorative]");
+      const altValue = img.getAttribute("alt") || "[decorative]";
+      log("Image alt value: " + altValue);
     }
     return hasAlt;
   }
 
   // Test all ways elements can be hidden from assistive tech...
-  function isImageHidden(element) {
+  function isElementHidden(element) {
     function isHidden(el) {
       let hid;
 
@@ -60,7 +67,7 @@ javascript: (() => {
       let hid;
       let parent = el.parentNode;
 
-      while (!hid && parent.nodeName !== "BODY" && parent.nodeName) {
+      while (!hid && parent.nodeName !== "BODY" && parent.nodeName && parent.nodeType !== 11) {
         hid = hid || isHidden(parent);
         parent = parent.parentNode;
       }
@@ -69,11 +76,11 @@ javascript: (() => {
     }
 
     let hidden = isHidden(element);
-    log("Image hidden from AT: " + hidden);
+    log("Image hidden from AT: " + !!hidden);
 
     if (!hidden) {
       hidden = hidden || areAnyParentsHidden(element);
-      log("Parent hidden from AT: " + hidden);
+      log("Parent hidden from AT: " + !!hidden);
     }
 
     return hidden;
@@ -83,7 +90,7 @@ javascript: (() => {
     log("Checking if image is accessible");
     log(img.src);
 
-    let isAccessible = hasAltAttribute(img) || isImageHidden(img);
+    let isAccessible = !!(hasAltAttribute(img) || isElementHidden(img));
 
     log("Accessible: " + isAccessible);
     if (isAccessible) {
@@ -120,19 +127,48 @@ javascript: (() => {
     }
   }
 
+  function findNestedShadowRoots(node, i) {
+    i = i + 1 || 1;
+    const shadows = node.querySelectorAll("*");
+    for (const shadow of shadows) {
+      const shadowChild = shadow.shadowRoot;
+      if (shadowChild) {
+        log("Found a shadow child (nesting level " + i + "):");
+        log(shadowChild.lastElementChild.localName);
+
+        const imgs = shadowChild.querySelectorAll("img");
+        for (const img of imgs) {
+          log("Found img in level " + i + " shadowRoot");
+          checkImgA11y(img);
+        }
+
+        log();
+
+        // Keep checking for more nesting levels.
+        findNestedShadowRoots(shadowChild, i);
+      }
+    }
+  }
+
   // Get every img and svg that's in a shadowRoot.
   function checkShadowImages() {
-    var nodes = document.querySelectorAll("*");
+    const nodes = document.querySelectorAll("*");
     for (const node of nodes) {
-      if (node.shadowRoot) {
-        const imgs = node.shadowRoot.querySelectorAll("img");
+      const shadowNode = node.shadowRoot;
+      if (shadowNode) {
+        log("Found a top-level shadowRoot:");
+        log(shadowNode.lastElementChild.localName);
+        findNestedShadowRoots(shadowNode);
+
+        const imgs = shadowNode.querySelectorAll("img");
         for (const img of imgs) {
+          log("Found img in top-level shadowRoot");
           checkImgA11y(img);
         }
 
         const svgs = node.shadowRoot.querySelectorAll("svg");
         for (const svg of svgs) {
-          log("Accessible: " + checkSvgA11y(svg));
+          checkSvgA11y(svg);
           highlightElement(svg, "#06f");
           log();
         }
@@ -141,8 +177,10 @@ javascript: (() => {
   }
 
   (function init() {
-    checkNonShadowImages();
-    checkShadowImages();
+    setTimeout(() => {
+      checkNonShadowImages();
+      checkShadowImages();
+    }, 1000);
   })();
 
   log("Concluding image test bookmarklet.");
