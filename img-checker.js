@@ -118,20 +118,24 @@ javascript: (() => {
     // Get all non-shadow svgs
     const svgs = document.querySelectorAll("svg");
     for (const svg of svgs) {
-      log("Accessible: " + checkSvgA11y(svg));
+      log("Inline SVG Accessible: " + checkSvgA11y(svg));
       highlightElement(svg, "#ff0");
       log();
     }
   }
 
-  function findNestedShadowRoots(node, i) {
+  function findNestedShadowRoots(sr, i) {
     i = i + 1 || 1;
-    const shadows = node.querySelectorAll("*");
-    for (const shadow of shadows) {
-      const shadowChild = shadow.shadowRoot;
+    const nodes = sr.querySelectorAll("*");
+    for (const node of nodes) {
+      const shadowChild = node.shadowRoot;
       if (shadowChild) {
-        log("Found a shadow child (nesting level " + i + "):");
-        log(shadowChild.lastElementChild.localName);
+        log(
+          "Found a shadow child (nesting level " +
+            i +
+            "): " +
+            shadowChild.lastElementChild.localName
+        );
 
         const imgs = shadowChild.querySelectorAll("img");
         for (const img of imgs) {
@@ -153,8 +157,7 @@ javascript: (() => {
     for (const node of nodes) {
       const shadowNode = node.shadowRoot;
       if (shadowNode) {
-        log("Found a top-level shadowRoot:");
-        log(shadowNode.lastElementChild.localName);
+        log("Found a top-level shadowRoot: " + shadowNode.lastElementChild.localName);
         findNestedShadowRoots(shadowNode);
 
         const imgs = shadowNode.querySelectorAll("img");
