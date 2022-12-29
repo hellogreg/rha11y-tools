@@ -20,8 +20,10 @@
       <div>
         <wc-img></wc-img>
         <ul>
-          <li>Image web component</li>
+          <li>Image component</li>
           <li>Has no alt</li>
+          <li>Not hidden from AT</li>
+          <li>No hidden parent</li>
           <li>Should <strong>fail</strong></li>
         </ul>
       </div>
@@ -29,9 +31,11 @@
         <wc-div></wc-div>
         <ul>
           <li>Image component...</li>
-          <li>Nested inside component...</li>
-          <li>Inside another component</li>
+          <li>Nested in component...</li>
+          <li>In another component</li>
           <li>Has no alt</li>
+          <li>Not hidden from AT</li>
+          <li>No hidden parent</li>
           <li>Should <strong>fail</strong></li>
         </ul>
       </div>
@@ -41,7 +45,7 @@
       <div>
         <img src="testimg.jpg?test=img01" />
         <ul>
-          <li>No alt</li>
+          <li>Has no alt</li>
           <li>Not hidden from AT</li>
           <li>No hidden parent</li>
           <li>Should <strong>fail</strong></li>
@@ -50,7 +54,7 @@
       <div>
         <span aria-hidden="true"><img src="testimg.jpg?test=img02" /></span>
         <ul>
-          <li>No alt</li>
+          <li>Has no alt</li>
           <li>Not hidden from AT</li>
           <li>AT-hidden parent</li>
           <li>Should <strong>pass</strong></li>
@@ -77,7 +81,7 @@
       <div>
         <img src="testimg.jpg?test=img05" role="presentation" />
         <ul>
-          <li>No alt</li>
+          <li>Has no alt</li>
           <li>role="presentation"</li>
           <li>No hidden parent</li>
           <li>Should <strong>pass</strong></li>
@@ -89,7 +93,7 @@
       <div>
         <img src="testsvg.svg?test=svg01" />
         <ul>
-          <li>No alt</li>
+          <li>Has no alt</li>
           <li>Not hidden from AT</li>
           <li>No hidden parent</li>
           <li>Should <strong>fail</strong></li>
@@ -98,7 +102,7 @@
       <div>
         <span aria-hidden="true"><img src="testsvg.svg?test=svg02" /></span>
         <ul>
-          <li>No alt</li>
+          <li>Has no alt</li>
           <li>Not hidden from AT</li>
           <li>AT-hidden parent</li>
           <li>Should <strong>pass</strong></li>
@@ -125,7 +129,7 @@
       <div>
         <img src="testsvg.svg?test=svg05" role="presentation" />
         <ul>
-          <li>No alt</li>
+          <li>Has no alt</li>
           <li>role="presentation"</li>
           <li>No hidden parent</li>
           <li>Should <strong>pass</strong></li>
