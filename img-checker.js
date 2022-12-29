@@ -4,7 +4,9 @@ javascript: (() => {
   // alt decision tree: https://www.w3.org/WAI/tutorials/images/decision-tree/
   // Access lit components with renderRoot? https://lit.dev/docs/components/shadow-dom/
   //
-  // TODO: Account for shadowroots that are hidden, or whose parents are hidden
+  // TODO: Determine if parents of shadowroots are hidden.
+  // TODO: Why aren't some images identified (e.g., search at redhat.com)?
+  // TODO: Fix outline color for some images (e.g., globe in redhat.com footer).
   //
 
   const outputMessagesDefault = true;
