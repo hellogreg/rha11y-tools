@@ -10,9 +10,9 @@
   </head>
   <body>
     <h1>A11y image tests</h1>
-    Check images (local testing only):
+    Drag to bookmarks bar for remote testing:
     <a
-      href='javascript: (function () {var bookletCode = document.createElement("script");bookletCode.setAttribute("src", "img-checker.js");document.body.appendChild(bookletCode);})();'
+      href='javascript: (function () {var bookletCode = document.createElement("script");bookletCode.setAttribute("src", "https://rha11y-tools.netlify.app/img-checker.js");document.body.appendChild(bookletCode);})();'
       >rha11yimg</a
     >
     <h2>Images in components</h2>
@@ -21,8 +21,8 @@
         <wc-img></wc-img>
         <ul>
           <li>Image web component</li>
-          <li>Has empty alt</li>
-          <li>Should <strong>pass</strong></li>
+          <li>Has no alt</li>
+          <li>Should <strong>fail</strong></li>
         </ul>
       </div>
       <div>
@@ -31,8 +31,8 @@
           <li>Image component...</li>
           <li>Nested inside component...</li>
           <li>Inside another component</li>
-          <li>Has empty alt</li>
-          <li>Should <strong>pass</strong></li>
+          <li>Has no alt</li>
+          <li>Should <strong>fail</strong></li>
         </ul>
       </div>
     </div>
@@ -153,6 +153,6 @@
       </div>
     </div>
 
-    <!--script src="img-checker.js"></script-->
+    <script src="img-checker.js"></script>
   </body>
 </html>

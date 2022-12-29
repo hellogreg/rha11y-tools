@@ -40,31 +40,50 @@ javascript: (() => {
 
   // Test all ways elements can be hidden from assistive tech...
   function isElementHidden(element) {
+    log("Checking if hidden...");
+
     function isHidden(el) {
       let hid;
+      log("Testing if " + el.nodeName + " is hidden.");
 
-      // Checks hidden attribute
+      // Check for hidden attribute
       hid = hid || el.hidden;
 
-      // Checks aria-hidden="true" with Firefox workaround for ariaHidden.
-      hid = hid || el.ariaHidden || el.getAttribute("aria-hidden") === "true";
+      // Check for aria-hidden="true" and role="presentation"
+      // Uses Firefox getAttribute() workaround for ariaHidden
+      try {
+        hid = hid || el.ariaHidden || el.getAttribute("aria-hidden") === "true";
+      } catch (e) {
+        hid = hid || el.ariaHidden;
+        log(
+          "Can't test " + el.nodeName + " for aria-hidden attribute. (Probably a web component.)"
+        );
+      }
 
-      // Checks role="presentation"
-      hid = hid || el.getAttribute("role") === "presentation";
+      // Check for role="presentation"
+      try {
+        hid = hid || el.getAttribute("role") === "presentation";
+      } catch (e) {
+        log("Can't test " + el.nodeName + " for role attribute. (Probably a web component.)");
+      }
 
       // Checks inline and external styles for display: none
-      hid = hid || getComputedStyle(el).display === "none";
+      try {
+        hid = hid || getComputedStyle(el).display === "none";
+      } catch (e) {
+        log("Can't test " + el.nodeName + " for computed style. (Probably a web component.)");
+      }
 
       // TODO: Any other ways it could be hidden?
 
-      return hid;
+      return !!hid;
     }
 
     function areAnyParentsHidden(el) {
       let hid;
       let parent = el.parentNode;
-
-      while (!hid && parent.nodeName !== "BODY" && parent.nodeName && parent.nodeType !== 11) {
+      // To test for web component parent: parent.nodeType !== 11 {
+      while (!hid && parent && parent.nodeName !== "BODY" && parent.nodeName) {
         hid = hid || isHidden(parent);
         parent = parent.parentNode;
       }
@@ -77,10 +96,10 @@ javascript: (() => {
 
     if (!hidden) {
       hidden = hidden || areAnyParentsHidden(element);
-      log("Parent hidden from AT: " + !!hidden);
     }
 
-    return hidden;
+    log("Element or parent is hidden: " + hidden);
+    return !!hidden;
   }
 
   function checkImgA11y(img) {
@@ -89,7 +108,7 @@ javascript: (() => {
 
     let isAccessible = !!(hasAltAttribute(img) || isElementHidden(img));
 
-    log("Accessible: " + isAccessible);
+    log("Element is accessible: " + isAccessible);
     if (isAccessible) {
       highlightElement(img, "#09f");
     } else {
@@ -105,7 +124,7 @@ javascript: (() => {
     let hasRoleImg = svg.getAttribute("role") === "img";
     let isAccessible = hasTitle && hasRoleImg;
 
-    return isAccessible;
+    return !!isAccessible;
   }
 
   function checkNonShadowImages() {
