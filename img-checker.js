@@ -186,8 +186,6 @@ javascript: (() => {
             checkImgA11y(img);
           }
 
-          log();
-
           // Keep checking for more nesting levels.
           findNestedShadowRoots(shadowChild, i);
         }
