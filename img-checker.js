@@ -3,10 +3,12 @@ javascript: (() => {
   // Resources:
   // alt decision tree: https://www.w3.org/WAI/tutorials/images/decision-tree/
   // Access lit components with renderRoot? https://lit.dev/docs/components/shadow-dom/
+  // JS minifier for creating quick local bookmarklet: https://www.toptal.com/developers/javascript-minifier
   //
   // TODO: Determine if parents of shadowroots are hidden.
   // TODO: Why aren't some images identified (e.g., search at redhat.com)?
   // TODO: Fix outline color for some images (e.g., globe in redhat.com footer).
+  // TODO: Better to identify by img tag or document.querySelectorAll([(role = "img")])?
   //
 
   const outputMessagesDefault = true;
@@ -99,6 +101,7 @@ javascript: (() => {
     log("Image hidden from AT: " + !!hidden);
 
     if (!hidden) {
+      log("Checking if any parents are hidden");
       hidden = hidden || areAnyParentsHidden(element);
     }
 
@@ -108,10 +111,14 @@ javascript: (() => {
 
   function checkImgA11y(img) {
     log("Checking if image is accessible");
-    log(img.src);
+
+    let imgSrc = !!img.src ? img.src : "[unspecified]";
+    let imgId = !!img.id ? img.id : "[unspecified]";
+    log("src: " + imgSrc);
+    log("id: " + imgId);
+    dir(img);
 
     let isAccessible = !!(hasAltAttribute(img) || isElementHidden(img));
-
     log("image is accessible: " + isAccessible);
     highlightElement(img, isAccessible);
 
@@ -127,27 +134,26 @@ javascript: (() => {
       return !!(hasTitle && hasRoleImg);
     }
 
-    let isAccessible = false;
+    log("Checking if inline svg is accessible");
+
+    let svgId = !!svg.id ? svg.id : "[unspecified]";
     let titleText = svg.querySelector("svg > title")
       ? svg.querySelector("svg > title").textContent
       : "[unspecified]";
-
-    log("Checking if inline svg is accessible");
-    log("id: " + svg.id || "[unspecified]");
+    log("id: " + svgId);
     log("title: " + titleText);
-    //dir(svg);
 
-    isAccessible = isAccessible || !!hasTitleAndImgRole(svg);
-    // TODO: check other ways to name svg: e.g., aria-label
+    let isAccessible = !!hasTitleAndImgRole(svg);
+    // TODO: check other ways to name svg: e.g., aria-label:
+    // isAccessible = isAccessible || !!hasAriaLabel(svg);
     isAccessible = isAccessible || !!isElementHidden(svg);
-
     log("svg is accessible: " + isAccessible);
     highlightElement(svg, isAccessible);
 
     log();
   }
 
-  function checkNonShadowImages() {
+  function findAndTestNonShadowImages() {
     // Get all non-shadow svgs
     const svgs = document.querySelectorAll("svg");
     for (const svg of svgs) {
@@ -162,7 +168,7 @@ javascript: (() => {
   }
 
   // Get every img and svg that's in a shadowRoot.
-  function checkShadowImages() {
+  function findAndTestShadowImages() {
     function findNestedShadowRoots(sr, i) {
       i = i + 1 || 1;
       const nodes = sr.querySelectorAll("*");
@@ -222,8 +228,8 @@ javascript: (() => {
     setTimeout(() => {
       log("Initiating image test bookmarklet.");
       log();
-      checkNonShadowImages();
-      checkShadowImages();
+      findAndTestNonShadowImages();
+      findAndTestShadowImages();
     }, 0); // Can set delay in testing
   })();
 })();
