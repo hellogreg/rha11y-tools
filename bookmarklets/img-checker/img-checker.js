@@ -64,17 +64,20 @@ javascript: (() => {
       hid = hid || !!el.hidden;
 
       // Check for aria-hidden="true" and role="presentation"
-      // Uses Firefox getAttribute() workaround for ariaHidden
       try {
-        hid = hid || el.ariaHidden || el.getAttribute("aria-hidden") === "true";
+        let ariaHidden = el.ariaHidden || el.getAttribute("aria-hidden") === "true";
+        log("aria-hidden: " + !!ariaHidden);
+        hid = hid || !!ariaHidden;
       } catch (e) {
-        hid = hid || el.ariaHidden;
+        hid = hid || !!el.ariaHidden;
+        log("aria-hidden: " + !!el.ariaHidden);
         log("Can't test " + el.nodeName + " for aria-hidden attribute.");
       }
 
       // Check for role="presentation"
       try {
         hid = hid || el.getAttribute("role") === "presentation";
+        log("role=presentation: " + (el.getAttribute("role") === "presentation"));
       } catch (e) {
         log("Can't test " + el.nodeName + " for role attribute.");
       }
@@ -138,23 +141,38 @@ javascript: (() => {
       let hasTitle = title && title.textContent;
       log("Has <title>: " + !!hasTitle);
       let titleText = hasTitle ? svg.querySelector("svg > title").textContent : "[unspecified]";
-      log("title: " + titleText);
+      if (hasTitle) {
+        log("title: " + titleText);
+      }
       return !!hasTitle;
     }
 
-    function hasRoleImg(s) {
-      let hasRoleImg = s.getAttribute("role") === "img";
-      log("Has role='img': " + !!hasRoleImg);
-      return !!hasRoleImg;
+    function hasImgRole(s) {
+      let hasImgRole = s.getAttribute("role") === "img";
+      log("Has role='img': " + !!hasImgRole);
+      return !!hasImgRole;
+    }
+
+    function hasAriaLabel(s) {
+      let ariaLabel = s.ariaLabel || s.getAttribute("aria-label");
+      let hasAriaLabel = !!ariaLabel;
+      log("Has aria-label: " + hasAriaLabel);
+      if (hasAriaLabel) {
+        log("aria-label: " + ariaLabel);
+      }
+
+      // TODO: Check aria-labelledby (and make sure reference has value);
+
+      return hasAriaLabel;
     }
 
     log("Checking if inline svg is accessible");
 
     let svgId = !!svg.id ? svg.id : "[unspecified]";
 
-    let isAccessible = !!(hasTitle(svg) && hasRoleImg(svg));
-    // TODO: check other ways to name svg: e.g., aria-label:
-    // isAccessible = isAccessible || !!hasAriaLabel(svg);
+    let isAccessible = !!(hasTitle(svg) && hasImgRole(svg));
+    isAccessible = isAccessible || !!hasAriaLabel(svg);
+    // TODO: Any other ways to be accessible?
     isAccessible = isAccessible || isElementHidden(svg);
     log("svg is accessible: " + isAccessible);
     outputA11yResults(svg, isAccessible);
