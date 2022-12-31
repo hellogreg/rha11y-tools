@@ -27,7 +27,7 @@ javascript: (() => {
     }
   }
 
-  function highlightElement(element, accessible) {
+  function outputA11yResults(element, accessible) {
     let color = "#eee";
     if (accessible) {
       color = "#09f";
@@ -35,6 +35,11 @@ javascript: (() => {
       color = "#f90";
     }
     element.style.setProperty("outline", color + " solid 8px", "important");
+
+    // Add a data-a11y attribute to the element.
+    // This attribute lists test results for someone inspecting the element.
+    // TODO: Add more detail to the results.
+    element.setAttribute("data-a11y", "Accessible: " + !!accessible);
   }
 
   function hasAltAttribute(img) {
@@ -53,8 +58,10 @@ javascript: (() => {
       let hid;
       log("Checking if " + el.nodeName + " is hidden");
 
+      // We use try/catch blocks because web components may fail to execute tests.
+
       // Check for hidden attribute
-      hid = hid || el.hidden;
+      hid = hid || !!el.hidden;
 
       // Check for aria-hidden="true" and role="presentation"
       // Uses Firefox getAttribute() workaround for ariaHidden
@@ -120,35 +127,37 @@ javascript: (() => {
 
     let isAccessible = !!(hasAltAttribute(img) || isElementHidden(img));
     log("image is accessible: " + isAccessible);
-    highlightElement(img, isAccessible);
+    outputA11yResults(img, isAccessible);
 
     log();
   }
 
   function checkSvgA11y(svg) {
-    function hasTitleAndImgRole(s) {
+    function hasTitle(s) {
       let title = s.querySelector("svg > title");
       let hasTitle = title && title.textContent;
+      log("Has <title>: " + !!hasTitle);
+      let titleText = hasTitle ? svg.querySelector("svg > title").textContent : "[unspecified]";
+      log("title: " + titleText);
+      return !!hasTitle;
+    }
+
+    function hasRoleImg(s) {
       let hasRoleImg = s.getAttribute("role") === "img";
-      log("Has <title> and role='img': " + !!(hasTitle && hasRoleImg));
-      return !!(hasTitle && hasRoleImg);
+      log("Has role='img': " + !!hasRoleImg);
+      return !!hasRoleImg;
     }
 
     log("Checking if inline svg is accessible");
 
     let svgId = !!svg.id ? svg.id : "[unspecified]";
-    let titleText = svg.querySelector("svg > title")
-      ? svg.querySelector("svg > title").textContent
-      : "[unspecified]";
-    log("id: " + svgId);
-    log("title: " + titleText);
 
-    let isAccessible = !!hasTitleAndImgRole(svg);
+    let isAccessible = !!(hasTitle(svg) && hasRoleImg(svg));
     // TODO: check other ways to name svg: e.g., aria-label:
     // isAccessible = isAccessible || !!hasAriaLabel(svg);
-    isAccessible = isAccessible || !!isElementHidden(svg);
+    isAccessible = isAccessible || isElementHidden(svg);
     log("svg is accessible: " + isAccessible);
-    highlightElement(svg, isAccessible);
+    outputA11yResults(svg, isAccessible);
 
     log();
   }
