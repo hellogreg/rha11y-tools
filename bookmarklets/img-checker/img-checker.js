@@ -116,7 +116,7 @@ javascript: (() => {
     let imgId = !!img.id ? img.id : "[unspecified]";
     log("src: " + imgSrc);
     log("id: " + imgId);
-    dir(img);
+    //dir(img);
 
     let isAccessible = !!(hasAltAttribute(img) || isElementHidden(img));
     log("image is accessible: " + isAccessible);
