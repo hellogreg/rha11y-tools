@@ -11,13 +11,30 @@
   </head>
   <body>
     <h1>A11y image tests</h1>
+    <!--
     <p>
-      Drag to bookmarks bar for remote testing:
+      Drag the following link to your bookmarks bar for testing. This bookmarklet loads the current
+      production version of the img-checker script every time you run it.
+    </p>
+    <p>
       <a
         href='javascript: (function () {var bookletCode = document.createElement("script");bookletCode.setAttribute("src", "https://rha11y-tools.netlify.app/bookmarklets/img-checker/img-checker.js");document.body.appendChild(bookletCode);})();'
         >rha11yimg</a
       >
     </p>
+    <p>
+      If the above doesn't work, the site you're testing may not allow remote scripts to run. In
+      that case, drag the following link to you bookmarks bar. This is the current version of the
+      bookmarklet, but it won't update automatically. You may want to check back here on occasion.
+    </p>
+    <p>
+      <a
+        href='javascript:(()=>{let e=!0;function t(t){e&&(t=void 0!==t?t:"-----------------",console.log(t))}function i(t){e&&t&&console.dir(t)}function o(e,t){let i="#eee";i=t?"#09f":"#f90",e.style.setProperty("outline",i+" solid 8px","important"),e.setAttribute("data-a11y","Accessible: "+!!t)}function l(e){if(t("Has alt attribute: "+(hasAlt=e.hasAttribute("alt"))),hasAlt){let i=e.getAttribute("alt")||"[decorative]";t("Image alt value: "+i)}return hasAlt}function n(e){function i(e){let i;t("Checking if "+e.nodeName+" is hidden"),i=i||!!e.hidden;try{i=i||e.ariaHidden||"true"===e.getAttribute("aria-hidden")}catch(o){i=i||e.ariaHidden,t("Cannot test "+e.nodeName+" for aria-hidden attribute.")}try{i=i||"presentation"===e.getAttribute("role")}catch(l){t("Cannot test "+e.nodeName+" for role attribute.")}try{i=i||"none"===getComputedStyle(e).display}catch(n){t("Cannot test "+e.nodeName+" for computed style.")}return!!i}t("Checking if element is hidden");let o=i(e);return t("Image hidden from AT: "+!!o),o||(t("Checking if any parents are hidden"),o=o||function e(t){let o,l=t.parentNode;for(;!o&&l&&"BODY"!==l.nodeName&&l.nodeName;)o=o||i(l),l=l.parentNode;return o}(e)),t("Element or parent is hidden: "+o),!!o}function r(e){t("Checking if image is accessible");let i=e.src?e.src:"[unspecified]",r=e.id?e.id:"[unspecified]";t("src: "+i),t("id: "+r);let a=!!(l(e)||n(e));t("image is accessible: "+a),o(e,a),t()}function a(e){var i,l;t("Checking if inline svg is accessible"),e.id&&e.id;let r,a,d,s=(a=(r=(i=e).querySelector("svg > title"))&&r.textContent,t("Has <title>: "+!!a),t("title: "+(a?e.querySelector("svg > title").textContent:"[unspecified]")),!!a&&(d="img"===(l=e).getAttribute("role"),t("Has role=img: "+!!d),!!d));s=s||n(e),t("svg is accessible: "+s),o(e,s),t()}function d(){let e=document.querySelectorAll("svg");for(let t of e)a(t);let i=document.querySelectorAll("img");for(let o of i)r(o)}function s(){function e(i,o){o=o+1||1;let l=i.querySelectorAll("*");for(let n of l){let a=n.shadowRoot;if(a){t("Found a shadow child (nesting level "+o+"): "+a.lastElementChild.localName);let d=a.querySelectorAll("svg");for(let s of d)t("Found svg in level "+o+" shadowRoot"),r(s);let c=a.querySelectorAll("img");for(let u of c)t("Found img in level "+o+" shadowRoot"),r(u);e(a,o)}}}let i=document.querySelectorAll("*");for(let o of i){let l=o.shadowRoot;if(l){t("Found a top-level shadowRoot: "+l.lastElementChild.localName),e(l);let n=o.shadowRoot.querySelectorAll("svg");for(let d of n)t("Found svg in top-level shadowRoot"),a(d);let s=l.querySelectorAll("img");for(let c of s)t("Found img in top-level shadowRoot"),r(c)}}}setTimeout(()=>{t("Initiating image test bookmarklet."),t(),d(),s()},0)})();'
+        >rhallyimg (local)</a
+      >
+      [Version 0.20221231]
+    </p>
+    -->
     <ul>
       <li>Blue outline: passes a11y check</li>
       <li>Orange outline: fails a11y check</li>
