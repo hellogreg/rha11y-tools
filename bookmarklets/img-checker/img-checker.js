@@ -161,18 +161,41 @@ javascript: (() => {
         log("aria-label: " + ariaLabel);
       }
 
-      // TODO: Check aria-labelledby (and make sure reference has value);
-
       return hasAriaLabel;
+    }
+
+    function hasAriaLabelledby(s) {
+      function getAriaLabelledbyValue(id) {
+        let value = "";
+        value = value || s.getElementById(id) ? s.getElementById(id).textContent : "";
+        value = value || document.getElementById(id) ? document.getElementById(id).textContent : "";
+        // TODO: Also check shadowroots for getElementById.
+        return value;
+      }
+      let ariaLabelledbyId = s.ariaLabelledby || s.getAttribute("aria-labelledby");
+      let hasAriaLabelledby = !!ariaLabelledbyId;
+      let ariaLabelledbyValue;
+      let hasAriaLabelledbyValue = false;
+      log("Has aria-labelledby: " + hasAriaLabelledby);
+      if (hasAriaLabelledby) {
+        log("aria-labelledby id: " + ariaLabelledbyId);
+        ariaLabelledbyValue = getAriaLabelledbyValue(ariaLabelledbyId);
+        hasAriaLabelledbyValue = !!ariaLabelledbyValue;
+        log("aria-labelledby value: " + ariaLabelledbyValue);
+      }
+
+      return hasAriaLabelledbyValue;
     }
 
     log("Checking if inline svg is accessible");
 
+    let isAccessible = false;
     let svgId = !!svg.id ? svg.id : "[unspecified]";
 
-    let isAccessible = !!(hasTitle(svg) && hasImgRole(svg));
+    isAccessible = !!(hasTitle(svg) && hasImgRole(svg));
     isAccessible = isAccessible || !!hasAriaLabel(svg);
-    // TODO: Any other ways to be accessible?
+    isAccessible = isAccessible || !!hasAriaLabelledby(svg);
+    // TODO: Any other ways for an svg to be accessible?
     isAccessible = isAccessible || isElementHidden(svg);
     log("svg is accessible: " + isAccessible);
     outputA11yResults(svg, isAccessible);
