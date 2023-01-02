@@ -2,13 +2,13 @@
 
 This bookmarklet identifies all external images (<img>) and inline SVGs (<svg>) on the page (including those in the Shadow DOM), and then evaluates them for accessibility: checking to see if they have accessible names and/or are hidden from assistive tech.
 
-## Latest version
+When run, the bookmarklet returns accessibility information three ways:
 
-Drag the following link to your bookmarks bar to use the bookmarklet:
-[Rha11y-img][1]
-[1]:javascript:!function(){var t=document.createElement("script");t.setAttribute("src","https://rha11y-img.netlify.app/img-checker.js"),document.body.appendChild(t)}();
+- All identified images on the page are given an 8px outline. A blue outline means the image passed accessibility checks. Orange means the image failed.
+- Inspecting an image will reveal a **data-ally** attribute, which returns info on the element's accessibility. (Currently, the attribute just says whether the image is accessible, but giving more details is on the todo list.)
+- Detailed accessibility test processes and results are displayed in the browser console.
 
-## Demo
+## Demo and latest version
 
 [View the demo page](https://rha11y-img.netlify.app/)
 
@@ -20,7 +20,7 @@ Drag the following link to your bookmarks bar to use the bookmarklet:
 - [JS minifier for creating quick local bookmarklet](https://www.toptal.com/developers/javascript-minifier)
 - [Accessing lit components with renderRoot](https://lit.dev/docs/components/shadow-dom/)
 
-## TODO list (as of 1/1/23)
+## To-do list (as of 1/1/23)
 
 - Find associated aria-labelledby ids in shadowroots.
 - Determine if parents of shadowroot elements are hidden.
