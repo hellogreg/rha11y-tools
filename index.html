@@ -11,15 +11,17 @@
   </head>
   <body>
     <h1>A11y image tests</h1>
-    <p>
-      Drag the following link to your bookmarks bar for testing. This bookmarklet loads the current
-      production version of the img-checker script every time you run it.
-    </p>
+    <p>Drag the following link to your bookmarks bar for testing.</p>
     <p>
       <a
         href='javascript: (function () {var bookletCode = document.createElement("script");bookletCode.setAttribute("src", "https://rha11y-tools.netlify.app/bookmarklets/img-checker/img-checker.js");document.body.appendChild(bookletCode);})();'
         >Rha11y-img</a
       >
+    </p>
+    <p>
+      This bookmarklet loads the current production version of the img-checker script every time you
+      run it. (We may have to include a full, non-remote-loading version here for testing on pages
+      that don't allow remote scripts.)
     </p>
     <!--
     <p>
@@ -35,6 +37,14 @@
       [Version 0.20221231]
     </p>
     -->
+    <h2>Results</h2>
+    <p>
+      For testing, the script automatically runs when this page is loaded. It identifies all images
+      on the page and outlines them based on whether they pass or fail accessibility checks.
+      Detailed results are available in the browser console. And inspecting the image now includes
+      an attribute, <strong>data-a11y</strong>, indicating whether the image passed or failed (for
+      testers who can't rely on outlines and color).
+    </p>
     <ul>
       <li>Blue outline: passes a11y check</li>
       <li>Orange outline: fails a11y check</li>
