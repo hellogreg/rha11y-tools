@@ -165,16 +165,19 @@ javascript: (() => {
     function hasAriaLabelledby(s) {
       function getAriaLabelledbyValue(id) {
         let value = "";
-        value = value || s.getElementById(id) ? s.getElementById(id).textContent : "";
-        value = value || document.getElementById(id) ? document.getElementById(id).textContent : "";
+        value = value || s.getElementById(id) ? s.getElementById(id).textContent : null;
+        value =
+          value || document.getElementById(id) ? document.getElementById(id).textContent : null;
         // TODO: Also check shadowroots for getElementById.
         return value;
       }
+
       let ariaLabelledbyId = s.ariaLabelledby || s.getAttribute("aria-labelledby");
       let hasAriaLabelledby = !!ariaLabelledbyId;
-      let ariaLabelledbyValue;
-      let hasAriaLabelledbyValue = false;
       log("Has aria-labelledby: " + hasAriaLabelledby);
+
+      let ariaLabelledbyValue;
+      let hasAriaLabelledbyValue = null;
       if (hasAriaLabelledby) {
         log("aria-labelledby id: " + ariaLabelledbyId);
         ariaLabelledbyValue = getAriaLabelledbyValue(ariaLabelledbyId);
