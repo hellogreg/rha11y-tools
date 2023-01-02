@@ -2,6 +2,7 @@ body {
   background: #ccc;
   font-family: system-ui, -apple-system, sans-serif;
   font-size: 1rem;
+  margin: 1rem 2rem;
 }
 
 ul {
@@ -13,8 +14,8 @@ ul {
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
-  margin: 2rem;
-  justify-content: center;
+  margin: 1rem 0.5rem;
+  //justify-content: center;
 }
 
 img,
