@@ -4,6 +4,7 @@ javascript: (() => {
   // alt decision tree: https://www.w3.org/WAI/tutorials/images/decision-tree/
   // Access lit components with renderRoot? https://lit.dev/docs/components/shadow-dom/
   // JS minifier for creating quick local bookmarklet: https://www.toptal.com/developers/javascript-minifier
+  // SVG a11y tests: https://weboverhauls.github.io/demos/svg/
   //
   // TODO: Determine if parents of shadowroots are hidden.
   // TODO: Why aren't some images identified (e.g., search at redhat.com)?
@@ -28,13 +29,10 @@ javascript: (() => {
   }
 
   function outputA11yResults(element, accessible) {
-    let color = "#eee";
-    if (accessible) {
-      color = "#09f";
-    } else {
-      color = "#f90";
-    }
-    element.style.setProperty("outline", color + " solid 8px", "important");
+    const colorPass = "#09f";
+    const colorFail = "#f90";
+    let outlineColor = !!accessible ? colorPass : colorFail;
+    element.style.setProperty("outline", outlineColor + " solid 8px", "important");
 
     // Add a data-a11y attribute to the element.
     // This attribute lists test results for someone inspecting the element.
