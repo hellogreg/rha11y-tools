@@ -1,6 +1,6 @@
 # Rha11y img-checker bookmarklet
 
-This bookmarklet identifies all external images (&lt;img&gt;) and inline SVGs (&lt;svg&gt;) on the page (including those in the Shadow DOM), and then evaluates them for accessibility: checking to see if they have accessible names and/or are hidden from assistive tech.
+This bookmarklet identifies all external images (&lt;img&gt;) and inline SVGs (&lt;svg&gt;) on the page--including those in the Shadow DOM--and then evaluates them for accessibility: checking to see if they have accessible names and/or are hidden from assistive tech.
 
 When run, the bookmarklet returns accessibility information three ways:
 
@@ -27,4 +27,4 @@ When run, the bookmarklet returns accessibility information three ways:
 - Investigate why occasional images have an outline color other than the bookmarklet's pass/fail colors (e.g., the globe in the redhat.com footer).
 - Find associated aria-labelledby ids in shadowroots. (Currently, we can locate them in the regular DOM and as children of the tested element. But the element could be elsewhere.)
 - Should all inline SVGs be required to have role="img"?
-- Do we need to account for non-<img> and non-<svg> elements with role="img"?
+- Do we need to account for non-img/svg elements with role="img"?
