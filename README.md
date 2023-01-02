@@ -5,7 +5,8 @@ This bookmarklet identifies all external images (<img>) and inline SVGs (<svg>) 
 ## Latest version
 
 Drag the following link to your bookmarks bar to use the bookmarklet:
-[Rha11y-img](javascript:!function(){var t=document.createElement("script");t.setAttribute("src","https://rha11y-img.netlify.app/img-checker.js"),document.body.appendChild(t)}();)
+[Rha11y-img][1]
+[1]:javascript:!function(){var t=document.createElement("script");t.setAttribute("src","https://rha11y-img.netlify.app/img-checker.js"),document.body.appendChild(t)}();
 
 ## Demo
 
