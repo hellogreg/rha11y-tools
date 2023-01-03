@@ -133,8 +133,8 @@ javascript: (() => {
       let title = s.querySelector("svg > title");
       let hasTitle = title && title.textContent;
       log("Has <title>: " + !!hasTitle);
-      let titleText = hasTitle ? svg.querySelector("svg > title").textContent : "[unspecified]";
       if (hasTitle) {
+        let titleText = svg.querySelector("svg > title").textContent || "[unspecified]";
         log("title: " + titleText);
       }
       return !!hasTitle;
@@ -168,7 +168,7 @@ javascript: (() => {
         value =
           value || document.getElementById(id) ? document.getElementById(id).textContent : null;
 
-        // TODO: Also check shadowRoots for getElementById.
+        // TODO: See if the aria-labelledby element is in a shadowRoot somewhere.
 
         return value;
       }
@@ -179,10 +179,12 @@ javascript: (() => {
 
       let ariaLabelledbyValue;
       let hasAriaLabelledbyValue = null;
+
+      // Get the label value if the element has aria-labelledby attribute.
       if (hasAriaLabelledby) {
-        log("aria-labelledby id: " + ariaLabelledbyId);
         ariaLabelledbyValue = getAriaLabelledbyValue(ariaLabelledbyId);
         hasAriaLabelledbyValue = !!ariaLabelledbyValue;
+        log("aria-labelledby id: " + ariaLabelledbyId);
         log("aria-labelledby value: " + ariaLabelledbyValue);
       }
 
