@@ -32,7 +32,7 @@ javascript: (() => {
   }
 
   function hasAltAttribute(img) {
-    hasAlt = img.hasAttribute("alt");
+    const hasAlt = !!img.hasAttribute("alt");
     log("Has alt attribute: " + hasAlt);
     if (hasAlt) {
       const altValue = img.getAttribute("alt") || "[decorative]";
@@ -194,6 +194,7 @@ javascript: (() => {
 
     let isAccessible = false;
     let svgId = !!svg.id ? svg.id : "[unspecified]";
+    log("id: " + imgId);
 
     isAccessible = !!(hasTitle(svg) && hasImgRole(svg));
     isAccessible = isAccessible || !!hasAriaLabel(svg);
