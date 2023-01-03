@@ -20,6 +20,8 @@ javascript: (() => {
     const colorFail = "#f90";
     let outlineColor = !!accessible ? colorPass : colorFail;
     element.style.setProperty("outline", outlineColor + " solid 8px", "important");
+    element.style.setProperty("filter", "grayscale(100%)", "important");
+    log("filter");
 
     // Add a data-a11y attribute to the element.
     // This attribute lists test results for someone inspecting the element.
