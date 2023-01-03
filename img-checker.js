@@ -1,11 +1,11 @@
 javascript: (() => {
+  // Give log() the ability to include line numbers.
+  const log = console.log.bind(window.console);
+
+  /*
   const outputMessagesDefault = true;
   let outputMessages = outputMessagesDefault;
 
-  const log = console.log.bind(window.console);
-  log("testing output(), aka log() with line numbers...");
-
-  /*
   function log(m) {
     if (outputMessages) {
       m = m !== undefined ? m : "-----------------";
@@ -129,7 +129,7 @@ javascript: (() => {
     log("Image is accessible: " + isAccessible);
     outputA11yResults(img, isAccessible);
 
-    log();
+    log("------------------");
   }
 
   function checkSvgA11y(svg) {
@@ -214,7 +214,7 @@ javascript: (() => {
     log("svg is accessible: " + isAccessible);
     outputA11yResults(svg, isAccessible);
 
-    log();
+    log("------------------");
   }
 
   function findAndTestNonShadowImages() {
@@ -293,7 +293,7 @@ javascript: (() => {
 
   (function init() {
     log("Initiating image test bookmarklet.");
-    log();
+    log("------------------");
     findAndTestNonShadowImages();
     findAndTestShadowImages();
   })();
