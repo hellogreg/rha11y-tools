@@ -22,8 +22,8 @@ javascript: (() => {
     element.style.setProperty("outline", outlineColor + " solid 8px", "important");
 
     // TODO: use filters to indicate pass/fail, for when outlines arent' visible?
-    let filter = !!accessible ? "grayscale(100%)" : "sepia(100%)";
-    element.style.setProperty("filter", filter, "important");
+    //let filter = !!accessible ? "grayscale(100%)" : "sepia(100%)";
+    //element.style.setProperty("filter", filter, "important");
 
     // Add a data-a11y attribute to the element.
     // This attribute lists test results for someone inspecting the element.
