@@ -4,7 +4,6 @@ body {
   font-family: system-ui, -apple-system, sans-serif;
   font-size: 1rem;
   line-height: 1.25;
-  margin: 1rem 2rem;
 }
 
 h2 {
@@ -13,6 +12,12 @@ h2 {
 
 ul {
   padding-left: 1rem;
+}
+
+.page {
+  margin: 1rem auto;
+  max-width: 60rem;
+  width: 96vw;
 }
 
 .cards {
