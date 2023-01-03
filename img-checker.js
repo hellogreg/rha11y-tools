@@ -20,6 +20,7 @@ javascript: (() => {
     const colorFail = "#f90";
     let outlineColor = !!accessible ? colorPass : colorFail;
     element.style.setProperty("outline", outlineColor + " solid 8px", "important");
+    element.style.setProperty("border", "2px solid " + outlineColor, "important");
 
     // TODO: use filters to indicate pass/fail, for when outlines arent' visible?
     //let filter = !!accessible ? "grayscale(100%)" : "sepia(100%)";
