@@ -25,6 +25,6 @@ When run, the bookmarklet returns accessibility information three ways:
 
 - [alt attribute decision tree](https://www.w3.org/WAI/tutorials/images/decision-tree/)
 - [Accessible SVG patterns](https://www.smashingmagazine.com/2021/05/accessible-svg-patterns-comparison/)
-- [Comparison of SVG a11y tests methods](https://weboverhauls.github.io/demos/svg/)
+- [Comparison of SVG a11y tests](https://weboverhauls.github.io/demos/svg/)
 - [JS minifier for creating quick local bookmarklet](https://www.toptal.com/developers/javascript-minifier)
 - [Accessing lit components with renderRoot](https://lit.dev/docs/components/shadow-dom/)
