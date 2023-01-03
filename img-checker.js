@@ -107,7 +107,6 @@ javascript: (() => {
       return !!hid;
     }
 
-    log("Checking if element is hidden");
     let hidden = isHidden(element);
     log("Hidden from asst. tech: " + !!hidden);
 
