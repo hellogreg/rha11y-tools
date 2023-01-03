@@ -156,10 +156,16 @@ javascript: (() => {
     function hasAriaLabelledby(s) {
       function getAriaLabelledbyValue(id) {
         let value = "";
+
+        // See if the aria-labelledby element is within the SVG itself.
         value = value || s.getElementById(id) ? s.getElementById(id).textContent : null;
+
+        // See if the aria-labelledby element is elsewhere in the page (excepting shadoRoots).
         value =
           value || document.getElementById(id) ? document.getElementById(id).textContent : null;
+
         // TODO: Also check shadowRoots for getElementById.
+
         return value;
       }
 
@@ -176,7 +182,12 @@ javascript: (() => {
         log("aria-labelledby value: " + ariaLabelledbyValue);
       }
 
-      return !!hasAriaLabelledbyValue;
+      // TODO: We're currently returning true if there's an aria-labelledby attribute at all.
+      // But we should check to make sure it has a valid id and value.
+      // Once hasAriaLabelledbyValue() can check shadowRoots, we should use the following:
+      // return !!hasAriaLabelledbyValue;
+      // But for now, we're using this:
+      return !!hasAriaLabelledby;
     }
 
     log("Checking if inline svg is accessible");
