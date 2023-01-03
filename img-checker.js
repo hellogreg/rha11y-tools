@@ -2,9 +2,10 @@ javascript: (() => {
   const outputMessagesDefault = true;
   let outputMessages = outputMessagesDefault;
 
-  let output = console.log.bind(window.console);
-  output("testing output(), aka log() with line numbers...");
+  const log = console.log.bind(window.console);
+  log("testing output(), aka log() with line numbers...");
 
+  /*
   function log(m) {
     if (outputMessages) {
       m = m !== undefined ? m : "-----------------";
@@ -17,6 +18,7 @@ javascript: (() => {
       console.dir(m);
     }
   }
+  */
 
   function outputA11yResults(element, accessible) {
     const colorPass = "#09f";
@@ -122,7 +124,6 @@ javascript: (() => {
     const imgId = !!img.id ? img.id : "[unspecified]";
     log("src: " + imgSrc);
     log("id: " + imgId);
-    //dir(img);
 
     let isAccessible = !!(hasAltAttribute(img) || isElementHidden(img));
     log("Image is accessible: " + isAccessible);
