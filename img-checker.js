@@ -282,11 +282,9 @@ javascript: (() => {
   }
 
   (function init() {
-    setTimeout(() => {
-      log("Initiating image test bookmarklet.");
-      log();
-      findAndTestNonShadowImages();
-      findAndTestShadowImages();
-    }, 0); // Can set delay in testing
+    log("Initiating image test bookmarklet.");
+    log();
+    findAndTestNonShadowImages();
+    findAndTestShadowImages();
   })();
 })();
