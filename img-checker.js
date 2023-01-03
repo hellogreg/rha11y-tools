@@ -20,6 +20,7 @@ javascript: (() => {
   }
   */
 
+  // Display the test results: outline around image and data-a11y attribute in element
   function outputA11yResults(element, accessible) {
     const colorPass = "#09f";
     const colorFail = "#f90";
@@ -30,7 +31,7 @@ javascript: (() => {
     // However, unlike outline, border will affect layout by a few pixels per image.
     // element.style.setProperty("border", "2px solid " + outlineColor, "important");
 
-    // TODO: use filters to indicate pass/fail, for when outlines arent' visible?
+    // TODO: maybe use filters to indicate pass/fail when outlines arent' visible?
     // let filter = !!accessible ? "grayscale(100%)" : "sepia(100%)";
     // element.style.setProperty("filter", filter, "important");
 
@@ -40,6 +41,7 @@ javascript: (() => {
     element.setAttribute("data-a11y", "Accessible: " + !!accessible);
   }
 
+  // Test whether an <img> element has an alt attribute, even if it's null
   function hasAltAttribute(img) {
     const hasAlt = !!img.hasAttribute("alt");
     log("Has alt attribute: " + hasAlt);
@@ -50,7 +52,7 @@ javascript: (() => {
     return !!hasAlt;
   }
 
-  // Test all ways elements can be hidden from assistive tech...
+  // Test all the ways elements can be hidden from assistive tech.
   function isElementHidden(element) {
     function isHidden(el) {
       let hid;
@@ -92,6 +94,7 @@ javascript: (() => {
       return !!hid;
     }
 
+    // Test if any of the element's parent elements are hidden, thus hiding the element
     function areAnyParentsHidden(el) {
       let hid;
       let parent = el.parentNode;
@@ -117,6 +120,7 @@ javascript: (() => {
     return !!hidden;
   }
 
+  // Test if an image is accessible (has alt or is hidden)
   function checkImgA11y(img) {
     log("Checking if image is accessible");
 
@@ -129,9 +133,10 @@ javascript: (() => {
     log("Image is accessible: " + isAccessible);
     outputA11yResults(img, isAccessible);
 
-    log("------------------");
+    log("------------------------");
   }
 
+  // Test if an svg is accessible (has an accessible name/role or is hidden)
   function checkSvgA11y(svg) {
     function hasTitle(s) {
       let title = s.querySelector("svg > title");
@@ -214,7 +219,7 @@ javascript: (() => {
     log("svg is accessible: " + isAccessible);
     outputA11yResults(svg, isAccessible);
 
-    log("------------------");
+    log("------------------------");
   }
 
   function findAndTestNonShadowImages() {
@@ -293,7 +298,7 @@ javascript: (() => {
 
   (function init() {
     log("Initiating image test bookmarklet.");
-    log("------------------");
+    log("------------------------");
     findAndTestNonShadowImages();
     findAndTestShadowImages();
   })();
