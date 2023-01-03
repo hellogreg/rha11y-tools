@@ -150,7 +150,7 @@ javascript: (() => {
 
     function hasImgRole(s) {
       let hasImgRole = s.getAttribute("role") === "img";
-      log("Has role='img': " + !!hasImgRole);
+      log("Has role=img: " + !!hasImgRole);
       return !!hasImgRole;
     }
 
