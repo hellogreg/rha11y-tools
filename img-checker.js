@@ -194,7 +194,7 @@ javascript: (() => {
 
     let isAccessible = false;
     let svgId = !!svg.id ? svg.id : "[unspecified]";
-    log("id: " + imgId);
+    log("id: " + svgId);
 
     isAccessible = !!(hasTitle(svg) && hasImgRole(svg));
     isAccessible = isAccessible || !!hasAriaLabel(svg);
