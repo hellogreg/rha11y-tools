@@ -10,18 +10,27 @@
     <script src="img-components.js"></script>
   </head>
   <body>
-    <h1>A11y image tests</h1>
-    <p>Drag the following link to your bookmarks bar for testing.</p>
+    <h1>Testing images with the Rhally-img bookmarklet</h1>
+    <a href="https://github.com/hellogreg/rha11y-img">GitHub link to this project</a>
+    <h2>Using the bookmarklet</h2>
     <p>
-      <a
-        href='javascript: (function () {var bookletCode = document.createElement("script");bookletCode.setAttribute("src", "https://rha11y-tools.netlify.app/bookmarklets/img-checker/img-checker.js");document.body.appendChild(bookletCode);})();'
-        >Rha11y-img</a
+      To get the bookmarklet, drag the following link to your bookmarks bar. You may also click the
+      link directly to use it on this page for testing.
+    </p>
+    <p>
+      <strong
+        ><a
+          href='javascript: (function () {var bookletCode = document.createElement("script");bookletCode.setAttribute("src", "https://rha11y-img.netlify.app/img-checker.js");document.body.appendChild(bookletCode);})();'
+          >Rha11y-img</a
+        ></strong
       >
     </p>
     <p>
       This bookmarklet loads the current production version of the img-checker script every time you
-      run it. (We may have to include a full, non-remote-loading version here for testing on pages
-      that don't allow remote scripts.)
+      run it. (<em
+        >Note: we may have to include a full, non-remote-loading version here for testing on pages
+        that don't allow remote scripts.</em
+      >)
     </p>
     <!--
     <p>
@@ -30,22 +39,29 @@
       bookmarklet, but it won't update automatically. You may want to check back here on occasion.
     </p>
     <p>
-      <ahref='javascript:'>Rhally-img (local)</a>
+      <a href='javascript:'>Rhally-img (local)</a>
     </p>
     -->
-    <h2>Results</h2>
     <p>
-      For testing, the script automatically runs when this page is loaded. It identifies all images
-      on the page and outlines them based on whether they pass or fail accessibility checks.
-      Detailed results are available in the browser console. And inspecting the image now includes
-      an attribute, <strong>data-a11y</strong>, indicating whether the image passed or failed (for
-      testers who can't rely on outlines and color).
+      When run, the bookmarklet identifies all images on a page and returns accessibility
+      information three ways:
     </p>
-    <ul>
-      <li>Blue outline: passes a11y check</li>
-      <li>Orange outline: fails a11y check</li>
-      <li>No outline: image not identified/tested</li>
-    </ul>
+
+    <ol>
+      <li>
+        All identified images on the page are given 8px outlines. <strong>Blue</strong> outlines
+        mean an image passed accessibility checks. <strong>Orange</strong> indicate that an image
+        failed. No outline means the image was not identified.
+      </li>
+      <li>
+        Detailed accessibility test processes and results are displayed in the browser console.
+      </li>
+      <li>
+        Inspecting an image shows a <strong>data-ally</strong> attribute with info on the element's
+        accessibility. (Currently, the attribute just says whether the image is accessible, but
+        giving more details is on the to-do list.)
+      </li>
+    </ol>
     <h2>Inline SVGs</h2>
     <div class="cards">
       <div>
@@ -187,14 +203,14 @@
         <ul>
           <li>Has no alt</li>
           <li>Not hidden from AT</li>
-          <li>AT-hidden parent</li>
+          <li>Has hidden parent</li>
           <li>Should <strong>pass</strong></li>
         </ul>
       </div>
       <div>
         <img src="testimg.jpg?test=img03" alt />
         <ul>
-          <li>Empty alt</li>
+          <li>Has alt (null)</li>
           <li>Not hidden from AT</li>
           <li>No hidden parent</li>
           <li>Should <strong>pass</strong></li>
@@ -203,7 +219,7 @@
       <div>
         <img src="testimg.jpg?test=img04" alt="People computing" />
         <ul>
-          <li>alt with value</li>
+          <li>Has alt (with value)</li>
           <li>Not hidden from AT</li>
           <li>No hidden parent</li>
           <li>Should <strong>pass</strong></li>
@@ -242,7 +258,7 @@
       <div>
         <img src="testsvg.svg?test=svg03" alt />
         <ul>
-          <li>Empty alt</li>
+          <li>Has alt (null)</li>
           <li>Not hidden from AT</li>
           <li>No hidden parent</li>
           <li>Should <strong>pass</strong></li>
@@ -251,7 +267,7 @@
       <div>
         <img src="testsvg.svg?test=svg04" alt="People computing" />
         <ul>
-          <li>alt with value</li>
+          <li>Has alt (with value)</li>
           <li>Not hidden from AT</li>
           <li>No hidden parent</li>
           <li>Should <strong>pass</strong></li>
@@ -292,6 +308,6 @@
         </ul>
       </div>
     </div>
-    <script src="img-checker.js"></script>
+    <!--script src="img-checker.js"></script-->
   </body>
 </html>
