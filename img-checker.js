@@ -34,7 +34,7 @@ javascript: (() => {
       const altValue = img.getAttribute("alt") || "[decorative]";
       log("Image alt value: " + altValue);
     }
-    return hasAlt;
+    return !!hasAlt;
   }
 
   // Test all ways elements can be hidden from assistive tech...
@@ -88,7 +88,7 @@ javascript: (() => {
         parent = parent.parentNode;
       }
 
-      return hid;
+      return !!hid;
     }
 
     log("Checking if element is hidden");
@@ -146,7 +146,7 @@ javascript: (() => {
         log("aria-label: " + ariaLabel);
       }
 
-      return hasAriaLabel;
+      return !!hasAriaLabel;
     }
 
     function hasAriaLabelledby(s) {
@@ -172,7 +172,7 @@ javascript: (() => {
         log("aria-labelledby value: " + ariaLabelledbyValue);
       }
 
-      return hasAriaLabelledbyValue;
+      return !!hasAriaLabelledbyValue;
     }
 
     log("Checking if inline svg is accessible");
