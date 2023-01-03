@@ -2,6 +2,9 @@ javascript: (() => {
   const outputMessagesDefault = true;
   let outputMessages = outputMessagesDefault;
 
+  let output = console.log.bind(window.console);
+  output("testing output(), aka log() with line numbers...");
+
   function log(m) {
     if (outputMessages) {
       m = m !== undefined ? m : "-----------------";
