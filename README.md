@@ -14,9 +14,9 @@ When run, the bookmarklet returns accessibility information three ways:
 
 ## To-do list (as of 1/3/23)
 
-- Determine if parents of shadowroot elements are hidden.
-- Investigate why some images aren't identified (e.g., search magnifier at redhat.com).
-- Investigate why occasional images have an outline color other than the bookmarklet's pass/fail colors (e.g., the globe in the redhat.com footer). Is there somehow an outline with more specificity than an inline style with "!important"?
+- Determine if parents of shadowroot elements are hidden. (e.g., the topnav icons at [redhat.com](https://www.redhat.com/en) fail because pfe-icon isn't properly identified as hidden)
+- Ensure all images are identified. (e.g., the search magnifier at [redhat.com](https://www.redhat.com/en) wasn't until the latest versions, but there could be others)
+- Investigate why occasional images have an outline color other than the bookmarklet's pass/fail colors (e.g., the globe in the [redhat.com](https://www.redhat.com/en) footer). Is there somehow an outline with more specificity than an inline style with "!important"?
 - Find associated aria-labelledby ids in shadowroots. (Currently, we can locate them in the regular DOM and as children of the tested element. But the element could be elsewhere.)
 - Should all inline SVGs be required to have role="img"? Currently, we're requiring it for SVGs with title elements, but not aria-label/labelledby attributes.
 - Do we need to account for non-img/svg elements with role="img"?
