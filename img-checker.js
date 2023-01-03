@@ -159,7 +159,7 @@ javascript: (() => {
         value = value || s.getElementById(id) ? s.getElementById(id).textContent : null;
         value =
           value || document.getElementById(id) ? document.getElementById(id).textContent : null;
-        // TODO: Also check shadowroots for getElementById.
+        // TODO: Also check shadowRoots for getElementById.
         return value;
       }
 
@@ -209,7 +209,7 @@ javascript: (() => {
     }
   }
 
-  // Get every img and svg that's in a shadowRoot.
+  // Get all imgs and svgs in top-level and nested shadowRoots.
   function findAndTestShadowImages() {
     function findNestedShadowRoots(sr, i) {
       i = i + 1 || 1;
@@ -224,12 +224,14 @@ javascript: (() => {
               shadowChild.lastElementChild.localName
           );
 
+          // Get all svgs in nested shadowRoot
           const svgs = shadowChild.querySelectorAll("svg");
           for (const svg of svgs) {
             log("Found svg in level " + i + " shadowRoot");
             checkImgA11y(svg);
           }
 
+          // Get all imgs in nested shadowRoot
           const imgs = shadowChild.querySelectorAll("img");
           for (const img of imgs) {
             log("Found img in level " + i + " shadowRoot");
@@ -242,6 +244,7 @@ javascript: (() => {
       }
     }
 
+    // Get all elements on page and then check to see if they have shadowRoots
     const nodes = document.querySelectorAll("*");
     for (const node of nodes) {
       const shadowNode = node.shadowRoot;
@@ -249,14 +252,14 @@ javascript: (() => {
         log("Found a top-level shadowRoot: " + shadowNode.lastElementChild.localName);
         findNestedShadowRoots(shadowNode);
 
-        // Get all shadow svgs
+        // Get all svgs in top-level shadowRoot
         const svgs = node.shadowRoot.querySelectorAll("svg");
         for (const svg of svgs) {
           log("Found svg in top-level shadowRoot");
           checkSvgA11y(svg);
         }
 
-        // Get all shadow imgs
+        // Get all imgs in top-level shadowRoot
         const imgs = shadowNode.querySelectorAll("img");
         for (const img of imgs) {
           log("Found img in top-level shadowRoot");
