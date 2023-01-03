@@ -23,11 +23,11 @@ javascript: (() => {
 
     // TODO: We can use border for images that are in containers that block outlines visibility.
     // However, unlike outline, border will affect layout by a few pixels per image.
-    // element.style.setProperty("border", "2px solid " + outlineColor, "important");
+    element.style.setProperty("border", "2px solid " + outlineColor, "important");
 
     // TODO: use filters to indicate pass/fail, for when outlines arent' visible?
-    //let filter = !!accessible ? "grayscale(100%)" : "sepia(100%)";
-    //element.style.setProperty("filter", filter, "important");
+    // let filter = !!accessible ? "grayscale(100%)" : "sepia(100%)";
+    // element.style.setProperty("filter", filter, "important");
 
     // Add a data-a11y attribute to the element.
     // This attribute lists test results for someone inspecting the element.
