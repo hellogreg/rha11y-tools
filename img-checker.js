@@ -97,7 +97,7 @@ javascript: (() => {
 
     log("Checking if element is hidden");
     let hidden = isHidden(element);
-    log("Image hidden from AT: " + !!hidden);
+    log("Hidden from asst. tech: " + !!hidden);
 
     if (!hidden) {
       log("Checking if any parents are hidden");
@@ -118,7 +118,7 @@ javascript: (() => {
     //dir(img);
 
     let isAccessible = !!(hasAltAttribute(img) || isElementHidden(img));
-    log("image is accessible: " + isAccessible);
+    log("Image is accessible: " + isAccessible);
     outputA11yResults(img, isAccessible);
 
     log();
