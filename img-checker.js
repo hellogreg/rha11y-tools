@@ -20,7 +20,10 @@ javascript: (() => {
     const colorFail = "#f90";
     let outlineColor = !!accessible ? colorPass : colorFail;
     element.style.setProperty("outline", outlineColor + " solid 8px", "important");
-    element.style.setProperty("border", "2px solid " + outlineColor, "important");
+
+    // TODO: We can use border for images that are in containers that block outlines visibility.
+    // However, unlike outline, border will affect layout by a few pixels per image.
+    // element.style.setProperty("border", "2px solid " + outlineColor, "important");
 
     // TODO: use filters to indicate pass/fail, for when outlines arent' visible?
     //let filter = !!accessible ? "grayscale(100%)" : "sepia(100%)";
@@ -48,10 +51,10 @@ javascript: (() => {
       let hid;
       log("Checking if " + el.nodeName + " is hidden");
 
-      // We use try/catch blocks because web components may fail to execute tests.
-
       // Check for hidden attribute
       hid = hid || !!el.hidden;
+
+      // We use try/catch blocks below because web components may fail to execute tests.
 
       // Check for aria-hidden="true" and role="presentation"
       try {
@@ -61,7 +64,7 @@ javascript: (() => {
       } catch (e) {
         hid = hid || !!el.ariaHidden;
         log("aria-hidden: " + !!el.ariaHidden);
-        log("Can't test " + el.nodeName + " for aria-hidden attribute.");
+        log("Can't test " + el.nodeName + " for aria-hidden with getAttribute().");
       }
 
       // Check for role="presentation"
