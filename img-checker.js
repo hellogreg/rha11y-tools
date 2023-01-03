@@ -116,7 +116,7 @@ javascript: (() => {
     log("Checking if image is accessible");
 
     let imgSrc = !!img.src ? img.src : "[unspecified]";
-    let imgId = !!img.id ? img.id : "[unspecified]";
+    const imgId = !!img.id ? img.id : "[unspecified]";
     log("src: " + imgSrc);
     log("id: " + imgId);
     //dir(img);
@@ -199,7 +199,7 @@ javascript: (() => {
     log("Checking if inline svg is accessible");
 
     let isAccessible = false;
-    let svgId = !!svg.id ? svg.id : "[unspecified]";
+    const svgId = !!svg.id ? svg.id : "[unspecified]";
     log("id: " + svgId);
 
     isAccessible = !!(hasTitle(svg) && hasImgRole(svg));
