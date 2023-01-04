@@ -227,13 +227,16 @@ javascript: (() => {
   }
 
   // Fade background images to indicate they are not tested
-  function fadeBackgroundImage(n) {
-    // Only fade images with a url, and not just colors/gradients
-    if (n.style.backgroundImage.match("url")) {
-      let bgImage = n.style.backgroundImage;
-      //n.style.setProperty("background-image", "none");
-      n.style.setProperty("background-color", "#fffd");
-      n.style.setProperty("background-blend-mode", "color");
+  function fadeBackgroundImages() {
+    const nodes = document.querySelectorAll("*");
+    for (const node of nodes) {
+      // Only fade images with a url, and not just colors/gradients
+      if (node.style.backgroundImage.match("url")) {
+        let bgImage = node.style.backgroundImage;
+        //node.style.setProperty("background-image", "none");
+        node.style.setProperty("background-color", "#fffd");
+        node.style.setProperty("background-blend-mode", "color");
+      }
     }
   }
 
@@ -289,8 +292,6 @@ javascript: (() => {
     // Get all elements on page and then check to see if they have shadowRoots
     const nodes = document.querySelectorAll("*");
     for (const node of nodes) {
-      fadeBackgroundImage(node);
-
       const shadowNode = node.shadowRoot;
       if (shadowNode) {
         log("Found a top-level shadowRoot: " + shadowNode.lastElementChild.localName);
