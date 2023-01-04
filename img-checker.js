@@ -100,7 +100,8 @@ javascript: (() => {
       let parent = el.parentNode;
       // To test for web component parent: parent.nodeType !== 11 {
       while (!hid && parent && parent.nodeName !== "BODY" && parent.nodeName) {
-        log("PARENT");
+        log("Parent:");
+        /*
         if (parent.tagName && parent.tagName === "A") {
           log("LINK: !+!+!+!+!+!+!+!+!+!++!+!+!+!+!+!+!+!++!+!+!+!+!+!+!+!+!+!+!+!+");
           log("LINK: !+!+!+!+!+!+!+!+!+!++!+!+!+!+!+!+!+!++!+!+!+!+!+!+!+!+!+!+!+!+");
@@ -108,6 +109,7 @@ javascript: (() => {
           log("LINK: !+!+!+!+!+!+!+!+!+!++!+!+!+!+!+!+!+!++!+!+!+!+!+!+!+!+!+!+!+!+");
           log("LINK: !+!+!+!+!+!+!+!+!+!++!+!+!+!+!+!+!+!++!+!+!+!+!+!+!+!+!+!+!+!+");
         }
+        */
         console.dir(parent);
         hid = hid || isHidden(parent);
         parent = parent.parentNode;
@@ -268,7 +270,6 @@ javascript: (() => {
       for (const node of nodes) {
         const shadowChild = node.shadowRoot;
         if (shadowChild) {
-          console.dir(shadowChild);
           log(
             "Found a shadow child (nesting level " +
               i +
