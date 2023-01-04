@@ -292,7 +292,7 @@ javascript: (() => {
               "linear-gradient(white, white),url('" + bgUrl + "')"
             );
 */
-            n.style.setProperty("background-color", "#fffa");
+            n.style.setProperty("background-color", "#fffe");
             n.style.setProperty("background-blend-mode", "color");
           }
         }
