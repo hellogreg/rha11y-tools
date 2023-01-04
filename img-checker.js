@@ -285,7 +285,7 @@ javascript: (() => {
           var bgUrl = bgImage.slice(5, -2) || false;
           if (!!bgUrl) {
             log("BG URL: " + bgUrl);
-            bgImage = "none";
+            n.style.setProperty("background-image", "none");
             /*
             n.style.setProperty(
               "background-image",
@@ -297,8 +297,6 @@ javascript: (() => {
             n.style.setProperty("background-blend-mode", "saturation");
 
             */
-          } else {
-            bgImage = "none";
           }
         }
       }
