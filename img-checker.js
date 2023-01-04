@@ -30,8 +30,6 @@ javascript: (() => {
     // Remove any current filters on the element, because they affect outline color, too.
     element.style.setProperty("filter", "initial", "important");
 
-    element.style.setProperty("z-index", "999", "important");
-
     // TODO: We can use border for images that are in containers that block outlines visibility.
     // However, unlike outline, border will affect layout by a few pixels per image.
     // element.style.setProperty("border", "2px solid " + outlineColor, "important");
