@@ -100,10 +100,10 @@ javascript: (() => {
       let parent = el.parentNode;
       // To test for web component parent: parent.nodeType !== 11 {
       while (!hid && parent && parent.nodeName !== "BODY" && parent.nodeName) {
-        hid = hid || isHidden(parent);
-        parent = parent.parentNode;
         log("PARENT");
         console.dir(parent);
+        hid = hid || isHidden(parent);
+        parent = parent.parentNode;
       }
 
       return !!hid;
