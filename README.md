@@ -16,7 +16,7 @@ When run, the bookmarklet returns accessibility information three ways:
 
 - Determine if parents of shadowroot elements are hidden. (e.g., the topnav icons at [redhat.com](https://www.redhat.com/en) fail because pfe-icon isn't properly identified as hidden)
 - Ensure all images are identified and outlines are visible. (e.g., the Recommended for you images at [redhat.com](https://www.redhat.com/en) are located, but the outline isn't visible--perhaps because the images are contained in another element of their exact height/width)
-- Investigate why occasional images have an outline color other than the bookmarklet's pass/fail colors (e.g., the globe in the [redhat.com](https://www.redhat.com/en) footer). Looks like CSS filters are being used!
+- ~~Investigate why occasional images have an outline color other than the bookmarklet's pass/fail colors (e.g., the globe in the [redhat.com](https://www.redhat.com/en) footer).~~ **Solved 1/4/22: Looks like this was a result of CSS filters being used; we now reset them to initial.**
 - Find associated aria-labelledby ids in shadowroots. (Currently, we can locate them in the regular DOM and as children of the tested element. But the element could be elsewhere.)
 - Should all inline SVGs be required to have role="img"? Currently, we're requiring it for SVGs with title elements, but not aria-label/labelledby attributes.
 - Do we need to account for non-img/svg elements with role="img"?
