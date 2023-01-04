@@ -22,8 +22,8 @@ javascript: (() => {
 
   // Display the test results: outline around image and data-a11y attribute in element
   function outputA11yResults(element, accessible) {
-    const colorPass = "#09fa";
-    const colorFail = "#f90a";
+    const colorPass = "#09fd";
+    const colorFail = "#f90d";
     let outlineColor = !!accessible ? colorPass : colorFail;
     element.style.setProperty("outline", outlineColor + " solid 8px", "important");
     element.style.setProperty("outline-offset", "-4px", "important");
