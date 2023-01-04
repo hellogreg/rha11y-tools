@@ -22,29 +22,23 @@ javascript: (() => {
 
   // Display the test results: outline around image and data-a11y attribute in element
   function outputA11yResults(element, accessible) {
+    // Add a data-a11y attribute to the element.
+    // This attribute lists test results for someone inspecting the element.
+    // TODO: Add more detail to the results.
+    //
+    element.setAttribute("data-a11y", "Accessible: " + !!accessible);
+
+    // Outline the image with the pass/fail color.
+    //
     const colorPass = "#09fd";
     const colorFail = "#f90d";
     let outlineColor = !!accessible ? colorPass : colorFail;
     element.style.setProperty("outline", outlineColor + " solid 8px", "important");
     element.style.setProperty("outline-offset", "-2px", "important");
     element.style.setProperty("border-radius", "2px", "important");
-    //element.style.setProperty("border", "4px solid " + outlineColor, "important");
 
     // Remove any current filters on the element, because they affect outline color, too.
     element.style.setProperty("filter", "initial", "important");
-
-    // TODO: We can use border for images that are in containers that block outlines visibility.
-    // However, unlike outline, border will affect layout by a few pixels per image.
-    // element.style.setProperty("border", "2px solid " + outlineColor, "important");
-
-    // TODO: maybe use filters to indicate pass/fail when outlines arent' visible?
-    // let filter = !!accessible ? "grayscale(100%)" : "sepia(100%)";
-    // element.style.setProperty("filter", filter, "important");
-
-    // Add a data-a11y attribute to the element.
-    // This attribute lists test results for someone inspecting the element.
-    // TODO: Add more detail to the results.
-    element.setAttribute("data-a11y", "Accessible: " + !!accessible);
   }
 
   // Test whether an <img> element has an alt attribute, even if it's null
