@@ -111,7 +111,6 @@ javascript: (() => {
         console.dir(parent);
         hid = hid || isHidden(parent);
         parent = parent.parentNode;
-        console.dir(parentNode);
       }
 
       return !!hid;
