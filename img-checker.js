@@ -293,7 +293,7 @@ javascript: (() => {
             );
 */
             n.style.setProperty("background-color", "#fff");
-            n.style.setProperty("background-blend-mode", "color");
+            n.style.setProperty("background-blend-mode", "difference");
           }
         }
       }
