@@ -285,16 +285,18 @@ javascript: (() => {
           var bgUrl = bgImage.slice(5, -2) || false;
           if (!!bgUrl) {
             log("BG URL: " + bgUrl);
+            bgImage = "none";
             /*
             n.style.setProperty(
               "background-image",
               "linear-gradient(white, white),url('" + bgUrl + "')"
             );
-            */
+
             n.style.setProperty("background-color", "#fff");
             n.style.setProperty("background-size", "cover");
             n.style.setProperty("background-blend-mode", "saturation");
-            //bgImage = "none";
+
+            */
           } else {
             bgImage = "none";
           }
