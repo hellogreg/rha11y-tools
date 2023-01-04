@@ -102,6 +102,8 @@ javascript: (() => {
       while (!hid && parent && parent.nodeName !== "BODY" && parent.nodeName) {
         hid = hid || isHidden(parent);
         parent = parent.parentNode;
+        log("PARENT");
+        console.dir(parent);
       }
 
       return !!hid;
