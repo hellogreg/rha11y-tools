@@ -21,7 +21,7 @@ When run, the bookmarklet returns accessibility information three ways:
 - Find associated aria-labelledby ids in shadowroots. (Currently, we can locate them in the regular DOM and as children of the tested element. But the element could be elsewhere.)
 - Should all inline SVGs be required to have role="img"? Currently, we're requiring it for SVGs with title elements, but not aria-label/labelledby attributes.
 - Do we need to account for non-img/svg elements with role="img"?
-- Handle background images somehow, to show they're different from other images. Maybe fade them out?
+- Handle background images somehow, to show they're different from other images. Should we hide them or fade them out a bit? Currently doing the latter.
 
 ### Resolved (as of 1/3/23)
 
