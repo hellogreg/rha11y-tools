@@ -280,7 +280,7 @@ javascript: (() => {
     for (const node of nodes) {
       function fadeBackgroundImage(n) {
         if (n.style.backgroundImage.match("url")) {
-          const bgImage = n.style.backgroundImage;
+          let bgImage = n.style.backgroundImage;
           log("BG IMAGE: " + bgImage);
           var bgUrl = bgImage.slice(5, -2) || false;
           if (!!bgUrl) {
