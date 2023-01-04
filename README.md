@@ -25,7 +25,7 @@ Rha11y-img (hopefully) identifies images that other tools can't and runs tests t
 - Some tools have difficulty locating all images in the Shadow DOM, particularly when nested more than one level deep.
 - Most other tools don't run full tests on inline SVGs, ensuring that they have accessible names and/or are hidden from assistive tech.
 
-Rha11y finds and tests images in the following order:
+The bookmarklet finds and tests images in the following order:
 
 1. Inline SVGs (&lt;svg&gt;) in the regular DOM
 2. External images (&lt;img&gt;) in the regular DOM
