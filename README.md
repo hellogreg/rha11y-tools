@@ -5,7 +5,7 @@ This bookmarklet identifies all external images (&lt;img&gt;) and inline SVGs (&
 When run, the bookmarklet returns accessibility information three ways:
 
 - All identified images on the page are given an 8px outline.
-  - Blue outline = image passed accessibility checks.
+  - Blue outline = image passed accessibility checks
   - Orange ouline = image failed
   - No outline = image not identified
   - Background images are faded/hidden and not tested
