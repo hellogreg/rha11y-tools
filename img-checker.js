@@ -102,7 +102,7 @@ javascript: (() => {
       while (!hid && parent && parent.nodeName !== "BODY" && parent.nodeName) {
         log("PARENT");
         if (parent.tagName && parent.tagName === "A") {
-          log("LINK: " + parent.href);
+          log("LINK: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + parent.href);
         }
         console.dir(parent);
         hid = hid || isHidden(parent);
