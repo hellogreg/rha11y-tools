@@ -25,7 +25,8 @@ javascript: (() => {
     const colorPass = "#09f";
     const colorFail = "#f90";
     let outlineColor = !!accessible ? colorPass : colorFail;
-    element.style.setProperty("outline", outlineColor + " solid 8px", "important");
+    element.style.setProperty("outline", outlineColor + " solid 4px", "important");
+    element.style.setProperty("border", "4px solid " + outlineColor, "important");
 
     // Remove any current filters on the element, because they affect outline color, too.
     element.style.setProperty("filter", "initial", "important");
