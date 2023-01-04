@@ -287,7 +287,7 @@ javascript: (() => {
             log("BG URL: " + bgUrl);
             n.style.setProperty(
               "background-image",
-              "linear-gradient(black, black),url('" + bgUrl + "');"
+              "linear-gradient(black, black),url('" + bgUrl + "')"
             );
             n.style.setProperty("background-size", "cover");
             n.style.setProperty("background-blend-mode", "saturation");
