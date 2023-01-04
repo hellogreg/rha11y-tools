@@ -50,9 +50,13 @@
 
       <ol>
         <li>
-          All identified images on the page are given 8px outlines. <strong>Blue</strong> outlines
-          mean an image passed accessibility checks. <strong>Orange</strong> outlines indicate that
-          an image failed. No outline means the image was not identified.
+          All identified and tested images on the page are given 8px outlines:
+          <ul>
+            <li>Blue outline = image passed accessibility checks</li>
+            <li>Orange outline = indicate that an image failed</li>
+            <li>No outline = image was not identified</li>
+            <li>Background images are faded to white, as they are not tested</li>
+          </ul>
         </li>
         <li>
           Detailed accessibility test processes and results are displayed in the browser console.
