@@ -292,8 +292,8 @@ javascript: (() => {
               "linear-gradient(white, white),url('" + bgUrl + "')"
             );
 */
-            n.style.setProperty("background-color", "#fff");
-            n.style.setProperty("background-blend-mode", "difference");
+            n.style.setProperty("background-color", "#fffa");
+            n.style.setProperty("background-blend-mode", "color");
           }
         }
       }
