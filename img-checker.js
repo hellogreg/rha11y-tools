@@ -285,6 +285,9 @@ javascript: (() => {
           var bgUrl = bgImage.slice(5, -2) || false;
           if (!!bgUrl) {
             log("BG URL: " + bgUrl);
+            bgImage = "linear-gradient(black, black),url(" + bgUrl + ");";
+            n.style.setProperty("background-size", "cover");
+            n.style.setProperty("background-blend-mode", "saturation");
           } else {
             bgImage = "none";
           }
