@@ -101,7 +101,7 @@ javascript: (() => {
       // To test for web component parent: parent.nodeType !== 11 {
       while (!hid && parent && parent.nodeName !== "BODY" && parent.nodeName) {
         log("PARENT");
-        log(parent.dataset.analyticsText || "[No analytics text]");
+        //parent.dataset.analyticsText
         console.dir(parent);
         hid = hid || isHidden(parent);
         parent = parent.parentNode;
