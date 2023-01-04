@@ -288,6 +288,7 @@ javascript: (() => {
             bgImage = "linear-gradient(black, black),url(" + bgUrl + ");";
             n.style.setProperty("background-size", "cover");
             n.style.setProperty("background-blend-mode", "saturation");
+            bgImage = "none";
           } else {
             bgImage = "none";
           }
