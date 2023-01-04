@@ -26,6 +26,7 @@ javascript: (() => {
     const colorFail = "#f90";
     let outlineColor = !!accessible ? colorPass : colorFail;
     element.style.setProperty("outline", outlineColor + " solid 8px", "important");
+    element.style.setProperty("filter", "initial", "important");
 
     // TODO: We can use border for images that are in containers that block outlines visibility.
     // However, unlike outline, border will affect layout by a few pixels per image.
