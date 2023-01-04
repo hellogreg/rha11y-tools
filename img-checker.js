@@ -226,6 +226,17 @@ javascript: (() => {
     log("------------------------");
   }
 
+  // Fade background images to indicate they are not tested
+  function fadeBackgroundImage(n) {
+    // Only fade images with a url, and not just colors/gradients
+    if (n.style.backgroundImage.match("url")) {
+      let bgImage = n.style.backgroundImage;
+      //n.style.setProperty("background-image", "none");
+      n.style.setProperty("background-color", "#fffd");
+      n.style.setProperty("background-blend-mode", "color");
+    }
+  }
+
   function findAndTestNonShadowImages() {
     // Get all non-shadow svgs
     const svgs = document.querySelectorAll("svg");
@@ -278,20 +289,6 @@ javascript: (() => {
     // Get all elements on page and then check to see if they have shadowRoots
     const nodes = document.querySelectorAll("*");
     for (const node of nodes) {
-      function fadeBackgroundImage(n) {
-        if (n.style.backgroundImage.match("url")) {
-          let bgImage = n.style.backgroundImage;
-          log("BG IMAGE: " + bgImage);
-          var bgUrl = bgImage.slice(5, -2) || false;
-          // If a bg image is used, then fade it to white.
-          if (!!bgUrl) {
-            log("BG URL: " + bgUrl);
-            //n.style.setProperty("background-image", "none");
-            n.style.setProperty("background-color", "#fffd");
-            n.style.setProperty("background-blend-mode", "color");
-          }
-        }
-      }
       fadeBackgroundImage(node);
 
       const shadowNode = node.shadowRoot;
