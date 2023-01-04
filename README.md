@@ -60,7 +60,7 @@ It ignores background images (and in fact fades them out, to give a visual clue 
 
 ### Resolved (as of 1/3/23)
 
-- ~~Ensure all outlines are visible. (e.g., the Recommended for you images at [redhat.com](https://www.redhat.com/en) are located, but the outline isn't visible--perhaps because the images are contained in another element of their exact height/width)~~ **Solved 1/4/22: Using ouline-offset allows us to inset the outline a bit, to make oulines visible on images inside same-height/width containers.**
+- ~~Ensure all outlines are visible. (e.g., the Recommended for you images at [redhat.com](https://www.redhat.com/en) are located, but the outline isn't visible--perhaps because the images are contained in another element of their exact height/width)~~ **Solved 1/4/22: Using outline-offset allows us to inset the outline a bit, to make oulines visible on images inside same-height/width containers.**
 - ~~Investigate why occasional images have an outline color other than the bookmarklet's pass/fail colors (e.g., the globe in the [redhat.com](https://www.redhat.com/en) footer).~~ **Solved 1/4/22: Looks like this was a result of CSS filters being used; we now reset them to initial.**
 
 ## Resources
