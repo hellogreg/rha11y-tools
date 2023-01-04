@@ -279,9 +279,12 @@ javascript: (() => {
     const nodes = document.querySelectorAll("*");
     for (const node of nodes) {
       function fadeBackgroundImage(n) {
-        if (n.style.backgroundImage.match("url") || n.style.background.match("url")) {
+        if (n.style.backgroundImage.match("url")) {
           n.style.backgroundImage = "none";
-          n.style.background = "none";
+
+          // "url('img_tree.png')"
+          //background-size: cover;
+          //background-blend-mode: saturation;
         }
       }
       fadeBackgroundImage(node);
