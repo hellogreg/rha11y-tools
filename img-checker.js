@@ -293,7 +293,7 @@ javascript: (() => {
             */
             n.style.setProperty("background-color", "#fff");
             n.style.setProperty("background-size", "cover");
-            n.style.setProperty("background-blend-mode", "multiply");
+            n.style.setProperty("background-blend-mode", "saturation");
             //bgImage = "none";
           } else {
             bgImage = "none";
