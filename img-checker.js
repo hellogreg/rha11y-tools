@@ -285,18 +285,15 @@ javascript: (() => {
           var bgUrl = bgImage.slice(5, -2) || false;
           if (!!bgUrl) {
             log("BG URL: " + bgUrl);
-            n.style.setProperty("background-image", "none");
+            //n.style.setProperty("background-image", "none");
             /*
             n.style.setProperty(
               "background-image",
               "linear-gradient(white, white),url('" + bgUrl + "')"
             );
-
+*/
             n.style.setProperty("background-color", "#fff");
-            n.style.setProperty("background-size", "cover");
-            n.style.setProperty("background-blend-mode", "saturation");
-
-            */
+            n.style.setProperty("background-blend-mode", "color");
           }
         }
       }
