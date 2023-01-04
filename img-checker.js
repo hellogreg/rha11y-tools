@@ -101,11 +101,9 @@ javascript: (() => {
       // To test for web component parent: parent.nodeType !== 11 {
       while (!hid && parent && parent.nodeName !== "BODY" && parent.nodeName) {
         log("PARENT");
-        /*
-        if (parent.getAttribute("data-analytics-text")) {
-          log("DATATEXT!");
+        if (parent.tagName && parent.tagName === "A") {
+          log("LINKY!");
         }
-        */
         console.dir(parent);
         hid = hid || isHidden(parent);
         parent = parent.parentNode;
