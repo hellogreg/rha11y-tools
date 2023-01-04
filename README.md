@@ -37,12 +37,14 @@ The bookmarklet finds and tests images in the following order:
 
 It checks SVGs to see if:
 
-- They have an accessible name (via the role="img" attribute and title element, aria-label, or aria-labelledby) _-or-_
+- They have an accessible name (via the role="img" attribute and title element, aria-label, or aria-labelledby)
+  _-or-_
 - They (or any of their parents) are hidden from assistive technology
 
 It checks external images to ensure:
 
-- They have an alt attribute (with or a without a value) _-or-_
+- They have an alt attribute (with or a without a value)
+  _-or-_
 - They (or any of their parents) are hidden from assistive technology
 
 It ignores background images (and in fact fades them out, to give a visual clue that they aren't being tested).
