@@ -31,8 +31,8 @@ Rha11y finds and tests images in the following order:
 2. External images (&lt;img&gt;) in the regular DOM
 3. Inline SVGs in the top-level Shadow DOM
 4. External images in the top-level Shadow DOM
-5. Inline SVGs in the second-level Shadow DOM
-6. External images in the second-level Shadow DOM
+5. Inline SVGs in a nested second-level Shadow DOM
+6. External images in a nested second-level Shadow DOM
 7. ...and so on.
 
 It checks SVGs to see if:
