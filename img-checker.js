@@ -226,12 +226,13 @@ javascript: (() => {
     log("------------------------");
   }
 
-  // Fade background images to indicate they are not tested
+  // Fade out background images to indicate they are not tested
   function fadeBackgroundImages() {
     const nodes = document.querySelectorAll("*");
     for (const node of nodes) {
       // Only fade images with a url, and not just colors/gradients
       if (node.style.backgroundImage.match("url")) {
+        log("Background image found. They are not tested.");
         let bgImage = node.style.backgroundImage;
         //node.style.setProperty("background-image", "none");
         node.style.setProperty("background-color", "#fffd");
@@ -319,5 +320,6 @@ javascript: (() => {
     log("------------------------");
     findAndTestNonShadowImages();
     findAndTestShadowImages();
+    fadeBackgroundImages();
   })();
 })();
