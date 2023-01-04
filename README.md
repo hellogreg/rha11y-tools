@@ -1,10 +1,12 @@
 # Rha11y img-checker bookmarklet
 
+## Overview
+
 This bookmarklet identifies all external images (&lt;img&gt;) and inline SVGs (&lt;svg&gt;) on the page--including those in the Shadow DOM--and then evaluates them for accessibility: checking to see if they have accessible names and/or are hidden from assistive tech.
 
 When run, the bookmarklet returns accessibility information three ways:
 
-- All identified images on the page are given an 8px outline.
+- All identified foreground images on the page are given an 8px outline.
   - Blue outline = image passed accessibility checks
   - Orange ouline = image failed
   - No outline = image not identified
@@ -15,6 +17,35 @@ When run, the bookmarklet returns accessibility information three ways:
 ## Demo and latest version
 
 [View the demo page](https://rha11y-img.netlify.app/)
+
+## Features
+
+Rha11y-img (hopefully) identifies images that other tools can't and runs tests that they don't:
+
+- Some tools have difficulty locating all images in the Shadow DOM, particularly when nested more than one level deep.
+- Most other tools don't run full tests on inline SVGs, ensuring that they have accessible names and/or are hidden from assistive tech.
+
+Rha11y finds and tests images in the following order:
+
+1. Inline SVGs (&lt;svg&gt;) in the regular DOM
+2. External images (&lt;img&gt;) in the regular DOM
+3. Inline SVGs in the top-level Shadow DOM
+4. External images in the top-level Shadow DOM
+5. Inline SVGs in the second-level Shadow DOM
+6. External images in the second-level Shadow DOM
+7. ...and so on.
+
+It checks SVGs to see if:
+
+- They have an accessible name (via the role="img" attribute and title element, aria-label, or aria-labelledby) _-or-_
+- They (or any of their parents) are hidden from assistive technology
+
+It checks external images to ensure:
+
+- They have an alt attribute (with or a without a value) _-or-_
+- They (or any of their parents) are hidden from assistive technology
+
+It ignores background images (and in fact fades them out, to give a visual clue that they aren't being tested).
 
 ## To-do list
 
