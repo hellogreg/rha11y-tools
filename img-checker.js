@@ -282,7 +282,7 @@ javascript: (() => {
         if (n.style.backgroundImage.match("url")) {
           const bgImage = n.style.backgroundImage;
           log("BG IMAGE: " + bgImage);
-          var bgUrl = bgImage.slice(4, -1).replace(/["']/g, "") || false;
+          var bgUrl = bgImage.slice(5, -2) || false;
           if (!!bgUrl) {
             log("BG URL: " + bgUrl);
           } else {
