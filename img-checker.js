@@ -283,15 +283,10 @@ javascript: (() => {
           let bgImage = n.style.backgroundImage;
           log("BG IMAGE: " + bgImage);
           var bgUrl = bgImage.slice(5, -2) || false;
+          // If a bg image is used, then fade it to white.
           if (!!bgUrl) {
             log("BG URL: " + bgUrl);
             //n.style.setProperty("background-image", "none");
-            /*
-            n.style.setProperty(
-              "background-image",
-              "linear-gradient(white, white),url('" + bgUrl + "')"
-            );
-*/
             n.style.setProperty("background-color", "#fffd");
             n.style.setProperty("background-blend-mode", "color");
           }
