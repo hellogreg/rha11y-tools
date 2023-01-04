@@ -268,7 +268,7 @@ javascript: (() => {
       for (const node of nodes) {
         const shadowChild = node.shadowRoot;
         if (shadowChild) {
-          dir(shadowChild);
+          console.dir(shadowChild);
           log(
             "Found a shadow child (nesting level " +
               i +
