@@ -234,7 +234,14 @@ javascript: (() => {
       // Only fade images with a url, and not just colors/gradients
       if (node.style.backgroundImage.match("url")) {
         log("Background image found. They are not tested.");
-        let bgImage = node.style.backgroundImage;
+        // let bgImage = node.style.backgroundImage;
+        //node.style.setProperty("background-image", "none");
+        node.style.setProperty("background-color", "#fffd");
+        node.style.setProperty("background-blend-mode", "color");
+      }
+      if (node.style.background.match("url")) {
+        log("Background image found. They are not tested.");
+        // let bgImage = node.style.background;
         //node.style.setProperty("background-image", "none");
         node.style.setProperty("background-color", "#fffd");
         node.style.setProperty("background-blend-mode", "color");
