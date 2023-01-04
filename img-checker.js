@@ -278,6 +278,14 @@ javascript: (() => {
     // Get all elements on page and then check to see if they have shadowRoots
     const nodes = document.querySelectorAll("*");
     for (const node of nodes) {
+      function fadeBackgroundImage(n) {
+        if (n.style.backgroundImage.match("url") || n.style.background.match("url")) {
+          n.style.backgroundImage = "none";
+          n.style.background = "none";
+        }
+      }
+      fadeBackgroundImage(node);
+
       const shadowNode = node.shadowRoot;
       if (shadowNode) {
         log("Found a top-level shadowRoot: " + shadowNode.lastElementChild.localName);
