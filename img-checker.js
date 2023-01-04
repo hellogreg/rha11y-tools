@@ -280,8 +280,9 @@ javascript: (() => {
     for (const node of nodes) {
       function fadeBackgroundImage(n) {
         if (n.style.backgroundImage.match("url")) {
+          log("BG IMAGE: " + n.style.backgroundImage);
           n.style.backgroundImage = "none";
-
+          //var url = backgroundImage.slice(4, -1).replace(/["']/g, "");
           // "url('img_tree.png')"
           //background-size: cover;
           //background-blend-mode: saturation;
