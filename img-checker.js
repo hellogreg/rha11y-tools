@@ -96,7 +96,6 @@ javascript: (() => {
     function areAnyParentsHidden(el) {
       let hid;
       let parent = el.parentNode;
-      // To test for web component parent: parent.nodeType !== 11 {
       while (!hid && parent && parent.nodeName !== "BODY" && parent.nodeName) {
         log("Parent:");
         console.dir(parent);
@@ -311,6 +310,11 @@ javascript: (() => {
         }
 
         findNestedShadowRoots(shadowNode);
+
+        if (!svgs && !imgs) {
+          log("No images within");
+          log();
+        }
       }
     }
   }
