@@ -30,8 +30,11 @@ javascript: (() => {
     //
     const colorPass = "#09fd";
     const colorFail = "#f90d";
-    let outlineColor = !!accessible ? colorPass : colorFail;
-    element.style.setProperty("outline", outlineColor + " solid 8px", "important");
+    const outlineColor = !!accessible ? colorPass : colorFail;
+    const stylePass = "solid";
+    const styleFail = "dotted";
+    const outlineStyle = !!accessible ? stylePass : styleFail;
+    element.style.setProperty("outline", outlineColor + " outlineStyle " + +" 8px", "important");
     element.style.setProperty("outline-offset", "-4px", "important");
     element.style.setProperty("border-radius", "2px", "important");
 
