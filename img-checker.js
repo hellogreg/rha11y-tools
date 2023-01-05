@@ -134,7 +134,7 @@ javascript: (() => {
     log("Image is accessible: " + isAccessible);
     outputA11yResults(img, isAccessible);
 
-    log("------------------------");
+    log();
   }
 
   // Test if an svg is accessible (has an accessible name/role or is hidden)
@@ -220,7 +220,7 @@ javascript: (() => {
     log("svg is accessible: " + isAccessible);
     outputA11yResults(svg, isAccessible);
 
-    log("------------------------");
+    log();
   }
 
   // Fade out background images to indicate they are not tested
@@ -319,7 +319,7 @@ javascript: (() => {
 
   (function init() {
     log("Initiating image test bookmarklet.");
-    log("------------------------");
+    log();
     findAndTestNonShadowImages();
     findAndTestShadowImages();
     fadeBackgroundImages();
