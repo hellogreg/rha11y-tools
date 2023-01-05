@@ -57,6 +57,7 @@ It ignores background images (and in fact fades them out, to give a visual clue 
 - Find associated aria-labelledby ids in shadowroots. (Currently, we can locate them in the regular DOM and as children of the tested element. But the element could be elsewhere.)
 - Should all inline SVGs be required to have role="img"? Currently, we're requiring it for SVGs with title elements, but not aria-label/labelledby attributes.
 - Do we need to account for non-img/svg elements with role="img"? (Probably not, but maybe?)
+- Add more detail to the data-a11y attribute than just "Accessible: true/false."
 
 ### Resolved
 
