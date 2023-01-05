@@ -92,7 +92,6 @@ javascript: (() => {
       // If shadowRoot element, checks host for ariaHidden
       try {
         hid = hid || !!el.getRootNode().host.ariaHidden;
-        log("HIDDEN: " + !!el.getRootNode().host.ariaHidden);
       } catch (e) {
         log("Can't test " + el.nodeName + " for getRootNode().host.ariaHidden.");
       }
