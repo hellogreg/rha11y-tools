@@ -293,7 +293,7 @@ javascript: (() => {
       const shadowNode = node.shadowRoot;
       if (shadowNode) {
         log("Found a shadowRoot: " + shadowNode.lastElementChild.localName);
-        let hasContactSvg = shadowHtml.innerHTML.toLowerCase().includes("bubble");
+        let hasContactSvg = shadowNode.innerHTML.toLowerCase().includes("bubble");
         if (hasContactSvg) {
           log("+++\n+++\nCONTACT: " + hasContactSvg + "\n+++\n+++");
         }
