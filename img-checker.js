@@ -91,6 +91,7 @@ javascript: (() => {
 
       // If shadowRoot element, checks host for ariaHidden
       if (el.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+        log("Is DOCUMENT_FRAGMENT_NODE");
         try {
           hid = hid || !!el.getRootNode().host.ariaHidden;
         } catch (e) {
