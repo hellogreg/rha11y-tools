@@ -33,8 +33,8 @@ javascript: (() => {
     const outlineColor = !!accessible ? colorPass : colorFail;
     const stylePass = "solid";
     const styleFail = "dotted";
-    const outlineStyle = !!accessible ? stylePass : styleFail;
-    element.style.setProperty("outline", outlineColor + " " + outlineStyle + " 8px", "important");
+    const outlineStyle = !!accessible ? stylePass : styleFail; // Not using yet.
+    element.style.setProperty("outline", outlineColor + " solid 8px", "important");
     element.style.setProperty("outline-offset", "-4px", "important");
     element.style.setProperty("border-radius", "2px", "important");
 
