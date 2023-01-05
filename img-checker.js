@@ -97,7 +97,7 @@ javascript: (() => {
     // Test if any of the element's parent elements are hidden, thus hiding the element
     function areAnyParentsHidden(el) {
       let hid;
-      let parent = el.parentNode; // TODO: Account for shadow element here with getRootNode??
+      let parent = el.parentNode;
       while (
         !hid &&
         parent &&
