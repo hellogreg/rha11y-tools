@@ -89,6 +89,14 @@ javascript: (() => {
         log("Can't test " + el.nodeName + " for computed style.");
       }
 
+      // If shadowRoot element, checks host for ariaHidden
+      try {
+        hid = hid || !!el.getRootNode().host.ariaHidden;
+        log("HIDDEN: " + !!el.getRootNode().host.ariaHidden);
+      } catch (e) {
+        log("Can't test " + el.nodeName + " for getRootNode().host.ariaHidden.");
+      }
+
       // TODO: Any other ways it could be hidden?
 
       return !!hid;
@@ -101,19 +109,9 @@ javascript: (() => {
       // To test for web component parent: parent.nodeType !== 11 {
       while (!hid && parent && parent.nodeName !== "BODY" && parent.nodeName) {
         log("Parent:");
-        /*
-        if (parent.tagName && parent.tagName === "A") {
-          log("LINK: !+!+!+!+!+!+!+!+!+!++!+!+!+!+!+!+!+!++!+!+!+!+!+!+!+!+!+!+!+!+");
-          log("LINK: !+!+!+!+!+!+!+!+!+!++!+!+!+!+!+!+!+!++!+!+!+!+!+!+!+!+!+!+!+!+");
-          log(parent.href);
-          log("LINK: !+!+!+!+!+!+!+!+!+!++!+!+!+!+!+!+!+!++!+!+!+!+!+!+!+!+!+!+!+!+");
-          log("LINK: !+!+!+!+!+!+!+!+!+!++!+!+!+!+!+!+!+!++!+!+!+!+!+!+!+!+!+!+!+!+");
-        }
-        */
         console.dir(parent);
         hid = hid || isHidden(parent);
         parent = parent.parentNode;
-        //log(!!parent.shadowRoot);
       }
 
       return !!hid;
@@ -281,7 +279,7 @@ javascript: (() => {
           const svgs = shadowChild.querySelectorAll("svg");
           for (const svg of svgs) {
             log("Found svg in level " + i + " shadowRoot");
-            checkImgA11y(svg);
+            checkSvgA11y(svg);
           }
 
           // Get all imgs in nested shadowRoot
@@ -302,8 +300,7 @@ javascript: (() => {
     for (const node of nodes) {
       const shadowNode = node.shadowRoot;
       if (shadowNode) {
-        log("Found a top-level shadowRoot: " + shadowNode.lastElementChild.localName);
-        findNestedShadowRoots(shadowNode);
+        log("Found a shadowRoot: " + shadowNode.lastElementChild.localName);
 
         // Get all svgs in top-level shadowRoot
         const svgs = node.shadowRoot.querySelectorAll("svg");
@@ -318,6 +315,8 @@ javascript: (() => {
           log("Found img in top-level shadowRoot");
           checkImgA11y(img);
         }
+
+        findNestedShadowRoots(shadowNode);
       }
     }
   }
