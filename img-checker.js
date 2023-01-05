@@ -34,7 +34,7 @@ javascript: (() => {
     const stylePass = "solid";
     const styleFail = "dotted";
     const outlineStyle = !!accessible ? stylePass : styleFail;
-    element.style.setProperty("outline", outlineColor + " outlineStyle " + +" 8px", "important");
+    element.style.setProperty("outline", outlineColor + " " + outlineStyle + " 8px", "important");
     element.style.setProperty("outline-offset", "-4px", "important");
     element.style.setProperty("border-radius", "2px", "important");
 
