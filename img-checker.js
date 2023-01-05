@@ -67,26 +67,26 @@ javascript: (() => {
 
         let isAriaHidden = !!el.ariaHidden;
         hid = hid || isAriaHidden;
-        log("aria-hidden: " + isAriaHidden);
+        log(" - aria-hidden: " + isAriaHidden);
 
         let isHostAriaHidden = !!el.getRootNode().host.ariaHidden;
         hid = hid || isHostAriaHidden;
-        log("getRootNode().host.ariaHidden: " + isHostAriaHidden);
+        log(" - getRootNode().host.ariaHidden: " + isHostAriaHidden);
       } else {
         // If _not_ shadowRoot element, checks element for various ways to be hidden form AT
         log("Running isHidden() tests for non-shadow element " + el.nodeName + "...");
 
         let isAriaHidden = !!el.ariaHidden || el.getAttribute("aria-hidden") === "true";
         hid = hid || isAriaHidden;
-        log("aria-hidden: " + isAriaHidden);
+        log(" - aria-hidden: " + isAriaHidden);
 
         let hasRolePresentation = el.getAttribute("role") === "presentation";
         hid = hid || hasRolePresentation;
-        log("role=presentation: " + hasRolePresentation);
+        log(" - role=presentation: " + hasRolePresentation);
 
         let hasDisplayNone = getComputedStyle(el).display === "none";
         hid = hid || hasDisplayNone;
-        log("display:none: " + hasDisplayNone);
+        log(" - display:none: " + hasDisplayNone);
       }
 
       // TODO: Any other ways it could be hidden?
