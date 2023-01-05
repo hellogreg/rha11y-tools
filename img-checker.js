@@ -62,8 +62,8 @@ javascript: (() => {
       hid = hid || hasHiddenAttr;
       log(" - Has hidden attribute: " + hasHiddenAttr);
 
+      // Run tests specific to shadow and non-shadow elements
       if (el.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-        // If shadowRoot element, checks element and host for ariaHidden
         log("Running shadow-specific isHidden() tests");
 
         const isAriaHidden = !!el.ariaHidden;
@@ -74,7 +74,6 @@ javascript: (() => {
         hid = hid || isHostAriaHidden;
         log(" - getRootNode().host.ariaHidden: " + isHostAriaHidden);
       } else {
-        // If _not_ shadowRoot element, checks element for various ways to be hidden form AT
         log("Running non-shadow isHidden() tests");
 
         const hasDisplayNone = getComputedStyle(el).display === "none";
@@ -128,14 +127,14 @@ javascript: (() => {
     }
 
     let hidden = isHidden(element);
-    log("Hidden from asst. tech: " + !!hidden);
+    log("Element hidden from asst. tech: " + !!hidden);
 
     if (!hidden) {
       log("Checking if any parents are hidden");
       hidden = hidden || areAnyParentsHidden(element);
     }
 
-    log("Element or parent is hidden: " + hidden);
+    log("Either element or a parent is hidden: " + hidden);
     return !!hidden;
   }
 
