@@ -99,12 +99,30 @@ javascript: (() => {
     function areAnyParentsHidden(el) {
       let hid;
       let parent = el.parentNode;
-      while (!hid && parent && parent.nodeName !== "BODY" && parent.nodeName) {
+      while (
+        !hid &&
+        parent &&
+        parent.nodeName !== "BODY" &&
+        parent.nodeName !== "HTML" &&
+        parent.nodeName !== "#document" &&
+        parent.nodeName
+      ) {
         log("Parent:");
         console.dir(parent);
+        log(parent.nodeName);
         hid = hid || isHidden(parent);
-        parent = parent.parentNode;
-        break;
+
+        if (parent.parentNode) {
+          parent = parent.parentNode;
+        } else if (parent.getRootNode()) {
+          parent = parent.getRootNode().host.parentNode;
+        } else {
+          break;
+        }
+
+        if (!parent) {
+          break;
+        }
       }
 
       return !!hid;
@@ -322,7 +340,7 @@ javascript: (() => {
   }
 
   (function init() {
-    log("Initiating image test bookmarklet.");
+    log("Initiating Rha11y-img bookmarklet");
     log();
     findAndTestNonShadowImages();
     findAndTestShadowImages();
