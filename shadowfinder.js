@@ -92,14 +92,26 @@ javascript: (() => {
     // Test if any of the element's parent elements are hidden, thus hiding the element
     function areAnyParentsHidden(el) {
       let hid;
+      log("Checking parents for " + el.nodeName);
       let parent = el.parentNode;
       // To test for web component parent: parent.nodeType !== 11 {
       while (!hid && parent && parent.nodeName !== "BODY" && parent.nodeName) {
         log("Parent:");
         dir(parent);
-        hid = hid || isHidden(parent);
-        parent = parent.parentNode;
-        dir(parent);
+        //hid = hid || isHidden(parent);
+        log("Has parent: " + !!parent.parentNode);
+        if (!!parent.parentNode) {
+          parent = parent.parentNode;
+          log(parent.nodeName);
+        } else if (parent.getRootNode().host.parentNode) {
+          const host = parent.getRootNode().host;
+          const parentNode = parent.getRootNode().host.parentNode;
+          log("Has host: " + !!host);
+          dir(host);
+          log(!!parentNode);
+          dir(parentNode);
+          break;
+        }
       }
 
       return !!hid;
@@ -112,6 +124,8 @@ javascript: (() => {
       log("Checking if any parents are hidden");
       hidden = hidden || areAnyParentsHidden(element);
     }
+
+    let parentsHidden = areAnyParentsHidden(element);
 
     log("Element or parent is hidden: " + hidden);
     return !!hidden;
@@ -182,8 +196,6 @@ javascript: (() => {
               shadowChild.lastElementChild.localName
           );
           const shadowHtml = shadowChild.innerHTML;
-          let hasHidden = shadowHtml.toLowerCase().includes("aria-hidden");
-          log("HIDDEN: " + hasHidden);
           let hasContactSvg = shadowHtml.toLowerCase().includes("bubble");
           if (hasContactSvg) {
             log("+++\n+++\nCONTACT: " + hasContactSvg + "\n+++\n+++");
@@ -209,14 +221,12 @@ javascript: (() => {
       if (shadowNode) {
         log("------------------------");
         log("Found a shadowRoot: " + shadowNode.lastElementChild.localName);
-        dir(shadowNode);
         const shadowHtml = shadowNode.innerHTML;
-        let hasHidden = !!shadowNode.getRootNode().host.ariaHidden;
-        log("HIDDEN: " + hasHidden);
-        log(shadowNode.getRootNode().nodeName);
         let hasContactSvg = shadowHtml.toLowerCase().includes("bubble");
         if (hasContactSvg) {
           log("+++\n+++\nCONTACT: " + hasContactSvg + "\n+++\n+++");
+          log(shadowNode.getRootNode().nodeName);
+          dir(shadowNode);
 
           // Get all svgs in top-level shadowRoot
           const svgs = node.shadowRoot.querySelectorAll("svg");
@@ -226,7 +236,7 @@ javascript: (() => {
           }
         }
 
-        findNestedShadowRoots(shadowNode);
+        //findNestedShadowRoots(shadowNode);
       }
     }
   }
