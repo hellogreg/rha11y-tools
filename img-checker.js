@@ -61,42 +61,24 @@ javascript: (() => {
       // Check for hidden attribute
       hid = hid || !!el.hidden;
 
-      // We use try/catch blocks below because web components may fail to execute tests.
+      if (el.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+        // If shadowRoot element, checks element and host for ariaHidden
 
-      // Check for aria-hidden="true" and role="presentation"
-      try {
-        let ariaHidden = el.ariaHidden || el.getAttribute("aria-hidden") === "true";
-        log("aria-hidden: " + !!ariaHidden);
-        hid = hid || !!ariaHidden;
-      } catch (e) {
         hid = hid || !!el.ariaHidden;
         log("aria-hidden: " + !!el.ariaHidden);
-        log("Can't test " + el.nodeName + " for aria-hidden with getAttribute().");
-      }
 
-      // Check for role="presentation"
-      try {
+        hid = hid || !!el.getRootNode().host.ariaHidden;
+        log("getRootNode().host.ariaHidden: " + !!el.getRootNode().host.ariaHidden);
+      } else {
+        // If _not_ shadowRoot element, checks element and host for ariaHidden
+        let ariaHidden = el.ariaHidden || el.getAttribute("aria-hidden") === "true";
+        hid = hid || !!ariaHidden;
+        log("aria-hidden: " + !!ariaHidden);
+
         hid = hid || el.getAttribute("role") === "presentation";
         log("role=presentation: " + (el.getAttribute("role") === "presentation"));
-      } catch (e) {
-        log("Can't test " + el.nodeName + " for role attribute.");
-      }
 
-      // Checks inline and external styles for display: none
-      try {
         hid = hid || getComputedStyle(el).display === "none";
-      } catch (e) {
-        log("Can't test " + el.nodeName + " for computed style.");
-      }
-
-      // If shadowRoot element, checks host for ariaHidden
-      if (el.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-        log("Is DOCUMENT_FRAGMENT_NODE");
-        try {
-          hid = hid || !!el.getRootNode().host.ariaHidden;
-        } catch (e) {
-          log("Can't test " + el.nodeName + " for getRootNode().host.ariaHidden.");
-        }
       }
 
       // TODO: Any other ways it could be hidden?
