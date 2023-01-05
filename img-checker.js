@@ -103,6 +103,8 @@ javascript: (() => {
         log("Parent:");
         console.dir(parent);
         hid = hid || isHidden(parent);
+        parent = element.parentNode;
+        /*
         if (element.parentNode) {
           parent = element.parentNode;
         } else if (parent.getRootNode().host.parentNode) {
@@ -110,6 +112,7 @@ javascript: (() => {
         } else {
           break;
         }
+        */
       }
 
       return !!hid;
