@@ -1,14 +1,13 @@
 javascript: (() => {
   // Give log() the ability to include line numbers.
-  const log = console.log.bind(window.console);
+  // const log = console.log.bind(window.console);
 
-  /*
   const outputMessagesDefault = true;
   let outputMessages = outputMessagesDefault;
 
   function log(m) {
     if (outputMessages) {
-      m = m !== undefined ? m : "-----------------";
+      m = m !== undefined ? m : "--------------------";
       console.log(m);
     }
   }
@@ -18,7 +17,6 @@ javascript: (() => {
       console.dir(m);
     }
   }
-  */
 
   // Display the test results: outline around image and data-a11y attribute in element
   function outputA11yResults(element, accessible) {
