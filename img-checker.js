@@ -53,37 +53,41 @@ javascript: (() => {
   // Test all the ways elements can be hidden from assistive tech.
   function isElementHidden(element) {
     function isHidden(el) {
-      let hid;
+      log("Running isHidden() tests for " + el.nodeName);
+
+      let hid = false;
 
       // Check for hidden attribute
-      hid = hid || !!el.hidden;
+      const hasHiddenAttr = !!el.hidden;
+      hid = hid || hasHiddenAttr;
+      log(" - Has hidden attribute: " + hasHiddenAttr);
 
       if (el.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
         // If shadowRoot element, checks element and host for ariaHidden
-        log("Running isHidden() tests for shadow element " + el.nodeName + "...");
+        log("Running shadow-specific isHidden() tests");
 
-        let isAriaHidden = !!el.ariaHidden;
+        const isAriaHidden = !!el.ariaHidden;
         hid = hid || isAriaHidden;
         log(" - aria-hidden: " + isAriaHidden);
 
-        let isHostAriaHidden = !!el.getRootNode().host.ariaHidden;
+        const isHostAriaHidden = !!el.getRootNode().host.ariaHidden;
         hid = hid || isHostAriaHidden;
         log(" - getRootNode().host.ariaHidden: " + isHostAriaHidden);
       } else {
         // If _not_ shadowRoot element, checks element for various ways to be hidden form AT
-        log("Running isHidden() tests for non-shadow element " + el.nodeName + "...");
+        log("Running non-shadow isHidden() tests");
 
-        let isAriaHidden = !!el.ariaHidden || el.getAttribute("aria-hidden") === "true";
+        const hasDisplayNone = getComputedStyle(el).display === "none";
+        hid = hid || hasDisplayNone;
+        log(" - display:none: " + hasDisplayNone);
+
+        const isAriaHidden = !!el.ariaHidden || el.getAttribute("aria-hidden") === "true";
         hid = hid || isAriaHidden;
         log(" - aria-hidden: " + isAriaHidden);
 
-        let hasRolePresentation = el.getAttribute("role") === "presentation";
+        const hasRolePresentation = el.getAttribute("role") === "presentation";
         hid = hid || hasRolePresentation;
         log(" - role=presentation: " + hasRolePresentation);
-
-        let hasDisplayNone = getComputedStyle(el).display === "none";
-        hid = hid || hasDisplayNone;
-        log(" - display:none: " + hasDisplayNone);
       }
 
       // TODO: Any other ways it could be hidden?
