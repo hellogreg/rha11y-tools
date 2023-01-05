@@ -293,7 +293,9 @@ javascript: (() => {
         log("Found a shadowRoot: " + shadowNode.lastElementChild.localName);
         let hasContactSvg = shadowNode.innerHTML.toLowerCase().includes("bubble");
         if (hasContactSvg) {
-          log("+++\n+++\nCONTACT: " + hasContactSvg + "\n+++\n+++");
+          log(
+            "++++++++++++++++++++\n+++\nCONTACT: " + hasContactSvg + "\n+++\n++++++++++++++++++++"
+          );
         }
 
         // Get all svgs in top-level shadowRoot
