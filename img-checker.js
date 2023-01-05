@@ -45,10 +45,10 @@ javascript: (() => {
   // Test whether an <img> element has an alt attribute, even if it's null
   function hasAltAttribute(img) {
     const hasAlt = !!img.hasAttribute("alt");
-    log("Has alt attribute: " + hasAlt);
+    log(" - Has alt attribute: " + hasAlt);
     if (hasAlt) {
       const altValue = img.getAttribute("alt") || "[decorative]";
-      log("Image alt value: " + altValue);
+      log(" - Image alt value: " + altValue);
     }
     return !!hasAlt;
   }
@@ -159,26 +159,26 @@ javascript: (() => {
     function hasTitle(s) {
       let title = s.querySelector("svg > title");
       let hasTitle = title && title.textContent;
-      log("Has <title>: " + !!hasTitle);
+      log(" - Has <title>: " + !!hasTitle);
       if (hasTitle) {
         let titleText = svg.querySelector("svg > title").textContent || "[unspecified]";
-        log("title: " + titleText);
+        log(" - title: " + titleText);
       }
       return !!hasTitle;
     }
 
     function hasImgRole(s) {
       let hasImgRole = s.getAttribute("role") === "img";
-      log("Has role=img: " + !!hasImgRole);
+      log(" - Has role=img: " + !!hasImgRole);
       return !!hasImgRole;
     }
 
     function hasAriaLabel(s) {
       let ariaLabel = s.ariaLabel || s.getAttribute("aria-label");
       let hasAriaLabel = !!ariaLabel;
-      log("Has aria-label: " + hasAriaLabel);
+      log(" - Has aria-label: " + hasAriaLabel);
       if (hasAriaLabel) {
-        log("aria-label: " + ariaLabel);
+        log(" - aria-label: " + ariaLabel);
       }
 
       return !!hasAriaLabel;
@@ -202,7 +202,7 @@ javascript: (() => {
 
       let ariaLabelledbyId = s.ariaLabelledby || s.getAttribute("aria-labelledby");
       let hasAriaLabelledby = !!ariaLabelledbyId;
-      log("Has aria-labelledby: " + hasAriaLabelledby);
+      log(" - Has aria-labelledby: " + hasAriaLabelledby);
 
       let ariaLabelledbyValue;
       let hasAriaLabelledbyValue = null;
@@ -211,8 +211,8 @@ javascript: (() => {
       if (hasAriaLabelledby) {
         ariaLabelledbyValue = getAriaLabelledbyValue(ariaLabelledbyId);
         hasAriaLabelledbyValue = !!ariaLabelledbyValue;
-        log("aria-labelledby id: " + ariaLabelledbyId);
-        log("aria-labelledby value: " + ariaLabelledbyValue);
+        log(" - aria-labelledby id: " + ariaLabelledbyId);
+        log(" - aria-labelledby value: " + ariaLabelledbyValue);
       }
 
       // TODO: We're currently returning true if there's an aria-labelledby attribute at all.
