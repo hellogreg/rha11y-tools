@@ -57,14 +57,13 @@ javascript: (() => {
   function isElementHidden(element) {
     function isHidden(el) {
       let hid;
-      log("Checking if " + el.nodeName + " is hidden");
 
       // Check for hidden attribute
       hid = hid || !!el.hidden;
 
       if (el.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
         // If shadowRoot element, checks element and host for ariaHidden
-        log("Running isHidden tests for shadow element...");
+        log("Running isHidden() tests for shadow element " + el.nodeName + "...");
 
         let isAriaHidden = !!el.ariaHidden;
         hid = hid || isAriaHidden;
@@ -75,7 +74,7 @@ javascript: (() => {
         log("getRootNode().host.ariaHidden: " + isHostAriaHidden);
       } else {
         // If _not_ shadowRoot element, checks element for various ways to be hidden form AT
-        log("Running isHidden tests for non-shadow element...");
+        log("Running isHidden() tests for non-shadow element " + el.nodeName + "...");
 
         let isAriaHidden = !!el.ariaHidden || el.getAttribute("aria-hidden") === "true";
         hid = hid || isAriaHidden;
@@ -98,7 +97,7 @@ javascript: (() => {
     // Test if any of the element's parent elements are hidden, thus hiding the element
     function areAnyParentsHidden(el) {
       let hid;
-      let parent = el.parentNode;
+      let parent = el.parentNode; // TODO: Account for shadow element here with getRootNode??
       while (
         !hid &&
         parent &&
@@ -107,7 +106,7 @@ javascript: (() => {
         parent.nodeName !== "#document" &&
         parent.nodeName
       ) {
-        log("Parent:" + parent.nodeName);
+        log("Parent: " + parent.nodeName);
         //dir(parent);
         hid = hid || isHidden(parent);
 
