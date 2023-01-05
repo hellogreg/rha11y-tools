@@ -1,7 +1,4 @@
 javascript: (() => {
-  // Give log() the ability to include line numbers.
-  // const log = console.log.bind(window.console);
-
   const outputMessagesDefault = true;
   let outputMessages = outputMessagesDefault;
 
