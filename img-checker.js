@@ -257,6 +257,7 @@ javascript: (() => {
       for (const node of nodes) {
         const shadowChild = node.shadowRoot;
         if (shadowChild) {
+          log();
           log(
             "Found a shadow child (nesting level " +
               i +
@@ -289,6 +290,7 @@ javascript: (() => {
     for (const node of nodes) {
       const shadowNode = node.shadowRoot;
       if (shadowNode) {
+        log();
         log("Found a shadowRoot: " + shadowNode.lastElementChild.localName);
         let hasContactSvg = shadowNode.innerHTML.toLowerCase().includes("bubble");
         if (hasContactSvg) {
@@ -310,11 +312,6 @@ javascript: (() => {
         }
 
         findNestedShadowRoots(shadowNode);
-
-        if (!svgs && !imgs) {
-          log("No images within");
-          log();
-        }
       }
     }
   }
