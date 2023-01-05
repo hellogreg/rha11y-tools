@@ -63,22 +63,30 @@ javascript: (() => {
 
       if (el.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
         // If shadowRoot element, checks element and host for ariaHidden
+        log("Running isHidden tests for shadow element...");
 
-        hid = hid || !!el.ariaHidden;
-        log("aria-hidden: " + !!el.ariaHidden);
+        let isAriaHidden = !!el.ariaHidden;
+        hid = hid || isAriaHidden;
+        log("aria-hidden: " + isAriaHidden);
 
-        hid = hid || !!el.getRootNode().host.ariaHidden;
-        log("getRootNode().host.ariaHidden: " + !!el.getRootNode().host.ariaHidden);
+        let isHostAriaHidden = !!el.getRootNode().host.ariaHidden;
+        hid = hid || isHostAriaHidden;
+        log("getRootNode().host.ariaHidden: " + isHostAriaHidden);
       } else {
         // If _not_ shadowRoot element, checks element and host for ariaHidden
-        let ariaHidden = el.ariaHidden || el.getAttribute("aria-hidden") === "true";
-        hid = hid || !!ariaHidden;
-        log("aria-hidden: " + !!ariaHidden);
+        log("Running isHidden tests for non-shadow element...");
 
-        hid = hid || el.getAttribute("role") === "presentation";
-        log("role=presentation: " + (el.getAttribute("role") === "presentation"));
+        let isAriaHidden = !!el.ariaHidden || el.getAttribute("aria-hidden") === "true";
+        hid = hid || isAriaHidden;
+        log("aria-hidden: " + isAriaHidden);
 
-        hid = hid || getComputedStyle(el).display === "none";
+        let hasRolePresentation = el.getAttribute("role") === "presentation";
+        hid = hid || hasRolePresentation;
+        log("role=presentation: " + hasRolePresentation);
+
+        let hasDisplayNone = getComputedStyle(el).display === "none";
+        hid = hid || hasDisplayNone;
+        log("display:none: " + hasDisplayNone);
       }
 
       // TODO: Any other ways it could be hidden?
