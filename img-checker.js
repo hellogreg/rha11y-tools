@@ -277,12 +277,12 @@ javascript: (() => {
       for (const node of nodes) {
         const shadowChild = node.shadowRoot;
         if (shadowChild) {
-          log(
-            "Found a shadow child (nesting level " +
-              i +
-              "): " +
-              shadowChild.lastElementChild.localName
-          );
+          log();
+          const rootName = shadowChild.host.nodeName || "[unspecified]";
+          const rootId = shadowChild.host.id || "[unspecified]";
+          log("Found a shadow child (nesting level " + i + "): " + rootName);
+          log("id: " + rootId);
+          //dir(shadowChild);
 
           // Get all svgs in nested shadowRoot
           const svgs = shadowChild.querySelectorAll("svg");
@@ -298,6 +298,11 @@ javascript: (() => {
             checkImgA11y(img);
           }
 
+          if (svgs.length === 0 && imgs.length === 0) {
+            log("No <img> or <svg> elements within");
+            log();
+          }
+
           // Keep checking for more nesting levels.
           findNestedShadowRoots(shadowChild, i);
         }
@@ -310,13 +315,11 @@ javascript: (() => {
       const shadowNode = node.shadowRoot;
       if (shadowNode) {
         log();
-        log("Found a shadowRoot: " + shadowNode.lastElementChild.localName);
-        let hasContactSvg = shadowNode.innerHTML.toLowerCase().includes("bubble");
-        if (hasContactSvg) {
-          log(
-            "++++++++++++++++++++\n+++\nCONTACT: " + hasContactSvg + "\n+++\n++++++++++++++++++++"
-          );
-        }
+        const rootName = shadowNode.host.nodeName || "[unspecified]";
+        const rootId = shadowNode.host.id || "[unspecified]";
+        log("Found a shadowRoot: " + rootName);
+        log("id: " + rootId);
+        //dir(shadowNode);
 
         // Get all svgs in top-level shadowRoot
         const svgs = node.shadowRoot.querySelectorAll("svg");
@@ -330,6 +333,11 @@ javascript: (() => {
         for (const img of imgs) {
           log("Found img in shadowRoot");
           checkImgA11y(img);
+        }
+
+        if (svgs.length === 0 && imgs.length === 0) {
+          log("No <img> or <svg> elements within");
+          log();
         }
 
         findNestedShadowRoots(shadowNode);
