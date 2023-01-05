@@ -58,12 +58,12 @@ It ignores background images (and in fact fades them out, to give a visual clue 
 - Should all inline SVGs be required to have role="img"? Currently, we're requiring it for SVGs with title elements, but not aria-label/labelledby attributes.
 - Do we need to account for non-img/svg elements with role="img"? (Probably not, but maybe?)
 
-### Resolved (as of 1/3/23)
+### Resolved
 
 - Detect aria-hidden in web component (e.g., &lt;pfe-icon aria-hidden="true"&gt;) **Solved 1/5/22: Using element.getRootNode().host.ariaHidden does the trick!**
 - Handle background images somehow, to show they're different from other images. Should we hide them or fade them out a bit? **Solved 1/5/22: Currently doing the latter.**
 - Ensure all outlines are visible. (e.g., the Recommended for you images at [redhat.com](https://www.redhat.com/en) are located, but the outline isn't visible--perhaps because the images are contained in another element of their exact height/width) **Solved 1/4/22: Using outline-offset allows us to inset the outline a bit, to make oulines visible on images inside same-height/width containers.**
-- Investigate why occasional images have an outline color other than the bookmarklet's pass/fail colors (e.g., the globe in the [redhat.com](https://www.redhat.com/en) footer). **Solved 1/4/22: Looks like this was a result of CSS filters being used; we now reset them to initial.**
+- Investigate why occasional images have an outline color other than the bookmarklet's pass/fail colors (e.g., the globe in the [redhat.com](https://www.redhat.com/en) footer). **Solved 1/4/22: Looks like this was a result of CSS filters being used; we now reset them to initial when the script runs.**
 
 ## Resources
 
