@@ -107,9 +107,8 @@ javascript: (() => {
         parent.nodeName !== "#document" &&
         parent.nodeName
       ) {
-        log("Parent:");
-        console.dir(parent);
-        log(parent.nodeName);
+        log("Parent:" + parent.nodeName);
+        //dir(parent);
         hid = hid || isHidden(parent);
 
         if (parent.parentNode) {
