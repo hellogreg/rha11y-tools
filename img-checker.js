@@ -299,14 +299,14 @@ javascript: (() => {
         // Get all svgs in top-level shadowRoot
         const svgs = node.shadowRoot.querySelectorAll("svg");
         for (const svg of svgs) {
-          log("Found svg in top-level shadowRoot");
+          log("Found svg in shadowRoot");
           checkSvgA11y(svg);
         }
 
         // Get all imgs in top-level shadowRoot
         const imgs = shadowNode.querySelectorAll("img");
         for (const img of imgs) {
-          log("Found img in top-level shadowRoot");
+          log("Found img in shadowRoot");
           checkImgA11y(img);
         }
 
