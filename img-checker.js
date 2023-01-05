@@ -90,10 +90,12 @@ javascript: (() => {
       }
 
       // If shadowRoot element, checks host for ariaHidden
-      try {
-        hid = hid || !!el.getRootNode().host.ariaHidden;
-      } catch (e) {
-        log("Can't test " + el.nodeName + " for getRootNode().host.ariaHidden.");
+      if (el.nodeType === 11) {
+        try {
+          hid = hid || !!el.getRootNode().host.ariaHidden;
+        } catch (e) {
+          log("Can't test " + el.nodeName + " for getRootNode().host.ariaHidden.");
+        }
       }
 
       // TODO: Any other ways it could be hidden?
