@@ -8,7 +8,7 @@ When run, the bookmarklet returns accessibility information three ways:
 
 - All identified foreground images on the page are given an 8px outline.
   - Blue outline = image passed accessibility checks
-  - Orange ouline = image failed
+  - Orange outline = image failed
   - No outline = image not identified
   - Background images are faded/hidden and not tested
 - Detailed accessibility test processes and results are displayed in the browser console.
@@ -65,7 +65,7 @@ It ignores background images (and in fact fades them out, to give a visual clue 
 - Handle background images somehow, to show they're different from other images. Should we hide them or fade them out a bit?  
   **Solved 1/5/22: Currently doing the latter.**
 - Ensure all outlines are visible. (e.g., the Recommended for you images at [redhat.com](https://www.redhat.com/en) are located, but the outline isn't visible--perhaps because the images are contained in another element of their exact height/width)  
-  **Solved 1/4/22: Using outline-offset allows us to inset the outline a bit, to make oulines visible on images inside same-height/width containers.**
+  **Solved 1/4/22: Using outline-offset allows us to inset the outline a bit, to make outlines visible on images inside same-height/width containers.**
 - Investigate why occasional images have an outline color other than the bookmarklet's pass/fail colors (e.g., the globe in the [redhat.com](https://www.redhat.com/en) footer).  
   **Solved 1/4/22: Looks like this was a result of CSS filters being used; we now reset them to initial when the script runs.**
 
