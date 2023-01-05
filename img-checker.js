@@ -73,7 +73,7 @@ javascript: (() => {
         hid = hid || isHostAriaHidden;
         log("getRootNode().host.ariaHidden: " + isHostAriaHidden);
       } else {
-        // If _not_ shadowRoot element, checks element and host for ariaHidden
+        // If _not_ shadowRoot element, checks element for various ways to be hidden form AT
         log("Running isHidden tests for non-shadow element...");
 
         let isAriaHidden = !!el.ariaHidden || el.getAttribute("aria-hidden") === "true";
@@ -293,6 +293,10 @@ javascript: (() => {
       const shadowNode = node.shadowRoot;
       if (shadowNode) {
         log("Found a shadowRoot: " + shadowNode.lastElementChild.localName);
+        let hasContactSvg = shadowHtml.innerHTML.toLowerCase().includes("bubble");
+        if (hasContactSvg) {
+          log("+++\n+++\nCONTACT: " + hasContactSvg + "\n+++\n+++");
+        }
 
         // Get all svgs in top-level shadowRoot
         const svgs = node.shadowRoot.querySelectorAll("svg");
