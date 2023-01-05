@@ -249,7 +249,6 @@ javascript: (() => {
         log("Background image found. They are not tested.");
         node.style.setProperty("background-color", "#fffd");
         node.style.setProperty("background-blend-mode", "color");
-        log();
       }
     }
   }
