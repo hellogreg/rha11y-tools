@@ -225,19 +225,6 @@ javascript: (() => {
     outputA11yResults(svg, isAccessible);
   }
 
-  // Fade out background images to indicate they are not tested
-  function fadeBackgroundImages() {
-    const nodes = document.querySelectorAll("*");
-    for (const node of nodes) {
-      // Only fade images with a url, and not just colors/gradients
-      if (node.style.backgroundImage.match("url") || node.style.background.match("url")) {
-        log("Background image found. They are not tested.");
-        node.style.setProperty("background-color", "#fffd");
-        node.style.setProperty("background-blend-mode", "color");
-      }
-    }
-  }
-
   function findAndTestImages(node) {
     const svgs = node.querySelectorAll("svg");
     for (const svg of svgs) {
@@ -303,6 +290,19 @@ javascript: (() => {
         findAndTestImages(shadowNode);
 
         findNestedShadowRoots(shadowNode);
+      }
+    }
+  }
+
+  // Fade out background images to indicate they are not tested
+  function fadeBackgroundImages() {
+    const nodes = document.querySelectorAll("*");
+    for (const node of nodes) {
+      // Only fade images with a url, and not just colors/gradients
+      if (node.style.backgroundImage.match("url") || node.style.background.match("url")) {
+        log("Background image found. They are not tested.");
+        node.style.setProperty("background-color", "#fffd");
+        node.style.setProperty("background-blend-mode", "color");
       }
     }
   }
