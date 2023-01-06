@@ -53,7 +53,6 @@ It ignores background images (and in fact fades them out, to give a visual clue 
 
 ### Unresolved
 
-- Determine if parents of shadowroot elements are hidden.
 - Find associated aria-labelledby ids in shadowroots. (Currently, we can locate them in the regular DOM and as children of the tested element. But the element could be elsewhere.)
 - Should all inline SVGs be required to have role="img"? Currently, we're requiring it for SVGs with title elements, but not aria-label/labelledby attributes.
 - Do we need to account for non-img/svg elements with role="img"? (Probably not, but maybe?)
@@ -61,6 +60,8 @@ It ignores background images (and in fact fades them out, to give a visual clue 
 
 ### Resolved
 
+- Determine if parents of shadowroot elements are hidden.  
+  **Solved 1/6/22: This is now working properly**
 - Detect aria-hidden in web component (e.g., &lt;pfe-icon aria-hidden="true"&gt;)  
   **Solved 1/5/22: Using element.getRootNode().host.ariaHidden does the trick!**
 - Handle background images somehow, to show they're different from other images. Should we hide them or fade them out a bit?  
