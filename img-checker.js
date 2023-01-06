@@ -4,7 +4,7 @@ javascript: (() => {
 
   function log(m) {
     if (outputMessages) {
-      m = m !== undefined ? m : "-----\n------------------------------\n-----";
+      m = m !== undefined ? m : " \n------------------------------\n ";
       console.log(m);
     }
   }
