@@ -274,7 +274,7 @@ javascript: (() => {
           findAndTestImages(shadowNode);
 
           // Keep checking for more nesting levels.
-          findNestedShadowRoots(shadowNode, i);
+          findNestedShadowRoots(shadowNode, level);
         }
       }
     }
