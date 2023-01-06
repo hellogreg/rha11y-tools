@@ -15,6 +15,11 @@ javascript: (() => {
     }
   }
 
+  // Returns whether a tested element is a document-fragment
+  function isShadowElement(element) {
+    return element.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
+  }
+
   // Display the test results: outline around image and data-a11y attribute in element
   function outputA11yResults(element, accessible) {
     // Add a data-a11y attribute to the element.
@@ -52,9 +57,9 @@ javascript: (() => {
     function isThisHidden(el) {
       let hidden = false;
 
-      const isShadowElement = el.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
-      const elementName = isShadowElement ? el.host.nodeName : el.nodeName;
+      const elementName = isShadowElement(el) ? el.host.nodeName : el.nodeName;
       log("Checking if " + elementName + " is hidden");
+      //dir(el);
 
       // Check for hidden attribute
       const hasHiddenAttr = !!el.hidden;
@@ -62,7 +67,7 @@ javascript: (() => {
       log(" - Has hidden attribute: " + hasHiddenAttr);
 
       // Run tests specific to shadow and non-shadow elements
-      if (isShadowElement) {
+      if (isShadowElement(el)) {
         log("Running shadow-specific hidden tests");
 
         const isAriaHidden = !!el.ariaHidden;
@@ -106,19 +111,18 @@ javascript: (() => {
     ) {
       // Check if the element is hidden
       isHidden = isHidden || isThisHidden(element);
-      const isShadowElement = element.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
 
       // Now get the element's parent element for the next iteration
       if (element.parentNode) {
         element = element.parentNode;
-      } else if (isShadowElement) {
+      } else if (isShadowElement(element)) {
         element = element.getRootNode().host.parentNode;
       } else {
         element = null;
       }
 
       if (!isHidden && element) {
-        const parentName = isShadowElement ? element.host.nodeName : element.nodeName;
+        const parentName = isShadowElement(element) ? element.host.nodeName : element.nodeName;
         log("Next parent: " + parentName);
       }
     }
@@ -129,14 +133,15 @@ javascript: (() => {
 
   // Test if an image is accessible (has alt or is hidden)
   function checkImgA11y(img) {
-    log("Checking if <img> is accessible");
+    let isAccessible = false;
 
+    log("Checking if <img> is accessible");
     const imgSrc = !!img.src ? img.src : "[unspecified]";
     const imgId = !!img.id ? img.id : "[unspecified]";
     log("src: " + imgSrc);
     log("id: " + imgId);
 
-    let isAccessible = !!(hasAltAttribute(img) || isElementOrParentHidden(img));
+    isAccessible = !!(hasAltAttribute(img) || isElementOrParentHidden(img));
     log("Image is accessible: " + isAccessible);
     outputA11yResults(img, isAccessible);
   }
@@ -186,14 +191,13 @@ javascript: (() => {
         return value;
       }
 
-      let ariaLabelledbyId = s.ariaLabelledby || s.getAttribute("aria-labelledby");
-      let hasAriaLabelledby = !!ariaLabelledbyId;
+      const ariaLabelledbyId = s.ariaLabelledby || s.getAttribute("aria-labelledby");
+      const hasAriaLabelledby = !!ariaLabelledbyId;
       log(" - Has aria-labelledby: " + hasAriaLabelledby);
 
+      // Get the label value if the element has aria-labelledby attribute.
       let ariaLabelledbyValue;
       let hasAriaLabelledbyValue = null;
-
-      // Get the label value if the element has aria-labelledby attribute.
       if (hasAriaLabelledby) {
         ariaLabelledbyValue = getAriaLabelledbyValue(ariaLabelledbyId);
         hasAriaLabelledbyValue = !!ariaLabelledbyValue;
@@ -270,21 +274,22 @@ javascript: (() => {
 
   // Get all imgs and svgs in top-level and nested shadowRoots.
   function findAndTestShadowImages() {
-    function findNestedShadowRoots(sr, i) {
-      i = i + 1 || 1;
-      const nodes = sr.querySelectorAll("*");
+    // Find shadowRoots nested within other shadowRoots
+    function findNestedShadowRoots(root, level) {
+      level = level + 1 || 1;
+      const nodes = root.querySelectorAll("*");
       for (const node of nodes) {
-        const shadowChild = node.shadowRoot;
-        if (shadowChild) {
-          const rootName = shadowChild.host.nodeName || "[unspecified]";
-          const rootId = shadowChild.host.id || "[unspecified]";
-          log("Found a nested shadowRoot (nesting level " + i + "): " + rootName);
+        const shadowNode = node.shadowRoot;
+        if (shadowNode) {
+          const rootName = shadowNode.host.nodeName || "[unspecified]";
+          const rootId = shadowNode.host.id || "[unspecified]";
+          log("Found a nested shadowRoot (nesting level " + level + "): " + rootName);
           log("id: " + rootId);
 
-          findAndTestImages(shadowChild);
+          findAndTestImages(shadowNode);
 
           // Keep checking for more nesting levels.
-          findNestedShadowRoots(shadowChild, i);
+          findNestedShadowRoots(shadowNode, i);
         }
       }
     }
