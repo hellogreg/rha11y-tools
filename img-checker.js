@@ -49,97 +49,85 @@ javascript: (() => {
 
   // Test all the ways elements can be hidden from assistive tech.
   function isElementHidden(element) {
-    function isHidden(el) {
-      log("Running isHidden() tests for " + el.nodeName);
+    function isThisHidden(el) {
+      log("Checking if " + el.nodeName + " is hidden");
 
-      let hid = false;
+      let hidden = false;
 
       // Check for hidden attribute
       const hasHiddenAttr = !!el.hidden;
-      hid = hid || hasHiddenAttr;
+      hidden = hidden || hasHiddenAttr;
       log(" - Has hidden attribute: " + hasHiddenAttr);
 
       // Run tests specific to shadow and non-shadow elements
       if (el.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-        log("Running shadow-specific isHidden() tests");
+        log("Running shadow-specific hidden tests");
 
         const isAriaHidden = !!el.ariaHidden;
-        hid = hid || isAriaHidden;
+        hidden = hidden || isAriaHidden;
         log(" - aria-hidden: " + isAriaHidden);
 
         const isHostAriaHidden = !!el.getRootNode().host.ariaHidden;
-        hid = hid || isHostAriaHidden;
+        hidden = hidden || isHostAriaHidden;
         log(" - getRootNode().host.ariaHidden: " + isHostAriaHidden);
       } else {
-        log("Running non-shadow isHidden() tests");
+        log("Running non-shadow hidden tests");
 
         const hasDisplayNone = getComputedStyle(el).display === "none";
-        hid = hid || hasDisplayNone;
+        hidden = hidden || hasDisplayNone;
         log(" - display:none: " + hasDisplayNone);
 
         const isAriaHidden = !!el.ariaHidden || el.getAttribute("aria-hidden") === "true";
-        hid = hid || isAriaHidden;
+        hidden = hidden || isAriaHidden;
         log(" - aria-hidden: " + isAriaHidden);
 
         const hasRolePresentation = el.getAttribute("role") === "presentation";
-        hid = hid || hasRolePresentation;
+        hidden = hidden || hasRolePresentation;
         log(" - role=presentation: " + hasRolePresentation);
       }
 
       // TODO: Any other ways it could be hidden?
 
-      return !!hid;
+      return !!hidden;
     }
 
-    // Test if any of the element's parent elements are hidden, thus hiding the element
-    function areAnyParentsHidden(el) {
-      let hid;
-      let parent = el.parentNode;
-      while (
-        !hid &&
-        parent &&
-        parent.nodeName !== "BODY" &&
-        parent.nodeName !== "HTML" &&
-        parent.nodeName !== "#document" &&
-        parent.nodeName
-      ) {
-        log("Parent: " + parent.nodeName);
-        //dir(parent);
-        hid = hid || isHidden(parent);
+    let isHidden = false;
 
-        if (parent.parentNode) {
-          parent = parent.parentNode;
-        } else if (parent.getRootNode()) {
-          parent = parent.getRootNode().host.parentNode;
-        } else {
-          break;
-        }
+    // Check if element *or any parents* are hidden
+    while (
+      !isHidden &&
+      !!element &&
+      element.nodeName !== "BODY" &&
+      element.nodeName !== "HTML" &&
+      element.nodeType !== Node.DOCUMENT_NODE &&
+      element.nodeName
+    ) {
+      // Check if the element is hidden
+      isHidden = isHidden || isThisHidden(element);
 
-        if (!parent) {
-          break;
-        }
+      // Now get the element's parent element for the next iteration
+      if (element.parentNode) {
+        element = element.parentNode;
+      } else if (element.getRootNode() && element.getRootNode().host.parentNode) {
+        element = element.getRootNode().host.parentNode;
+      } else {
+        element = null;
       }
 
-      return !!hid;
+      if (!isHidden && element) {
+        log("Next parent: " + element.nodeName);
+      }
     }
 
-    let hidden = isHidden(element);
-    log("Element hidden from asst. tech: " + !!hidden);
-
-    if (!hidden) {
-      log("Checking if any parents are hidden");
-      hidden = hidden || areAnyParentsHidden(element);
-    }
-
-    log("Either element or a parent is hidden: " + hidden);
-    return !!hidden;
+    log("Either element or a parent is hidden: " + isHidden);
+    return !!isHidden;
   }
 
   // Test if an image is accessible (has alt or is hidden)
   function checkImgA11y(img) {
-    log("Checking if image is accessible");
+    log("Checking if <img> is accessible");
 
-    let imgSrc = !!img.src ? img.src : "[unspecified]";
+    const imgSrc = !!img.src ? img.src : "[unspecified]";
     const imgId = !!img.id ? img.id : "[unspecified]";
     log("src: " + imgSrc);
     log("id: " + imgId);
@@ -147,43 +135,40 @@ javascript: (() => {
     let isAccessible = !!(hasAltAttribute(img) || isElementHidden(img));
     log("Image is accessible: " + isAccessible);
     outputA11yResults(img, isAccessible);
-
-    log();
   }
 
   // Test if an svg is accessible (has an accessible name/role or is hidden)
   function checkSvgA11y(svg) {
     function hasTitle(s) {
-      let title = s.querySelector("svg > title");
-      let hasTitle = title && title.textContent;
+      const title = s.querySelector("svg > title");
+      const hasTitle = title && title.textContent;
       log(" - Has <title>: " + !!hasTitle);
       if (hasTitle) {
-        let titleText = svg.querySelector("svg > title").textContent || "[unspecified]";
+        const titleText = svg.querySelector("svg > title").textContent || "[unspecified]";
         log(" - title: " + titleText);
       }
       return !!hasTitle;
     }
 
     function hasImgRole(s) {
-      let hasImgRole = s.getAttribute("role") === "img";
+      const hasImgRole = s.getAttribute("role") === "img";
       log(" - Has role=img: " + !!hasImgRole);
       return !!hasImgRole;
     }
 
     function hasAriaLabel(s) {
-      let ariaLabel = s.ariaLabel || s.getAttribute("aria-label");
-      let hasAriaLabel = !!ariaLabel;
+      const ariaLabel = s.ariaLabel || s.getAttribute("aria-label");
+      const hasAriaLabel = !!ariaLabel;
       log(" - Has aria-label: " + hasAriaLabel);
       if (hasAriaLabel) {
         log(" - aria-label: " + ariaLabel);
       }
-
       return !!hasAriaLabel;
     }
 
     function hasAriaLabelledby(s) {
       function getAriaLabelledbyValue(id) {
-        let value = "";
+        let value;
 
         // See if the aria-labelledby element is within the SVG itself.
         value = value || s.getElementById(id) ? s.getElementById(id).textContent : null;
@@ -220,7 +205,7 @@ javascript: (() => {
       return !!hasAriaLabelledby;
     }
 
-    log("Checking if inline svg is accessible");
+    log("Checking if inline <svg> is accessible");
 
     let isAccessible = false;
     const svgId = !!svg.id ? svg.id : "[unspecified]";
@@ -229,12 +214,13 @@ javascript: (() => {
     isAccessible = !!(hasTitle(svg) && !!hasImgRole(svg));
     isAccessible = isAccessible || !!hasAriaLabel(svg);
     isAccessible = isAccessible || !!hasAriaLabelledby(svg);
+
     // TODO: Any other ways for an svg to be accessible?
+
     isAccessible = isAccessible || isElementHidden(svg);
+
     log("svg is accessible: " + isAccessible);
     outputA11yResults(svg, isAccessible);
-
-    log();
   }
 
   // Fade out background images to indicate they are not tested
@@ -250,18 +236,32 @@ javascript: (() => {
     }
   }
 
-  function findAndTestNonShadowImages() {
-    // Get all non-shadow svgs
-    const svgs = document.querySelectorAll("svg");
+  function findAndTestImages(node) {
+    const svgs = node.querySelectorAll("svg");
     for (const svg of svgs) {
+      log("Located <svg> within");
       checkSvgA11y(svg);
+      log();
     }
 
     // Get all non-shadow imgs
-    const imgs = document.querySelectorAll("img");
+    const imgs = node.querySelectorAll("img");
     for (const img of imgs) {
+      log("Located <img> within");
       checkImgA11y(img);
+      log();
     }
+
+    if (svgs.length === 0 && imgs.length === 0) {
+      log("No <img> or <svg> elements within");
+      log();
+    }
+  }
+
+  function findAndTestNonShadowImages() {
+    // By default, we want to test all images in the whole document.
+    // Change this parameter to narrow the scope.
+    findAndTestImages(document);
   }
 
   // Get all imgs and svgs in top-level and nested shadowRoots.
@@ -272,31 +272,12 @@ javascript: (() => {
       for (const node of nodes) {
         const shadowChild = node.shadowRoot;
         if (shadowChild) {
-          log();
           const rootName = shadowChild.host.nodeName || "[unspecified]";
           const rootId = shadowChild.host.id || "[unspecified]";
-          log("Found a shadow child (nesting level " + i + "): " + rootName);
+          log("Found a nested shadowRoot (nesting level " + i + "): " + rootName);
           log("id: " + rootId);
-          //dir(shadowChild);
 
-          // Get all svgs in nested shadowRoot
-          const svgs = shadowChild.querySelectorAll("svg");
-          for (const svg of svgs) {
-            log("Found svg in level " + i + " shadowRoot");
-            checkSvgA11y(svg);
-          }
-
-          // Get all imgs in nested shadowRoot
-          const imgs = shadowChild.querySelectorAll("img");
-          for (const img of imgs) {
-            log("Found img in level " + i + " shadowRoot");
-            checkImgA11y(img);
-          }
-
-          if (svgs.length === 0 && imgs.length === 0) {
-            log("No <img> or <svg> elements within");
-            log();
-          }
+          findAndTestImages(shadowChild);
 
           // Keep checking for more nesting levels.
           findNestedShadowRoots(shadowChild, i);
@@ -309,31 +290,12 @@ javascript: (() => {
     for (const node of nodes) {
       const shadowNode = node.shadowRoot;
       if (shadowNode) {
-        log();
         const rootName = shadowNode.host.nodeName || "[unspecified]";
         const rootId = shadowNode.host.id || "[unspecified]";
         log("Found a shadowRoot: " + rootName);
         log("id: " + rootId);
-        //dir(shadowNode);
 
-        // Get all svgs in top-level shadowRoot
-        const svgs = node.shadowRoot.querySelectorAll("svg");
-        for (const svg of svgs) {
-          log("Found svg in shadowRoot");
-          checkSvgA11y(svg);
-        }
-
-        // Get all imgs in top-level shadowRoot
-        const imgs = shadowNode.querySelectorAll("img");
-        for (const img of imgs) {
-          log("Found img in shadowRoot");
-          checkImgA11y(img);
-        }
-
-        if (svgs.length === 0 && imgs.length === 0) {
-          log("No <img> or <svg> elements within");
-          log();
-        }
+        findAndTestImages(shadowNode);
 
         findNestedShadowRoots(shadowNode);
       }
