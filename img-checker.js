@@ -48,11 +48,13 @@ javascript: (() => {
   }
 
   // Test all the ways elements can be hidden from assistive tech.
-  function isElementHidden(element) {
+  function isElementOrParentHidden(element) {
     function isThisHidden(el) {
-      log("Checking if " + el.nodeName + " is hidden");
-
       let hidden = false;
+
+      const elIsShadow = el.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
+      const elName = elIsShadow ? el.host.nodeName : el.nodeName;
+      log("Checking if " + elName + " is hidden");
 
       // Check for hidden attribute
       const hasHiddenAttr = !!el.hidden;
@@ -60,7 +62,7 @@ javascript: (() => {
       log(" - Has hidden attribute: " + hasHiddenAttr);
 
       // Run tests specific to shadow and non-shadow elements
-      if (el.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+      if (elIsShadow) {
         log("Running shadow-specific hidden tests");
 
         const isAriaHidden = !!el.ariaHidden;
@@ -115,7 +117,11 @@ javascript: (() => {
       }
 
       if (!isHidden && element) {
-        log("Next parent: " + element.nodeName);
+        const parentName =
+          element.nodeType === Node.DOCUMENT_FRAGMENT_NODE
+            ? element.host.nodeName
+            : element.nodeName;
+        log("Next parent: " + parentName);
       }
     }
 
@@ -132,7 +138,7 @@ javascript: (() => {
     log("src: " + imgSrc);
     log("id: " + imgId);
 
-    let isAccessible = !!(hasAltAttribute(img) || isElementHidden(img));
+    let isAccessible = !!(hasAltAttribute(img) || isElementOrParentHidden(img));
     log("Image is accessible: " + isAccessible);
     outputA11yResults(img, isAccessible);
   }
@@ -217,7 +223,7 @@ javascript: (() => {
 
     // TODO: Any other ways for an svg to be accessible?
 
-    isAccessible = isAccessible || isElementHidden(svg);
+    isAccessible = isAccessible || isElementOrParentHidden(svg);
 
     log("svg is accessible: " + isAccessible);
     outputA11yResults(svg, isAccessible);
