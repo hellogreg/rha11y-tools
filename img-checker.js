@@ -265,9 +265,11 @@ javascript: (() => {
         const shadowNode = node.shadowRoot;
         if (shadowNode) {
           const rootName = shadowNode.host.nodeName || "[unspecified]";
-          const rootId = shadowNode.host.id || "[unspecified]";
+          const rootId = shadowNode.host.id || null;
           log("Found a nested shadowRoot (nesting level " + level + "): " + rootName);
-          log("id: " + rootId);
+          if (rootId) {
+            log("id: " + rootId);
+          }
 
           findAndTestImages(shadowNode);
 
@@ -283,9 +285,11 @@ javascript: (() => {
       const shadowNode = node.shadowRoot;
       if (shadowNode) {
         const rootName = shadowNode.host.nodeName || "[unspecified]";
-        const rootId = shadowNode.host.id || "[unspecified]";
+        const rootId = shadowNode.host.id || null;
         log("Found a shadowRoot: " + rootName);
-        log("id: " + rootId);
+        if (rootId) {
+          log("id: " + rootId);
+        }
 
         findAndTestImages(shadowNode);
 
