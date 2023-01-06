@@ -249,10 +249,25 @@ javascript: (() => {
     }
   }
 
+  // Fade out background images to indicate they are not tested
+  function fadeBackgroundImages(node) {
+    // Only fade images with a url, and not just colors/gradients
+    if (node.style.backgroundImage.match("url") || node.style.background.match("url")) {
+      log("Background image found. They are not tested.");
+      node.style.setProperty("background-color", "#fffd");
+      node.style.setProperty("background-blend-mode", "color");
+    }
+  }
+
   function findAndTestNonShadowImages() {
     // By default, we want to test all images in the whole document.
     // Change this parameter to narrow the scope.
-    findAndTestImages(document);
+    const region = document;
+    findAndTestImages(region);
+    const nodes = document.querySelectorAll("*");
+    for (const node of nodes) {
+      fadeBackgroundImages(node);
+    }
   }
 
   // Get all imgs and svgs in top-level and nested shadowRoots.
@@ -272,6 +287,7 @@ javascript: (() => {
           }
 
           findAndTestImages(shadowNode);
+          fadeBackgroundImages(node);
 
           // Keep checking for more nesting levels.
           findNestedShadowRoots(shadowNode, level);
@@ -292,21 +308,9 @@ javascript: (() => {
         }
 
         findAndTestImages(shadowNode);
+        fadeBackgroundImages(node);
 
         findNestedShadowRoots(shadowNode);
-      }
-    }
-  }
-
-  // Fade out background images to indicate they are not tested
-  function fadeBackgroundImages() {
-    const nodes = document.querySelectorAll("*");
-    for (const node of nodes) {
-      // Only fade images with a url, and not just colors/gradients
-      if (node.style.backgroundImage.match("url") || node.style.background.match("url")) {
-        log("Background image found. They are not tested.");
-        node.style.setProperty("background-color", "#fffd");
-        node.style.setProperty("background-blend-mode", "color");
       }
     }
   }
@@ -316,6 +320,5 @@ javascript: (() => {
     log();
     findAndTestNonShadowImages();
     findAndTestShadowImages();
-    fadeBackgroundImages();
   })();
 })();
