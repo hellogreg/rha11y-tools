@@ -136,10 +136,6 @@ javascript: (() => {
     let isAccessible = false;
 
     log("Checking if <img> is accessible");
-    const imgSrc = !!img.src ? img.src : "[unspecified]";
-    const imgId = !!img.id ? img.id : "[unspecified]";
-    log("src: " + imgSrc);
-    log("id: " + imgId);
 
     isAccessible = !!(hasAltAttribute(img) || isElementOrParentHidden(img));
     log("Image is accessible: " + isAccessible);
@@ -216,8 +212,6 @@ javascript: (() => {
     log("Checking if inline <svg> is accessible");
 
     let isAccessible = false;
-    const svgId = !!svg.id ? svg.id : "[unspecified]";
-    log("id: " + svgId);
 
     isAccessible = !!(hasTitle(svg) && !!hasImgRole(svg));
     isAccessible = isAccessible || !!hasAriaLabel(svg);
@@ -247,7 +241,8 @@ javascript: (() => {
   function findAndTestImages(node) {
     const svgs = node.querySelectorAll("svg");
     for (const svg of svgs) {
-      log("Located <svg> within");
+      log("Located an <svg>");
+      log(svg.outerHTML);
       checkSvgA11y(svg);
       log();
     }
@@ -255,7 +250,8 @@ javascript: (() => {
     // Get all non-shadow imgs
     const imgs = node.querySelectorAll("img");
     for (const img of imgs) {
-      log("Located <img> within");
+      log("Located an <img>");
+      log(img.outerHTML);
       checkImgA11y(img);
       log();
     }
