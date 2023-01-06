@@ -52,9 +52,9 @@ javascript: (() => {
     function isThisHidden(el) {
       let hidden = false;
 
-      const elIsShadow = el.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
-      const elName = elIsShadow ? el.host.nodeName : el.nodeName;
-      log("Checking if " + elName + " is hidden");
+      const isShadowElement = el.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
+      const elementName = isShadowElement ? el.host.nodeName : el.nodeName;
+      log("Checking if " + elementName + " is hidden");
 
       // Check for hidden attribute
       const hasHiddenAttr = !!el.hidden;
@@ -62,7 +62,7 @@ javascript: (() => {
       log(" - Has hidden attribute: " + hasHiddenAttr);
 
       // Run tests specific to shadow and non-shadow elements
-      if (elIsShadow) {
+      if (isShadowElement) {
         log("Running shadow-specific hidden tests");
 
         const isAriaHidden = !!el.ariaHidden;
@@ -106,21 +106,19 @@ javascript: (() => {
     ) {
       // Check if the element is hidden
       isHidden = isHidden || isThisHidden(element);
+      const isShadowElement = element.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
 
       // Now get the element's parent element for the next iteration
       if (element.parentNode) {
         element = element.parentNode;
-      } else if (element.getRootNode() && element.getRootNode().host.parentNode) {
+      } else if (isShadowElement) {
         element = element.getRootNode().host.parentNode;
       } else {
         element = null;
       }
 
       if (!isHidden && element) {
-        const parentName =
-          element.nodeType === Node.DOCUMENT_FRAGMENT_NODE
-            ? element.host.nodeName
-            : element.nodeName;
+        const parentName = isShadowElement ? element.host.nodeName : element.nodeName;
         log("Next parent: " + parentName);
       }
     }
