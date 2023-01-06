@@ -251,9 +251,20 @@ javascript: (() => {
 
   // Fade out background images to indicate they are not tested
   function fadeBackgroundImages(node) {
-    // Only fade images with a url, and not just colors/gradients
-    if (node.style.backgroundImage.match("url") || node.style.background.match("url")) {
+    // Only fade images with a url/var value, not colors/gradients
+
+    if (isShadowElement(node)) {
+      node = node.host;
+    }
+
+    if (
+      node.style &&
+      (node.style.backgroundImage.match("url") ||
+        node.style.background.match("url") ||
+        node.style.backgroundImage.match("var"))
+    ) {
       log("Background image found. They are not tested.");
+      //node.style.setProperty("background-image", "none");
       node.style.setProperty("background-color", "#fffd");
       node.style.setProperty("background-blend-mode", "color");
     }
@@ -287,7 +298,7 @@ javascript: (() => {
           }
 
           findAndTestImages(shadowNode);
-          fadeBackgroundImages(node);
+          fadeBackgroundImages(shadowNode);
 
           // Keep checking for more nesting levels.
           findNestedShadowRoots(shadowNode, level);
@@ -308,7 +319,7 @@ javascript: (() => {
         }
 
         findAndTestImages(shadowNode);
-        fadeBackgroundImages(node);
+        fadeBackgroundImages(shadowNode);
 
         findNestedShadowRoots(shadowNode);
       }
