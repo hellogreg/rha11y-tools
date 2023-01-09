@@ -152,7 +152,7 @@ javascript: (() => {
       const hasTitle = title && title.textContent;
       log(" - Has <title>: " + !!hasTitle);
       if (hasTitle) {
-        const titleText = svg.querySelector("svg > title").textContent || "[unspecified]";
+        const titleText = svg.querySelector("svg > title").textContent;
         log(" - title: " + titleText);
       }
       return !!hasTitle;
