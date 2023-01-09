@@ -1,5 +1,5 @@
 javascript: (() => {
-  const outputMessagesDefault = true;
+  let outputMessagesDefault = true;
   let outputMessages = outputMessagesDefault;
 
   function log(m) {
@@ -54,6 +54,7 @@ javascript: (() => {
 
   // Test all the ways elements can be hidden from assistive tech.
   function isElementOrParentHidden(element) {
+    outputMessages = false;
     function isThisHidden(el) {
       let hidden = false;
 
@@ -127,6 +128,8 @@ javascript: (() => {
       }
     }
 
+    outputMessages = outputMessagesDefault;
+
     log("Either element or a parent is hidden: " + isHidden);
     return !!isHidden;
   }
@@ -149,7 +152,7 @@ javascript: (() => {
       const hasTitle = title && title.textContent;
       log(" - Has <title>: " + !!hasTitle);
       if (hasTitle) {
-        const titleText = svg.querySelector("svg > title").textContent || "[unspecified]";
+        const titleText = svg.querySelector("svg > title").textContent;
         log(" - title: " + titleText);
       }
       return !!hasTitle;
@@ -225,30 +228,6 @@ javascript: (() => {
     outputA11yResults(svg, isAccessible);
   }
 
-  function findAndTestImages(node) {
-    const svgs = node.querySelectorAll("svg");
-    for (const svg of svgs) {
-      log("Located an <svg>");
-      log(svg.outerHTML);
-      checkSvgA11y(svg);
-      log();
-    }
-
-    // Get all non-shadow imgs
-    const imgs = node.querySelectorAll("img");
-    for (const img of imgs) {
-      log("Located an <img>");
-      log(img.outerHTML);
-      checkImgA11y(img);
-      log();
-    }
-
-    if (svgs.length === 0 && imgs.length === 0) {
-      log("No <img> or <svg> elements within");
-      log();
-    }
-  }
-
   // Fade out background images to indicate they are not tested
   function fadeBackgroundImages(node) {
     // Only fade images with a url/var value, not colors/gradients
@@ -270,66 +249,57 @@ javascript: (() => {
     }
   }
 
-  function findAndTestNonShadowImages() {
-    // By default, we want to test all images in the whole document.
-    // Change this parameter to narrow the scope.
-    const region = document;
-    findAndTestImages(region);
-    const nodes = document.querySelectorAll("*");
+  let rootLevel = 0;
+  function findAndTestImages(root) {
+    const nodes = root.querySelectorAll("*");
+
     for (const node of nodes) {
-      fadeBackgroundImages(node);
-    }
-  }
-
-  // Get all imgs and svgs in top-level and nested shadowRoots.
-  function findAndTestShadowImages() {
-    // Find shadowRoots nested within other shadowRoots
-    function findNestedShadowRoots(root, level) {
-      level = level + 1 || 1;
-      const nodes = root.querySelectorAll("*");
-      for (const node of nodes) {
-        const shadowNode = node.shadowRoot;
-        if (shadowNode) {
-          const rootName = shadowNode.host.nodeName || "[unspecified]";
-          const rootId = shadowNode.host.id || null;
-          log("Found a nested shadowRoot (nesting level " + level + "): " + rootName);
-          if (rootId) {
-            log("id: " + rootId);
-          }
-
-          findAndTestImages(shadowNode);
-          fadeBackgroundImages(shadowNode);
-
-          // Keep checking for more nesting levels.
-          findNestedShadowRoots(shadowNode, level);
-        }
+      if (node.nodeName.toLowerCase() === "svg") {
+        log();
+        log("Located an <svg>");
+        log(node.outerHTML);
+        checkSvgA11y(node);
       }
-    }
 
-    // Get all elements on page and then check to see if they have shadowRoots
-    const nodes = document.querySelectorAll("*");
-    for (const node of nodes) {
+      if (node.nodeName.toLowerCase() === "img") {
+        log();
+        log("Located an <img>");
+        log(node.outerHTML);
+        checkImgA11y(node);
+      }
+
       const shadowNode = node.shadowRoot;
       if (shadowNode) {
         const rootName = shadowNode.host.nodeName || "[unspecified]";
+        rootLevel += 1;
         const rootId = shadowNode.host.id || null;
-        log("Found a shadowRoot: " + rootName);
+        log();
+        log("Checking " + rootName + " shadowRoot at nesting level " + rootLevel);
         if (rootId) {
           log("id: " + rootId);
         }
-
         findAndTestImages(shadowNode);
-        fadeBackgroundImages(shadowNode);
-
-        findNestedShadowRoots(shadowNode);
       }
+
+      fadeBackgroundImages(node);
     }
+
+    if (rootLevel > 0 && root.host.nodeName) {
+      log();
+      log("Exiting " + root.host.nodeName + " shadowRoot at nesting level " + rootLevel);
+      rootLevel -= 1;
+    }
+    log();
   }
 
   (function init() {
+    log();
     log("Initiating Rha11y-img bookmarklet");
     log();
-    findAndTestNonShadowImages();
-    findAndTestShadowImages();
+
+    // By default, we want to test all elements in the document body.
+    // Change this parameter to narrow the scope.
+    const root = document.body;
+    findAndTestImages(root);
   })();
 })();
