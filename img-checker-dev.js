@@ -79,35 +79,32 @@ javascript: (() => {
     return !!isHidden;
   }
 
+  // Run up the DOM to check if the element or any parents are hidden
+  //
   function isElementOrParentHidden(element) {
+    function continueTesting(el) {
+      return (
+        !!el &&
+        el.nodeName !== "BODY" &&
+        el.nodeName !== "HTML" &&
+        el.nodeType !== Node.DOCUMENT_NODE &&
+        el.nodeName
+      );
+    }
+
+    element = isDocumentFragment(element) ? element.getRootNode().host : element;
     let isHidden = false;
 
-    // Run up the DOM to check if the element or any parents are hidden
-    while (
-      !isHidden &&
-      !!element &&
-      element.nodeName !== "BODY" &&
-      element.nodeName !== "HTML" &&
-      element.nodeType !== Node.DOCUMENT_NODE &&
-      element.nodeName
-    ) {
+    while (!isHidden && continueTesting(element)) {
       // Check if the element is hidden
       isHidden = isHidden || isElementHidden(element);
 
       // Now get the element's parent element for the next iteration
-      if (element.parentNode) {
-        element = element.parentNode;
-      } else if (isDocumentFragment(element)) {
-        element = element.getRootNode().host.parentNode;
-      } else {
-        element = null;
-      }
+      element = element.parentNode ? element.parentNode : null;
+      element = isDocumentFragment(element) ? element.getRootNode().host : element;
 
-      if (!isHidden && element) {
-        const parentName = isDocumentFragment(element)
-          ? element.getRootNode().host.nodeName
-          : element.nodeName;
-        log("Next parent: " + parentName);
+      if (!isHidden && continueTesting(element)) {
+        log("Next parent: " + element.nodeName);
       }
     }
 
@@ -273,7 +270,7 @@ javascript: (() => {
       fadeBackgroundImages(node);
     }
 
-    let nodeName = root.getRootNode().host.nodeName || null;
+    let nodeName = root.getRootNode().host ? root.getRootNode().host.nodeName : null;
     if (rootLevel > 0 && nodeName) {
       log();
       log("Exiting " + nodeName + " shadowRoot at nesting level " + rootLevel);
