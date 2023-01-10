@@ -45,17 +45,6 @@ javascript: (() => {
     element.style.setProperty("filter", "initial", "important");
   }
 
-  // Test whether an <img> element has an alt attribute, even if it's null
-  function hasAltAttribute(img) {
-    const hasAlt = !!img.hasAttribute("alt");
-    log(" - Has alt attribute: " + hasAlt);
-    if (hasAlt) {
-      const altValue = img.getAttribute("alt") || "[decorative]";
-      log(" - Image alt value: " + altValue);
-    }
-    return !!hasAlt;
-  }
-
   // Test all the ways elements can be hidden from assistive tech.
   function isElementOrParentHidden(element) {
     function isThisHidden(el) {
@@ -126,20 +115,29 @@ javascript: (() => {
 
   // Test if an image is accessible (has alt or is hidden)
   function checkImgA11y(img) {
+    // Test whether an <img> element has an alt attribute, even if it's null
+    function hasAltAttribute(img) {
+      const hasAlt = !!img.hasAttribute("alt");
+      log(" - Has alt attribute: " + hasAlt);
+      if (hasAlt) {
+        const altValue = img.getAttribute("alt") || "[decorative]";
+        log(" - Image alt value: " + altValue);
+      }
+      return !!hasAlt;
+    }
+
     let isAccessible = false;
 
     log("Checking if <img> is accessible");
-
     isAccessible = isAccessible || hasAltAttribute(img);
     isAccessible = isAccessible || isElementOrParentHidden(img);
-
     log("<img> is accessible: " + isAccessible);
+
     outputA11yResults(img, isAccessible);
   }
 
   // Test if an svg is accessible (has an accessible name/role or is hidden)
   function checkSvgA11y(svg) {
-    //dir(svg);
     function hasTitle(s) {
       //const title = s.querySelector("svg > title");
       const hasTitle =
