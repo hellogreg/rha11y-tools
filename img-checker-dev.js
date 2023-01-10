@@ -139,7 +139,6 @@ javascript: (() => {
   // Test if an svg is accessible (has an accessible name/role or is hidden)
   function checkSvgA11y(svg) {
     function hasTitle(s) {
-      //const title = s.querySelector("svg > title");
       const hasTitle =
         svg.firstElementChild.tagName === "title" && !!svg.firstElementChild.textContent;
       log(" - Has <title>: " + !!hasTitle);
@@ -167,16 +166,18 @@ javascript: (() => {
 
     function hasAriaLabelledby(s) {
       function getAriaLabelledbyValue(id) {
-        let value;
+        let labelTarget;
+        let labelValue;
 
-        // See if the aria-labelledby element is within the SVG itself or elsewhere in the page
-        value = value || s.getElementById(id) ? s.getElementById(id).textContent : null;
-        value =
-          value || document.getElementById(id) ? document.getElementById(id).textContent : null;
+        // See if we can locate the aria-labelledby's target element
+        labelTarget = labelTarget || s.getElementById(id);
+        labelTarget = labelTarget || document.getElementById(id);
+        // TODO: See if the targetelement is in a shadowRoot somewhere.
 
-        // TODO: See if the aria-labelledby element is in a shadowRoot somewhere.
+        // If we have a target, get its textContent value
+        labelValue = labelTarget ? labelTarget.textContent : false;
 
-        return value;
+        return labelValue;
       }
 
       const ariaLabelledbyId = s.ariaLabelledby || s.getAttribute("aria-labelledby");
