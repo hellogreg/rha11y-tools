@@ -48,10 +48,16 @@ javascript: (() => {
     return !!node.shadowRoot;
   }
 
+  // Returns an element we can use, whether in the shadow DOM or not
+  function getElementHost(element) {
+    element = isDocumentFragment(element) ? element.getRootNode().host : element;
+    return element;
+  }
+
   // Test all the ways an element can be hidden from assistive tech.
   function isElementHidden(element) {
     let isHidden = false;
-    element = isDocumentFragment(element) ? element.getRootNode().host : element;
+    element = getElementHost(element);
 
     const elementName = element.nodeName;
     log("Checking if " + elementName + " is hidden");
@@ -92,7 +98,7 @@ javascript: (() => {
       );
     }
 
-    element = isDocumentFragment(element) ? element.getRootNode().host : element;
+    element = getElementHost(element);
     let isHidden = false;
 
     while (!isHidden && continueTesting(element)) {
@@ -101,7 +107,7 @@ javascript: (() => {
 
       // Now get the element's parent element for the next iteration
       element = element.parentNode ? element.parentNode : null;
-      element = isDocumentFragment(element) ? element.getRootNode().host : element;
+      element = getElementHost(element);
 
       if (!isHidden && continueTesting(element)) {
         log("Next parent: " + element.nodeName);
