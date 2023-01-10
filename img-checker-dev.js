@@ -34,6 +34,7 @@ javascript: (() => {
     element.setAttribute("data-a11y", "Accessible: " + !!accessible);
 
     // Outline the image with the pass/fail color.
+    // (Must reset filters on image, too, to ensure proper outlining)
     //
     const colorPass = "#09fd";
     const colorFail = "#f90d";
