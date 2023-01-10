@@ -138,7 +138,7 @@ javascript: (() => {
 
   // Test if an svg is accessible (has an accessible name/role or is hidden)
   function checkSvgA11y(svg) {
-    dir(svg);
+    //dir(svg);
     function hasTitle(s) {
       //const title = s.querySelector("svg > title");
       const hasTitle =
