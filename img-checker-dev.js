@@ -1,7 +1,11 @@
 javascript: (() => {
+  //
+  // outputMessages toggles whether log() and dir() output anything
   let outputMessagesDefault = true;
   let outputMessages = outputMessagesDefault;
 
+  // Custom log() and dir() functions, so we don't have to prepend with console
+  //
   function log(m) {
     if (outputMessages) {
       m = m !== undefined ? m : " \n------------------------------";
@@ -15,22 +19,11 @@ javascript: (() => {
     }
   }
 
-  // Returns whether a tested element is a document-fragment
-  function isDocumentFragment(node) {
-    return node.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
-  }
-
-  // Returns whether a node is in the shadow DOM
-  function hasShadowRoot(node) {
-    return !!node.shadowRoot;
-  }
-
   // Display the test results: outline around image and data-a11y attribute in element
+  //
   function outputA11yResults(element, accessible) {
-    // Add a data-a11y attribute to the element.
-    // This attribute lists test results for someone inspecting the element.
+    // The data-a11y attribute lists test results for someone inspecting the element.
     // TODO: Add more detail to the results.
-    //
     element.setAttribute("data-a11y", "Accessible: " + !!accessible);
 
     // Outline the image with the pass/fail color.
@@ -45,42 +38,51 @@ javascript: (() => {
     element.style.setProperty("filter", "initial", "important");
   }
 
-  // Test all the ways elements can be hidden from assistive tech.
+  // Returns whether a tested element is a document-fragment
+  function isDocumentFragment(node) {
+    return node.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
+  }
+
+  // Returns whether a node is in the shadow DOM
+  function hasShadowRoot(node) {
+    return !!node.shadowRoot;
+  }
+
+  // Test all the ways an element can be hidden from assistive tech.
+  function isElementHidden(element) {
+    let isHidden = false;
+    element = isDocumentFragment(element) ? element.getRootNode().host : element;
+
+    const elementName = element.nodeName;
+    log("Checking if " + elementName + " is hidden");
+    //dir(element);
+
+    // Check for hidden attribute
+    const hasHiddenAttr = !!element.hidden;
+    isHidden = isHidden || hasHiddenAttr;
+    log(" - hidden attribute: " + hasHiddenAttr);
+
+    const hasDisplayNone = getComputedStyle(element).display === "none";
+    isHidden = isHidden || hasDisplayNone;
+    log(" - display:none: " + hasDisplayNone);
+
+    const isAriaHidden = !!element.ariaHidden || element.getAttribute("aria-hidden") === "true";
+    isHidden = isHidden || isAriaHidden;
+    log(" - aria-hidden: " + isAriaHidden);
+
+    const hasRolePresentation = element.getAttribute("role") === "presentation";
+    isHidden = isHidden || hasRolePresentation;
+    log(" - role=presentation: " + hasRolePresentation);
+
+    // TODO: Any other ways it could be hidden?
+
+    return !!isHidden;
+  }
+
   function isElementOrParentHidden(element) {
-    function isThisHidden(el) {
-      let hidden = false;
-
-      el = isDocumentFragment(el) ? el.getRootNode().host : el;
-
-      const elementName = el.nodeName;
-      log("Checking if " + elementName + " is hidden");
-      //dir(el);
-
-      // Check for hidden attribute
-      const hasHiddenAttr = !!el.hidden;
-      hidden = hidden || hasHiddenAttr;
-      log(" - hidden attribute: " + hasHiddenAttr);
-
-      const hasDisplayNone = getComputedStyle(el).display === "none";
-      hidden = hidden || hasDisplayNone;
-      log(" - display:none: " + hasDisplayNone);
-
-      const isAriaHidden = !!el.ariaHidden || el.getAttribute("aria-hidden") === "true";
-      hidden = hidden || isAriaHidden;
-      log(" - aria-hidden: " + isAriaHidden);
-
-      const hasRolePresentation = el.getAttribute("role") === "presentation";
-      hidden = hidden || hasRolePresentation;
-      log(" - role=presentation: " + hasRolePresentation);
-
-      // TODO: Any other ways it could be hidden?
-
-      return !!hidden;
-    }
-
     let isHidden = false;
 
-    // Check if element *or any parents* are hidden
+    // Run up the DOM to check if the element or any parents are hidden
     while (
       !isHidden &&
       !!element &&
@@ -90,7 +92,7 @@ javascript: (() => {
       element.nodeName
     ) {
       // Check if the element is hidden
-      isHidden = isHidden || isThisHidden(element);
+      isHidden = isHidden || isElementHidden(element);
 
       // Now get the element's parent element for the next iteration
       if (element.parentNode) {
@@ -113,102 +115,103 @@ javascript: (() => {
     return !!isHidden;
   }
 
-  // Test if an image is accessible (has alt or is hidden)
-  function checkImgA11y(img) {
-    // Test whether an <img> element has an alt attribute, even if it's null
-    function hasAltAttribute(img) {
-      const hasAlt = !!img.hasAttribute("alt");
-      log(" - Has alt attribute: " + hasAlt);
-      if (hasAlt) {
-        const altValue = img.getAttribute("alt") || "[decorative]";
-        log(" - Image alt value: " + altValue);
-      }
-      return !!hasAlt;
+  // Test whether an <img> element has an alt attribute, even if it's null
+  function hasAltAttribute(img) {
+    const hasAlt = !!img.hasAttribute("alt");
+    log(" - Has alt attribute: " + hasAlt);
+    if (hasAlt) {
+      const altValue = img.getAttribute("alt") || "[decorative]";
+      log(" - Image alt value: " + altValue);
+    }
+    return !!hasAlt;
+  }
+
+  // Test whether an <svg> element has a <title> as its first child element
+  function hasTitleElement(svg) {
+    const hasTitle =
+      svg.firstElementChild.tagName === "title" && !!svg.firstElementChild.textContent;
+    log(" - Has <title>: " + !!hasTitle);
+    if (hasTitle) {
+      log(" - title: " + svg.firstElementChild.textContent);
+    }
+    return !!hasTitle;
+  }
+
+  // Test whether an element has role="img"
+  function hasImgRole(element) {
+    const hasImgRole = element.getAttribute("role") === "img";
+    log(" - Has role=img (not required/sufficient on its own): " + !!hasImgRole);
+    return !!hasImgRole;
+  }
+
+  // Test whether an element has an aria-label
+  function hasAriaLabel(element) {
+    const ariaLabel = element.ariaLabel || element.getAttribute("aria-label");
+    const hasAriaLabel = !!ariaLabel;
+    log(" - Has aria-label: " + hasAriaLabel);
+    if (hasAriaLabel) {
+      log(" - aria-label: " + ariaLabel);
+    }
+    return !!hasAriaLabel;
+  }
+
+  // Get an element's aria-labelledby value from its target
+  function getAriaLabelledbyValue(id) {
+    // See if we can locate the aria-labelledby's target element in regular DOM.
+    let labelTarget = document.getElementById(id);
+    // TODO: See if the target id is in a shadowRoot somewhere.
+
+    let labelValue = labelTarget ? labelTarget.textContent : null;
+    return labelValue;
+  }
+
+  // Test whether an element has an aria-labelledby attribute
+  function hasAriaLabelledby(element) {
+    const ariaLabelledbyId = element.ariaLabelledby || element.getAttribute("aria-labelledby");
+    const hasAriaLabelledby = !!ariaLabelledbyId;
+    log(" - Has aria-labelledby: " + hasAriaLabelledby);
+
+    // Get the label value if the element has aria-labelledby attribute.
+    let ariaLabelledbyValue;
+    let hasAriaLabelledbyValue = null;
+    if (hasAriaLabelledby) {
+      ariaLabelledbyValue = getAriaLabelledbyValue(ariaLabelledbyId);
+      hasAriaLabelledbyValue = !!ariaLabelledbyValue;
+      log(" - aria-labelledby id: " + ariaLabelledbyId);
+      log(" - aria-labelledby value: " + ariaLabelledbyValue);
     }
 
+    // TODO: We're currently returning true if there's an aria-labelledby attribute at all.
+    // But we should check to make sure it has a valid id and value.
+    // Once hasAriaLabelledbyValue() can check shadowRoots, use the following:
+    // return !!hasAriaLabelledbyValue;
+    // But for now, we're using this:
+    return !!hasAriaLabelledby;
+  }
+
+  // Test if an image is accessible (has alt or is hidden)
+  //
+  function checkImgA11y(img) {
     let isAccessible = false;
 
     log("Checking if <img> is accessible");
     isAccessible = isAccessible || hasAltAttribute(img);
     isAccessible = isAccessible || isElementOrParentHidden(img);
-    log("<img> is accessible: " + isAccessible);
 
+    log("<img> is accessible: " + isAccessible);
     outputA11yResults(img, isAccessible);
   }
 
   // Test if an svg is accessible (has an accessible name/role or is hidden)
+  //
   function checkSvgA11y(svg) {
-    function hasTitle(s) {
-      const hasTitle =
-        svg.firstElementChild.tagName === "title" && !!svg.firstElementChild.textContent;
-      log(" - Has <title>: " + !!hasTitle);
-      if (hasTitle) {
-        log(" - title: " + svg.firstElementChild.textContent);
-      }
-      return !!hasTitle;
-    }
-
-    function hasImgRole(s) {
-      const hasImgRole = s.getAttribute("role") === "img";
-      log(" - Has role=img (not required/sufficient on its own): " + !!hasImgRole);
-      return !!hasImgRole;
-    }
-
-    function hasAriaLabel(s) {
-      const ariaLabel = s.ariaLabel || s.getAttribute("aria-label");
-      const hasAriaLabel = !!ariaLabel;
-      log(" - Has aria-label: " + hasAriaLabel);
-      if (hasAriaLabel) {
-        log(" - aria-label: " + ariaLabel);
-      }
-      return !!hasAriaLabel;
-    }
-
-    function hasAriaLabelledby(s) {
-      function getAriaLabelledbyValue(id) {
-        let labelTarget;
-        let labelValue;
-
-        // See if we can locate the aria-labelledby's target element
-        labelTarget = labelTarget || s.getElementById(id);
-        labelTarget = labelTarget || document.getElementById(id);
-        // TODO: See if the targetelement is in a shadowRoot somewhere.
-
-        // If we have a target, get its textContent value
-        labelValue = labelTarget ? labelTarget.textContent : false;
-
-        return labelValue;
-      }
-
-      const ariaLabelledbyId = s.ariaLabelledby || s.getAttribute("aria-labelledby");
-      const hasAriaLabelledby = !!ariaLabelledbyId;
-      log(" - Has aria-labelledby: " + hasAriaLabelledby);
-
-      // Get the label value if the element has aria-labelledby attribute.
-      let ariaLabelledbyValue;
-      let hasAriaLabelledbyValue = null;
-      if (hasAriaLabelledby) {
-        ariaLabelledbyValue = getAriaLabelledbyValue(ariaLabelledbyId);
-        hasAriaLabelledbyValue = !!ariaLabelledbyValue;
-        log(" - aria-labelledby id: " + ariaLabelledbyId);
-        log(" - aria-labelledby value: " + ariaLabelledbyValue);
-      }
-
-      // TODO: We're currently returning true if there's an aria-labelledby attribute at all.
-      // But we should check to make sure it has a valid id and value.
-      // Once hasAriaLabelledbyValue() can check shadowRoots, use the following:
-      // return !!hasAriaLabelledbyValue;
-      // But for now, we're using this:
-      return !!hasAriaLabelledby;
-    }
-
     log("Checking if inline <svg> is accessible");
 
     let isAccessible = false;
 
     // Check if the SVG has an accessible name...
     hasImgRole(svg); // Not currently required, but still worth checking.
-    isAccessible = isAccessible || !!hasTitle(svg);
+    isAccessible = isAccessible || !!hasTitleElement(svg);
     isAccessible = isAccessible || !!hasAriaLabel(svg);
     isAccessible = isAccessible || !!hasAriaLabelledby(svg);
     // TODO: Any other ways for an svg to be accessible?
@@ -221,11 +224,11 @@ javascript: (() => {
   }
 
   // Fade out background images to indicate they are not tested
+  //
   function fadeBackgroundImages(node) {
-    // Only fade images with a url/var value, not colors/gradients
-
     node = isDocumentFragment(node) ? node.getRootNode().host : node;
 
+    // Only fade images with a url/var value, not colors/gradients
     if (
       node.style &&
       (node.style.backgroundImage.match("url") ||
@@ -244,13 +247,6 @@ javascript: (() => {
     const nodes = root.querySelectorAll("*");
 
     for (const node of nodes) {
-      if (node.nodeName.toLowerCase() === "svg") {
-        log();
-        log("Located an <svg>");
-        log(node.outerHTML);
-        checkSvgA11y(node);
-      }
-
       if (node.nodeName.toLowerCase() === "img") {
         log();
         log("Located an <img>");
@@ -258,27 +254,29 @@ javascript: (() => {
         checkImgA11y(node);
       }
 
+      if (node.nodeName.toLowerCase() === "svg") {
+        log();
+        log("Located an <svg>");
+        log(node.outerHTML);
+        checkSvgA11y(node);
+      }
+
       if (hasShadowRoot(node)) {
         const shadowNode = node.shadowRoot;
         const rootName = shadowNode.getRootNode().host.nodeName || "[unspecified]";
         rootLevel += 1;
-        const rootId = shadowNode.getRootNode().host.id || null;
         log();
         log("Checking " + rootName + " shadowRoot at nesting level " + rootLevel);
-        if (rootId) {
-          log("id: " + rootId);
-        }
         findAndTestImages(shadowNode);
       }
 
       fadeBackgroundImages(node);
     }
 
-    if (rootLevel > 0 && root.getRootNode().host.nodeName) {
+    let nodeName = root.getRootNode().host.nodeName || null;
+    if (rootLevel > 0 && nodeName) {
       log();
-      log(
-        "Exiting " + root.getRootNode().host.nodeName + " shadowRoot at nesting level " + rootLevel
-      );
+      log("Exiting " + nodeName + " shadowRoot at nesting level " + rootLevel);
       rootLevel -= 1;
     }
     log();
