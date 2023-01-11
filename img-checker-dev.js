@@ -303,20 +303,6 @@ javascript: (() => {
     log();
   }
 
-  function highlightFocusableItems() {
-    //https://zellwk.com/blog/keyboard-focusable-elements/
-
-    function getKeyboardFocusableElements(element = document) {
-      return [
-        ...element.querySelectorAll(
-          'a[href], button, input, textarea, select, details,[tabindex]:not([tabindex="-1"])'
-        ),
-      ].filter((el) => !el.hasAttribute("disabled") && !el.getAttribute("aria-hidden"));
-    }
-
-    dir(highlightFocusableItems());
-  }
-
   (function init() {
     log();
     log("Initiating Rha11y-img bookmarklet");
@@ -324,7 +310,6 @@ javascript: (() => {
 
     // By default, we want to test all elements in the document body.
     const root = document.body;
-    //findAndTestImages(root);
-    highlightFocusableItems();
+    findAndTestImages(root);
   })();
 })();
