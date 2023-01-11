@@ -72,6 +72,10 @@ javascript: (() => {
     isHidden = isHidden || hasDisplayNone;
     log(" - display:none: " + hasDisplayNone);
 
+    const hasVisibilityHidden = getComputedStyle(element).visibility === "hidden";
+    isHidden = isHidden || hasVisibilityHidden;
+    log(" - visbility:hidden: " + hasVisibilityHidden);
+
     const isAriaHidden = !!element.ariaHidden || element.getAttribute("aria-hidden") === "true";
     isHidden = isHidden || isAriaHidden;
     log(" - aria-hidden: " + isAriaHidden);
@@ -269,7 +273,7 @@ javascript: (() => {
         const rootName = shadowNode.getRootNode().host.nodeName || "[unspecified]";
         rootLevel += 1;
         log();
-        log("Checking " + rootName + " shadowRoot at nesting level " + rootLevel);
+        log("Entering " + rootName + " shadowRoot at nesting level " + rootLevel);
         findAndTestImages(shadowNode);
       }
 
