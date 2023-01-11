@@ -38,7 +38,15 @@ javascript: (() => {
     element.style.setProperty("filter", "initial", "important");
   }
 
-  // Returns whether a tested element is a document-fragment
+  function isImg(element) {
+    return element.nodeName.toLowerCase() === "img";
+  }
+
+  function isSvg(element) {
+    return element.nodeName.toLowerCase() === "svg";
+  }
+
+  // Returns whether a tested node is a document-fragment
   function isDocumentFragment(node) {
     return node.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
   }
@@ -80,9 +88,12 @@ javascript: (() => {
     isHidden = isHidden || isAriaHidden;
     log(" - aria-hidden: " + isAriaHidden);
 
-    const hasRolePresentation = element.getAttribute("role") === "presentation";
-    isHidden = isHidden || hasRolePresentation;
-    log(" - role=presentation: " + hasRolePresentation);
+    // role="presentation" is only tested on the image itself
+    if (isImg(element) || isSvg(element)) {
+      const hasRolePresentation = element.getAttribute("role") === "presentation";
+      isHidden = isHidden || hasRolePresentation;
+      log(" - role=presentation: " + hasRolePresentation);
+    }
 
     // TODO: Any other ways it could be hidden?
 
@@ -254,14 +265,14 @@ javascript: (() => {
     const nodes = root.querySelectorAll("*");
 
     for (const node of nodes) {
-      if (node.nodeName.toLowerCase() === "img") {
+      if (isImg(node)) {
         log();
         log("Located an <img>");
         log(node.outerHTML);
         checkImgA11y(node);
       }
 
-      if (node.nodeName.toLowerCase() === "svg") {
+      if (isSvg(node)) {
         log();
         log("Located an <svg>");
         log(node.outerHTML);
