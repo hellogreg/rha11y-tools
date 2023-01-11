@@ -46,26 +46,22 @@ javascript: (() => {
     return element.nodeName.toLowerCase() === "svg";
   }
 
-  // Returns whether a tested node is a document-fragment
-  function isDocumentFragment(node) {
-    return node.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
-  }
-
   // Returns whether a node is in the shadow DOM
   function hasShadowRoot(node) {
     return !!node.shadowRoot;
   }
 
   // Returns an element we can use, whether in the shadow DOM or not
-  function getElementHost(element) {
-    element = isDocumentFragment(element) ? element.getRootNode().host : element;
+  function getTestableElement(element) {
+    element =
+      element.nodeType === Node.DOCUMENT_FRAGMENT_NODE ? element.getRootNode().host : element;
     return element;
   }
 
   // Test all the ways an element can be hidden from assistive tech.
   function isElementHidden(element) {
     let isHidden = false;
-    element = getElementHost(element);
+    element = getTestableElement(element);
 
     const elementName = element.nodeName;
     log("Checking if " + elementName + " is hidden");
@@ -113,7 +109,7 @@ javascript: (() => {
       );
     }
 
-    element = getElementHost(element);
+    element = getTestableElement(element);
     let isHidden = false;
 
     while (!isHidden && continueTesting(element)) {
@@ -122,7 +118,7 @@ javascript: (() => {
 
       // Now get the element's parent element for the next iteration
       element = element.parentNode ? element.parentNode : null;
-      element = getElementHost(element);
+      element = getTestableElement(element);
 
       if (!isHidden && continueTesting(element)) {
         log("Next parent: " + element.nodeName);
@@ -244,7 +240,7 @@ javascript: (() => {
   // Fade out background images to indicate they are not tested
   //
   function fadeBackgroundImages(node) {
-    node = isDocumentFragment(node) ? node.getRootNode().host : node;
+    node = getTestableElement(node);
 
     // Only fade images with a url/var value, not colors/gradients
     if (
