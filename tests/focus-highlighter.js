@@ -19,31 +19,38 @@ javascript: (() => {
     }
   }
 
+  function highlightElements(elements) {
+    for (const element of elements) {
+      element.style.setProperty("outline", "#f90d solid 8px", "important");
+      element.style.setProperty("outline-offset", "-4px", "important");
+      element.style.setProperty("border-radius", "2px", "important");
+      element.style.setProperty("filter", "initial", "important");
+    }
+  }
+
   function highlightFocusableItems(element) {
     //https://zellwk.com/blog/keyboard-focusable-elements/
 
     function getKeyboardFocusableElements(element) {
-      const allItems = element.querySelectorAll(
+      let allItems = element.querySelectorAll(
         "a[href], button, input, textarea, select, details,[tabindex]:not([tabindex='-1'])"
       );
 
-      const filteredItems = [allItems].filter(
+      dir(allItems);
+      allItems = Array.from(allItems);
+
+      const filteredItems = allItems.filter(
         (el) => !el.hasAttribute("disabled") && !el.getAttribute("aria-hidden")
       );
 
       return filteredItems;
     }
 
-    const items = getKeyboardFocusableElements(element);
-    dir(items);
+    const elements = getKeyboardFocusableElements(element);
+    highlightElements(elements);
   }
 
   (function init() {
-    log();
-    log("Initiating Rha11y-img bookmarklet");
-    log();
-
-    // By default, we want to test all elements in the document body.
     const root = document.body;
     highlightFocusableItems(document.body);
   })();
