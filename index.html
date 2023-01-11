@@ -5,18 +5,19 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rha11y-img Image Checker Bookmarklet</title>
+    <title>Rha11y-img Image Bookmarklets</title>
     <link rel="stylesheet" href="img-checker.css" rel="stylesheet" />
     <script src="img-components.js"></script>
   </head>
   <body>
     <div class="page">
-      <h1>Testing images with the Rha11y-img bookmarklet</h1>
+      <h1>Testing images with the Rha11y-img bookmarklets</h1>
       <a href="https://github.com/hellogreg/rha11y-img">View this project at GitHub</a>
-      <h2>Using the bookmarklet</h2>
+      <h2>Rhally-img: check the accessibility of all page images</h2>
       <p>
-        To get the bookmarklet, drag the following link to your bookmarks bar. You may also click
-        the link directly to use it on this page for testing.
+        To get the Rhally-img bookmarklet, drag the following link to your bookmarks bar. You may
+        also click the link directly to use it on this page for testing. (Refresh the page to reset
+        it.)
       </p>
       <p>
         <strong
@@ -27,29 +28,12 @@
           ></strong
         >
       </p>
-      <!--p>
-        This bookmarklet loads the current version of the image checking script every time you run
-        it. (<em
-          >Note: we may have to add a static, non-remote-loading version here for testing on pages
-          that don't allow remote scripts.</em
-        >)
-      </p-->
-      <!--
       <p>
-        If the above doesn't work, the site you're testing may not allow remote scripts to run. In
-        that case, drag the following link to you bookmarks bar. This is the current version of the
-        bookmarklet, but it won't update automatically. You may want to check back here on occasion.
-      </p>
-      <p>
-        <a href='javascript:'>Rha11y-img (local)</a>
-      </p>
-      -->
-      <p>
-        When run, the bookmarklet identifies all images on a page and returns accessibility
-        information three ways:
+        When run, the Rha11y-img bookmarklet identifies all images on a page and returns
+        accessibility information in the following ways:
       </p>
 
-      <ol>
+      <ul>
         <li>
           All identified and tested images on the page are given 8px outlines:
           <ul>
@@ -62,13 +46,30 @@
         <li>
           Detailed accessibility test processes and results are displayed in the browser console.
         </li>
-        <li>
-          Inspecting an image shows a <strong>data-ally</strong> attribute with info on the
-          element's accessibility. (Currently, the attribute just says whether the image is
-          accessible, but giving more details is on the to-do list.)
-        </li>
-      </ol>
-      <h2>Inline SVGs</h2>
+      </ul>
+      <h2>Rhally img-hider: hide all images (including background) on a page</h2>
+      <p>
+        To get the Rhally-img bookmarklet, drag the following link to your bookmarks bar. You may
+        also click the link directly to use it on this page for testing. (Refresh the page to reset
+        it.)
+      </p>
+      <p>
+        <strong
+          ><a
+            style="display: inline-block; outline: #aaa dotted 2px; padding: 0.25rem"
+            href='javascript:!function(){var bookletCode=document.createElement("script");bookletCode.setAttribute("src","https://rha11y-img.netlify.app/img-hider.js"),document.body.appendChild(bookletCode)}();'
+            >Rha11y-img-hider</a
+          ></strong
+        >
+      </p>
+      <p>
+        When run, the Rha11y-img-hider bookmarklet hides all images on a page--including background
+        images. This bookmarklet is mostly useful just for making sure you can still view your page
+        text if images don't load. (You always want to have high contrast between text and
+        background colors, just in case of such an occurrence.)
+      </p>
+      <h2>Test images</h2>
+      <h3>Inline SVGs</h3>
       <div class="cards">
         <div>
           <svg
@@ -193,7 +194,7 @@
           </ul>
         </div>
       </div>
-      <h2>Non-shadow JPG &lt;img&gt; elements</h2>
+      <h3>Non-shadow JPG &lt;img&gt; elements</h3>
       <div class="cards">
         <div>
           <img src="testimg.jpg?test=img01" />
@@ -241,7 +242,7 @@
           </ul>
         </div>
       </div>
-      <h2>Non-shadow SVG &lt;img&gt; elements</h2>
+      <h3>Non-shadow SVG &lt;img&gt; elements</h3>
       <div class="cards">
         <div>
           <img src="testsvg.svg?test=svg01" />
@@ -289,7 +290,7 @@
           </ul>
         </div>
       </div>
-      <h2>Shadow &lt;img&gt; elements</h2>
+      <h3>Shadow &lt;img&gt; elements</h3>
       <div class="cards">
         <div>
           <wc-img></wc-img>
