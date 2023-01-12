@@ -21,6 +21,7 @@ javascript: (() => {
 
   function highlightElements(elements) {
     for (const element of elements) {
+      dir(element);
       element.style.setProperty("outline", "#f90d solid 8px", "important");
       element.style.setProperty("outline-offset", "-4px", "important");
       element.style.setProperty("border-radius", "2px", "important");
