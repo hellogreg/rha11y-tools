@@ -26,7 +26,7 @@ javascript: (() => {
     return element;
   }
 
-  function getCleanElementText(element) {
+  function getCleanText(element) {
     let text = element.textContent || "[empty]";
     text = text.replace(/(\r\n|\n|\r)/gm, "");
     text = text.trim();
@@ -47,7 +47,7 @@ javascript: (() => {
       const element = getElement(node);
 
       if (element.nodeName.toLowerCase() === "h1") {
-        addResult("<h1>" + getCleanElementText(element) + "</h1>");
+        addResult("<h1>" + getCleanText(element) + "</h1>");
       }
 
       // If the node has shadowRoot, re-run this functino for it.
