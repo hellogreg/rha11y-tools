@@ -33,38 +33,66 @@ javascript: (() => {
     return text;
   }
 
-  let headingStructureOutput = "PAGE <h1> INFORMATION";
   let h1Count = 0;
+  let h1Elements = [];
 
-  function addLine(text) {
-    headingStructureOutput = headingStructureOutput.concat("\n\n", text);
+  function addResult(text) {
+    h1Count = h1Elements.push(text);
   }
 
-  function getHeadingOutput(root) {
+  function testH1Headings(root) {
     const nodes = root.querySelectorAll("*");
 
     for (const node of nodes) {
       const element = getElement(node);
 
       if (element.nodeName.toLowerCase() === "h1") {
-        addLine("<h1>" + getCleanElementText(element) + "</h1>");
-        h1Count += 1;
+        addResult("<h1>" + getCleanElementText(element) + "</h1>");
       }
 
       // If the node has shadowRoot, re-run this functino for it.
       if (!!node.shadowRoot) {
         const shadowNode = node.shadowRoot;
-        getHeadingOutput(shadowNode);
+        testH1Headings(shadowNode);
       }
     }
+  }
+
+  function outputResults() {
+    const dialog = document.createElement("dialog");
+    document.body.appendChild(dialog);
+
+    let h2, ul, p;
+
+    h2 = document.createElement("h2");
+    h2.appendChild(document.createTextNode("H1 elements on this page"));
+    dialog.appendChild(h2);
+
+    ul = document.createElement("ul");
+    for (const h1Element of h1Elements) {
+      const li = document.createElement("li");
+      li.appendChild(document.createTextNode(h1Element));
+      ul.appendChild(li);
+    }
+    dialog.appendChild(ul);
+
+    p = document.createElement("p");
+    p.appendChild(document.createTextNode("Number of H1 elements: " + h1Count));
+    dialog.appendChild(p);
+
+    p = document.createElement("p");
+    p.appendChild(document.createTextNode("(Press [esc] to close this modal)"));
+    dialog.appendChild(p);
+
+    dialog.showModal();
   }
 
   (function init() {
     log();
     const root = document.body;
-    getHeadingOutput(root);
-    addLine("FOUND " + h1Count + " <h1> ELEMENT(S)");
-    alert(headingStructureOutput);
+    testH1Headings(root);
+    outputResults();
+    //alert(headingStructureOutput);
     log();
   })();
 })();
