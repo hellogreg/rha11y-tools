@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- https://rha11y-img.netlify.app/ -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rha11y-tools Unitasker Bookmarklets</title>
+    <link rel="stylesheet" href="rha11y-tools.css" rel="stylesheet" />
+    <script src="img-components.js"></script>
+  </head>
+  <body>
+    <div class="page">
+      <h1>Testing pages with <span style="color: #e00">rha11y-tools</span> bookmarklets</h1>
+      <p>
+        These scripts are branded to <span style="color: #e00">RHa11y</span>, Red Hat's
+        accessibility volunteer group.
+      </p>
+      <p>
+        To get a bookmarklet, drag its link to your bookmarks bar. To run it, go to the page you
+        want to test, and click the bookmarklet link you added to your bookmarks. It's recommended
+        that you refresh the page you're testing before running each bookmarklet, so they don't
+        conflict with one another.
+      </p>
+
+      <h2>
+        <span style="color: #e00">rha11y-img-checker</span>: test the accessibility of all page
+        images
+      </h2>
+      <p>
+        <strong
+          ><a
+            style="display: inline-block; outline: #aaa dotted 2px; padding: 0.25rem"
+            href='javascript: (function () {var bookletCode = document.createElement("script");bookletCode.setAttribute("src", "https://rha11y-img.netlify.app/img-checker.js");document.body.appendChild(bookletCode);})();'
+            >rha11y-img-checker</a
+          ></strong
+        >
+      </p>
+      <p>
+        When run, the rha11y-img-checker bookmarklet identifies all images on a page (including
+        inline SVGs and images in the shadow DOM) and returns accessibility information in the
+        following ways:
+      </p>
+
+      <ol>
+        <li>
+          All identified and tested images on the page are given 8px outlines:
+          <ul>
+            <li>
+              Blue outline = image passed accessibility checks or is hidden from accessible tech
+            </li>
+            <li>
+              Orange outline = image failed accessibility checks and is not hidden from accessible
+              tech
+            </li>
+            <li>No outline = image was not successfully identified</li>
+            <li>Background images are faded to white, as they are not tested</li>
+          </ul>
+        </li>
+        <li>
+          Detailed accessibility test processes and results are displayed in the browser console.
+        </li>
+      </ol>
+
+      <h2><span style="color: #e00">rha11y-img-hide</span>: hide all images on a page</h2>
+      <p>
+        <strong
+          ><a
+            style="display: inline-block; outline: #aaa dotted 2px; padding: 0.25rem"
+            href='javascript:!function(){var bookletCode=document.createElement("script");bookletCode.setAttribute("src","https://rha11y-img.netlify.app/img-hide.js"),document.body.appendChild(bookletCode)}();'
+            >rha11y-img-hide</a
+          ></strong
+        >
+      </p>
+      <p>
+        The rha11y-img-hide bookmarklet hides all images on a page, including background images.
+        This bookmarklet is useful for making sure you can still view your page text if images don't
+        load.
+      </p>
+
+      <h2><span style="color: #e00">rha11y-img-filesize</span>: ensure images aren't too large</h2>
+      <p>
+        <strong
+          ><a style="display: inline-block; outline: #aaa dotted 2px; padding: 0.25rem" href=""
+            >rha11y-img-filesize</a
+          ></strong
+        >
+      </p>
+      <p>
+        The rha11y-img-filesize bookmarklet tests all non-background images to ensure none has a
+        filesize of over 200k, per Red Hat standards. Images are oulined in blue (pass) and orange
+        (fail), as with the rha11y-img-checker bookmarklet, above. You can also view results in the
+        browser console.
+      </p>
+
+      <h2><span style="color: #e00">rha11y-heading-h1</span>: list a page's &lt;h1&gt; elements</h2>
+      <p>
+        <strong
+          ><a style="display: inline-block; outline: #aaa dotted 2px; padding: 0.25rem" href=""
+            >rha11y-heading-h1</a
+          ></strong
+        >
+      </p>
+      <p>
+        The rha11y-heading-h1 bookmarklet helps you verify that your page has only a single
+        &lt;h1&gt; tag. When run, the script opens a modal listing (and counting) all the page's
+        &lt;h1&gt; elements.
+      </p>
+
+      <h2>
+        <span style="color: #e00">rha11y-link-target</span>: ensure links don't open in new windows
+      </h2>
+      <p>
+        <strong
+          ><a style="display: inline-block; outline: #aaa dotted 2px; padding: 0.25rem" href=""
+            >rha11y-link-target</a
+          ></strong
+        >
+      </p>
+      <p>
+        The rha11y-link-target bookmarklet checks all &lt;a&gt; tags with href attributes and makes
+        sure they don't have a target set to open in a new window. (Note: this bookmarklet only
+        checks the page source and won't catch JavaScripts that open new windows.)
+      </p>
+
+      <h2><span style="color: #e00">rha11y-form-labels</span>: check all form inputs for labels</h2>
+      <p>
+        <strong
+          ><a style="display: inline-block; outline: #aaa dotted 2px; padding: 0.25rem" href=""
+            >rha11y-form-labels</a
+          ></strong
+        >
+      </p>
+      <p>
+        The rha11y-form-labels checks all non-button, non-hidden form inputs on a page and opens a
+        modal listing whether each has an associated (or enclosing) label.
+      </p>
+    </div>
+  </body>
+</html>

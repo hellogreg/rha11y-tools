@@ -164,7 +164,7 @@ javascript: (() => {
     dialog.appendChild(ul);
 
     p = document.createElement("p");
-    p.appendChild(document.createTextNode("(Press [esc] or refresh to close)"));
+    p.appendChild(document.createTextNode("Press [esc] or refresh to close"));
     dialog.appendChild(p);
 
     dialog.showModal();
