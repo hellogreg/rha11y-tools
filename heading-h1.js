@@ -92,7 +92,6 @@ javascript: (() => {
     const root = document.body;
     testH1Headings(root);
     outputResults();
-    //alert(headingStructureOutput);
     log();
   })();
 })();
