@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- https://rha11y-tools.netlify.app/ -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rha11y-img-filesize bookmarklet demo</title>
+    <link rel="stylesheet" href="rha11y-tools.css" rel="stylesheet" />
+    <script src="img-components.js"></script>
+  </head>
+  <body>
+    <div class="demo-page">
+      <h1><span class="rh-text">rha11y-img-hide</span> demo</h1>
+      <p><a href="index.html">Return to the rha11y-tools homepage</a></p>
+      <h2>Getting the bookmarklet</h2>
+      <p>
+        To get the rha11y-img-filesize bookmarklet, drag the following link to your bookmarks bar.
+        You may also click the link directly to use it on this page for testing. (Refresh the page
+        to reset it.)
+      </p>
+      <p>
+        <strong
+          ><a
+            class="book-link"
+            href='javascript: (function () {var booklink = document.createElement("script");booklink.setAttribute("src", "https://rha11y-tools.netlify.app/img-filesize.js");document.body.appendChild(booklink);})();'
+            >rha11y-img-filesize</a
+          ></strong
+        >
+      </p>
+      <p>
+        The rha11y-img-filesize bookmarklet tests all non-background images to ensure none has a
+        filesize of over 200k, per Red Hat standards. Images are outlined in blue (pass) or orange
+        (fail). Background images are not checked. You can also view detailed filesize results for
+        each identified image in the browser console.
+      </p>
+      <p>
+        (This isn't an accessibility test. But we perform this check for page QA and are sharing the
+        bookmarklet for anyone else who may find it useful.)
+      </p>
+      <h2>Test images</h2>
+      <p>These images should all vanish when you run the bookmarklet.</p>
+      <div class="cards">
+        <div>
+          <h3>Small filesize</h3>
+          <img src="testimg.jpg?test=img01" alt="people looking at a notepad" />
+          <ul>
+            <li>Under 200k</li>
+            <li>Should <strong>pass</strong></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Large filesize</h3>
+          <img src="testbgimg.jpg?test=img01" alt="man with earbuds sitting at computer" />
+          <ul>
+            <li>Over 200k</li>
+            <li>Should <strong>fail</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--script src="img-checker.js"></script-->
+  </body>
+</html>

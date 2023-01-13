@@ -35,6 +35,7 @@
           ></strong
         >
       </p>
+      <p><a href="img-checker.html">View the rha11y-img-checker demo</a></p>
       <p>
         When run, the rha11y-img-checker bookmarklet identifies all images on a page (including
         inline SVGs and images in the shadow DOM) and returns accessibility information in the
@@ -53,7 +54,7 @@
               tech
             </li>
             <li>No outline = image was not successfully identified</li>
-            <li>Background images are faded to white, as they are not tested</li>
+            <li>Background images are typically faded to white and not tested</li>
           </ul>
         </li>
         <li>
@@ -71,6 +72,7 @@
           ></strong
         >
       </p>
+      <p><a href="img-hide.html">View the rha11y-img-hide demo</a></p>
       <p>
         The rha11y-img-hide bookmarklet hides all images on a page, including background images.
         This bookmarklet is useful for making sure you can still view your page text if images don't
@@ -87,11 +89,13 @@
           ></strong
         >
       </p>
+      <p><a href="img-filesize.html">View the rha11y-img-filesize demo</a></p>
       <p>
         The rha11y-img-filesize bookmarklet tests all non-background images to ensure none has a
-        filesize of over 200k, per Red Hat standards. Images are oulined in blue (pass) and orange
-        (fail), as with the rha11y-img-checker bookmarklet, above. You can also view results in the
-        browser console.
+        filesize of over 200k, per Red Hat standards. Images are outlined in blue (pass) or orange
+        (fail). You can also view filesize details for each image in the browser console. (This
+        isn't an accessibility test. But we perform this check for page QA and are sharing the
+        bookmarklet for anyone else who may find it useful.)
       </p>
 
       <h2><span class="rh-text">rha11y-heading-h1</span>: list a page's &lt;h1&gt; elements</h2>

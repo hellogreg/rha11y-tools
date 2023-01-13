@@ -11,64 +11,48 @@
   </head>
   <body>
     <div class="demo-page">
-      <h1>Testing images with the <span class="rh-text">rha11y-tools</span> bookmarklets</h1>
-      <p>These scripts are branded to RHa11y, Red Hat's accessibility volunteer group.</p>
-      <a href="https://github.com/hellogreg/rha11y-img">View this project at GitHub</a>
-      <h2><span class="rh-text">rha11y-img</span>: check the accessibility of all page images</h2>
+      <h1><span class="rh-text">rha11y-img-checker</span> demo</h1>
+      <p><a href="index.html">Return to the rha11y-tools homepage</a></p>
+      <h2>Getting the bookmarklet</h2>
       <p>
-        To get the rha11y-img bookmarklet, drag the following link to your bookmarks bar. You may
-        also click the link directly to use it on this page for testing. (Refresh the page to reset
-        it.)
+        To get the rha11y-img-checker bookmarklet, drag the following link to your bookmarks bar.
+        You may also click the link directly to use it on this page for testing. (Refresh the page
+        to reset it.)
       </p>
       <p>
         <strong
           ><a
             class="book-link"
             href='javascript: (function () {var booklink = document.createElement("script");booklink.setAttribute("src", "https://rha11y-tools.netlify.app/img-checker.js");document.body.appendChild(booklink);})();'
-            >rha11y-img</a
+            >rha11y-img-checker</a
           ></strong
         >
       </p>
       <p>
-        When run, the rha11y-img bookmarklet identifies all images on a page and returns
-        accessibility information in the following ways:
+        When run, the rha11y-img-checker bookmarklet identifies all images on a page (including
+        inline SVGs and images in the shadow DOM) and returns accessibility information in the
+        following ways:
       </p>
 
-      <ul>
+      <ol>
         <li>
           All identified and tested images on the page are given 8px outlines:
           <ul>
-            <li>Blue outline = image passed accessibility checks</li>
-            <li>Orange outline = indicate that an image failed</li>
-            <li>No outline = image was not identified</li>
-            <li>Background images are faded to white, as they are not tested</li>
+            <li>
+              Blue outline = image passed accessibility checks or is hidden from accessible tech
+            </li>
+            <li>
+              Orange outline = image failed accessibility checks and is not hidden from accessible
+              tech
+            </li>
+            <li>No outline = image was not successfully identified</li>
+            <li>Background images are typically faded to white and not tested</li>
           </ul>
         </li>
         <li>
           Detailed accessibility test processes and results are displayed in the browser console.
         </li>
-      </ul>
-      <h2><span class="rh-text">rha11y-img-hide</span>: hide all images on a page</h2>
-      <p>
-        To get the rha11y-img-hide bookmarklet, drag the following link to your bookmarks bar. You
-        may also click the link directly to use it on this page for testing. (Refresh the page to
-        reset it.)
-      </p>
-      <p>
-        <strong
-          ><a
-            class="book-link"
-            href='javascript:!function(){var booklink=document.createElement("script");booklink.setAttribute("src","https://rha11y-tools.netlify.app/img-hide.js"),document.body.appendChild(booklink)}();'
-            >rha11y-img-hide</a
-          ></strong
-        >
-      </p>
-      <p>
-        When run, the rha11y-img-hide bookmarklet hides all images on a page--including background
-        images. This bookmarklet is mostly useful just for making sure you can still view your page
-        text if images don't load. (You always want to have high contrast between text and
-        background colors, just in case of such an occurrence.)
-      </p>
+      </ol>
       <h2>Test images</h2>
       <h3>Inline SVGs</h3>
       <div class="cards">
@@ -87,7 +71,7 @@
           <ul>
             <li>Inline svg</li>
             <li>No title or img role</li>
-            <li>Not hidden from AT</li>
+            <li>Not hidden from screen readers</li>
             <li>Should <strong>fail</strong></li>
           </ul>
         </div>
@@ -148,7 +132,7 @@
           <ul>
             <li>Inline svg</li>
             <li>Has title and img role</li>
-            <li>Not hidden from AT</li>
+            <li>Not hidden from assistive tech</li>
             <li>Should <strong>pass</strong></li>
           </ul>
         </div>
@@ -169,7 +153,7 @@
             <li>Inline svg</li>
             <li>No title or img role</li>
             <li>Has aria-label</li>
-            <li>Not hidden from AT</li>
+            <li>Not hidden from assistive tech</li>
             <li>Should <strong>pass</strong></li>
           </ul>
         </div>
@@ -190,7 +174,7 @@
             <li>Inline svg</li>
             <li>No title or img role</li>
             <li>Has aria-labelledby: <br /><em id="svglabel">Red Hat</em></li>
-            <li>Not hidden from AT</li>
+            <li>Not hidden from assistive tech</li>
             <li>Should <strong>pass</strong></li>
           </ul>
         </div>
@@ -201,7 +185,7 @@
           <img src="testimg.jpg?test=img01" />
           <ul>
             <li>Has no alt</li>
-            <li>Not hidden from AT</li>
+            <li>Not hidden from assistive tech</li>
             <li>No hidden parent</li>
             <li>Should <strong>fail</strong></li>
           </ul>
@@ -210,7 +194,7 @@
           <span aria-hidden="true"><img src="testimg.jpg?test=img02" /></span>
           <ul>
             <li>Has no alt</li>
-            <li>Not hidden from AT</li>
+            <li>Not hidden from assistive tech</li>
             <li>Has hidden parent</li>
             <li>Should <strong>pass</strong></li>
           </ul>
@@ -219,7 +203,7 @@
           <img src="testimg.jpg?test=img03" alt />
           <ul>
             <li>Has alt (null)</li>
-            <li>Not hidden from AT</li>
+            <li>Not hidden from assistive tech</li>
             <li>No hidden parent</li>
             <li>Should <strong>pass</strong></li>
           </ul>
@@ -228,7 +212,7 @@
           <img src="testimg.jpg?test=img04" alt="People computing" />
           <ul>
             <li>Has alt (with value)</li>
-            <li>Not hidden from AT</li>
+            <li>Not hidden from assistive tech</li>
             <li>No hidden parent</li>
             <li>Should <strong>pass</strong></li>
           </ul>
@@ -249,7 +233,7 @@
           <img src="testsvg.svg?test=svg01" />
           <ul>
             <li>Has no alt</li>
-            <li>Not hidden from AT</li>
+            <li>Not hidden from assistive tech</li>
             <li>No hidden parent</li>
             <li>Should <strong>fail</strong></li>
           </ul>
@@ -258,8 +242,8 @@
           <span aria-hidden="true"><img src="testsvg.svg?test=svg02" /></span>
           <ul>
             <li>Has no alt</li>
-            <li>Not hidden from AT</li>
-            <li>AT-hidden parent</li>
+            <li>Not hidden from assistive tech</li>
+            <li>assistive tech-hidden parent</li>
             <li>Should <strong>pass</strong></li>
           </ul>
         </div>
@@ -267,7 +251,7 @@
           <img src="testsvg.svg?test=svg03" alt />
           <ul>
             <li>Has alt (null)</li>
-            <li>Not hidden from AT</li>
+            <li>Not hidden from assistive tech</li>
             <li>No hidden parent</li>
             <li>Should <strong>pass</strong></li>
           </ul>
@@ -276,7 +260,7 @@
           <img src="testsvg.svg?test=svg04" alt="People computing" />
           <ul>
             <li>Has alt (with value)</li>
-            <li>Not hidden from AT</li>
+            <li>Not hidden from assistive tech</li>
             <li>No hidden parent</li>
             <li>Should <strong>pass</strong></li>
           </ul>
@@ -298,7 +282,7 @@
           <ul>
             <li>Image component</li>
             <li>Has no alt</li>
-            <li>Not hidden from AT</li>
+            <li>Not hidden from assistive tech</li>
             <li>No hidden parent</li>
             <li>Should <strong>fail</strong></li>
           </ul>
@@ -310,9 +294,18 @@
             <li>Nested in component...</li>
             <li>In another component</li>
             <li>Has no alt</li>
-            <li>Not hidden from AT</li>
+            <li>Not hidden from assistive tech</li>
             <li>No hidden parent</li>
             <li>Should <strong>fail</strong></li>
+          </ul>
+        </div>
+      </div>
+      <h3>Background image</h3>
+      <div class="cards">
+        <div>
+          <p class="bg-image"></p>
+          <ul>
+            <li>Should not be tested</li>
           </ul>
         </div>
       </div>
