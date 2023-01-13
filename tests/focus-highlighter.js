@@ -30,9 +30,6 @@ javascript: (() => {
   }
 
   function highlightFocusableItems(element) {
-    //https://zellwk.com/blog/keyboard-focusable-elements/
-    // https://piccalil.li/quick-tip/load-all-focusable-elements-with-javascript/
-
     function getKeyboardFocusableElements(element) {
       let allItems = element.querySelectorAll(
         "a[href], button, input, textarea, select, details,[tabindex]:not([tabindex='-1'])"
