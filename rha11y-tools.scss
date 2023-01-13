@@ -36,14 +36,14 @@ svg {
 }
 
 .page {
-  margin: 1rem auto;
+  margin: 1rem auto 2rem;
   max-width: 48rem;
   width: 96vw;
 }
 
 .demo-page {
-  margin: 1rem auto;
-  max-width: 60rem;
+  margin: 1rem auto 2rem;
+  max-width: 48rem;
   width: 96vw;
 }
 
@@ -56,13 +56,13 @@ svg {
   //justify-content: center;
 
   & > * {
-    flex-basis: 15rem;
-    max-width: 15rem;
+    flex-basis: 14rem;
+    max-width: 14rem;
   }
 }
 
 .bg-image {
-  background-image: url(testbgimg.jpg);
+  background-image: url("testbgimg.jpg");
   background-size: cover;
   height: 10rem;
 }

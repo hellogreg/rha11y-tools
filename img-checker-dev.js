@@ -249,13 +249,16 @@ javascript: (() => {
   //
   function fadeBackgroundImages(node) {
     node = getTestableElement(node);
+    dir(node);
 
     // Only fade images with a url/var value, not colors/gradients
+    const styleBackground = window.getComputedStyle(node).background;
+    const styleBackgroundImage = window.getComputedStyle(node).backgroundImage;
     if (
       node.style &&
-      (node.style.backgroundImage.match("url") ||
-        node.style.background.match("url") ||
-        node.style.backgroundImage.match("var"))
+      (styleBackground.match("url") ||
+        styleBackgroundImage.match("url") ||
+        styleBackgroundImage.match("var"))
     ) {
       log("Background image found. They are not tested.");
       //node.style.setProperty("background-image", "none");
