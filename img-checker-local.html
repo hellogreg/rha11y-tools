@@ -30,6 +30,263 @@
         the image passed. Orange means it failed. Background images are not tested, as they don't
         need accessible names. View the browser console for detailed results.
       </p>
+      <h2>Test images</h2>
+      <h3>Inline SVGs</h3>
+      <div class="cards">
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 200 145"
+            class="redhat-logo"
+            id="svg01"
+          >
+            <path
+              d="M127.47 83.49c12.51 0 30.61-2.58 30.61-17.46a14 14 0 0 0-.31-3.42l-7.45-32.36c-1.72-7.12-3.23-10.35-15.73-16.6C124.89 8.69 103.76.5 97.51.5 91.69.5 90 8 83.06 8c-6.68 0-11.64-5.6-17.89-5.6-6 0-9.91 4.09-12.93 12.5 0 0-8.41 23.72-9.49 27.16a6.43 6.43 0 0 0-.22 1.94c0 9.22 36.3 39.45 84.94 39.45M160 72.07c1.73 8.19 1.73 9.05 1.73 10.13 0 14-15.74 21.77-36.43 21.77-46.76.03-87.72-27.37-87.72-45.48a18.45 18.45 0 0 1 1.51-7.33C22.27 52 .5 55 .5 74.22c0 31.48 74.59 70.28 133.65 70.28 45.28 0 56.7-20.48 56.7-36.65 0-12.72-11-27.16-30.83-35.78"
+              fill="#e00"
+            ></path>
+          </svg>
+          <ul>
+            <li>Inline svg</li>
+            <li>No title or img role</li>
+            <li>Not hidden from screen readers</li>
+            <li>Should <strong>fail</strong></li>
+          </ul>
+        </div>
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 200 145"
+            class="redhat-logo"
+            id="svg02"
+            aria-hidden="true"
+          >
+            <path
+              d="M127.47 83.49c12.51 0 30.61-2.58 30.61-17.46a14 14 0 0 0-.31-3.42l-7.45-32.36c-1.72-7.12-3.23-10.35-15.73-16.6C124.89 8.69 103.76.5 97.51.5 91.69.5 90 8 83.06 8c-6.68 0-11.64-5.6-17.89-5.6-6 0-9.91 4.09-12.93 12.5 0 0-8.41 23.72-9.49 27.16a6.43 6.43 0 0 0-.22 1.94c0 9.22 36.3 39.45 84.94 39.45M160 72.07c1.73 8.19 1.73 9.05 1.73 10.13 0 14-15.74 21.77-36.43 21.77-46.76.03-87.72-27.37-87.72-45.48a18.45 18.45 0 0 1 1.51-7.33C22.27 52 .5 55 .5 74.22c0 31.48 74.59 70.28 133.65 70.28 45.28 0 56.7-20.48 56.7-36.65 0-12.72-11-27.16-30.83-35.78"
+              fill="#e00"
+            ></path>
+          </svg>
+          <ul>
+            <li>Inline svg</li>
+            <li>No title or img role</li>
+            <li>aria-hidden="true"</li>
+            <li>Should <strong>pass</strong></li>
+          </ul>
+        </div>
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 200 145"
+            class="redhat-logo"
+            id="svg03"
+            role="presentation"
+          >
+            <path
+              d="M127.47 83.49c12.51 0 30.61-2.58 30.61-17.46a14 14 0 0 0-.31-3.42l-7.45-32.36c-1.72-7.12-3.23-10.35-15.73-16.6C124.89 8.69 103.76.5 97.51.5 91.69.5 90 8 83.06 8c-6.68 0-11.64-5.6-17.89-5.6-6 0-9.91 4.09-12.93 12.5 0 0-8.41 23.72-9.49 27.16a6.43 6.43 0 0 0-.22 1.94c0 9.22 36.3 39.45 84.94 39.45M160 72.07c1.73 8.19 1.73 9.05 1.73 10.13 0 14-15.74 21.77-36.43 21.77-46.76.03-87.72-27.37-87.72-45.48a18.45 18.45 0 0 1 1.51-7.33C22.27 52 .5 55 .5 74.22c0 31.48 74.59 70.28 133.65 70.28 45.28 0 56.7-20.48 56.7-36.65 0-12.72-11-27.16-30.83-35.78"
+              fill="#e00"
+            ></path>
+          </svg>
+          <ul>
+            <li>Inline svg</li>
+            <li>No title or img role</li>
+            <li>role="presentation"</li>
+            <li>Should <strong>pass</strong></li>
+          </ul>
+        </div>
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 200 145"
+            class="redhat-logo"
+            id="svg04"
+            role="img"
+          >
+            <title>Red Hat</title>
+            <path
+              d="M127.47 83.49c12.51 0 30.61-2.58 30.61-17.46a14 14 0 0 0-.31-3.42l-7.45-32.36c-1.72-7.12-3.23-10.35-15.73-16.6C124.89 8.69 103.76.5 97.51.5 91.69.5 90 8 83.06 8c-6.68 0-11.64-5.6-17.89-5.6-6 0-9.91 4.09-12.93 12.5 0 0-8.41 23.72-9.49 27.16a6.43 6.43 0 0 0-.22 1.94c0 9.22 36.3 39.45 84.94 39.45M160 72.07c1.73 8.19 1.73 9.05 1.73 10.13 0 14-15.74 21.77-36.43 21.77-46.76.03-87.72-27.37-87.72-45.48a18.45 18.45 0 0 1 1.51-7.33C22.27 52 .5 55 .5 74.22c0 31.48 74.59 70.28 133.65 70.28 45.28 0 56.7-20.48 56.7-36.65 0-12.72-11-27.16-30.83-35.78"
+              fill="#e00"
+            ></path>
+          </svg>
+          <ul>
+            <li>Inline svg</li>
+            <li>Has title and img role</li>
+            <li>Not hidden from assistive tech</li>
+            <li>Should <strong>pass</strong></li>
+          </ul>
+        </div>
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 200 145"
+            class="redhat-logo"
+            id="svg05"
+            aria-label="Red Hat"
+          >
+            <path
+              d="M127.47 83.49c12.51 0 30.61-2.58 30.61-17.46a14 14 0 0 0-.31-3.42l-7.45-32.36c-1.72-7.12-3.23-10.35-15.73-16.6C124.89 8.69 103.76.5 97.51.5 91.69.5 90 8 83.06 8c-6.68 0-11.64-5.6-17.89-5.6-6 0-9.91 4.09-12.93 12.5 0 0-8.41 23.72-9.49 27.16a6.43 6.43 0 0 0-.22 1.94c0 9.22 36.3 39.45 84.94 39.45M160 72.07c1.73 8.19 1.73 9.05 1.73 10.13 0 14-15.74 21.77-36.43 21.77-46.76.03-87.72-27.37-87.72-45.48a18.45 18.45 0 0 1 1.51-7.33C22.27 52 .5 55 .5 74.22c0 31.48 74.59 70.28 133.65 70.28 45.28 0 56.7-20.48 56.7-36.65 0-12.72-11-27.16-30.83-35.78"
+              fill="#e00"
+            ></path>
+          </svg>
+          <ul>
+            <li>Inline svg</li>
+            <li>No title or img role</li>
+            <li>Has aria-label</li>
+            <li>Not hidden from assistive tech</li>
+            <li>Should <strong>pass</strong></li>
+          </ul>
+        </div>
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 200 145"
+            class="redhat-logo"
+            id="svg06"
+            aria-labelledby="svglabel"
+          >
+            <path
+              d="M127.47 83.49c12.51 0 30.61-2.58 30.61-17.46a14 14 0 0 0-.31-3.42l-7.45-32.36c-1.72-7.12-3.23-10.35-15.73-16.6C124.89 8.69 103.76.5 97.51.5 91.69.5 90 8 83.06 8c-6.68 0-11.64-5.6-17.89-5.6-6 0-9.91 4.09-12.93 12.5 0 0-8.41 23.72-9.49 27.16a6.43 6.43 0 0 0-.22 1.94c0 9.22 36.3 39.45 84.94 39.45M160 72.07c1.73 8.19 1.73 9.05 1.73 10.13 0 14-15.74 21.77-36.43 21.77-46.76.03-87.72-27.37-87.72-45.48a18.45 18.45 0 0 1 1.51-7.33C22.27 52 .5 55 .5 74.22c0 31.48 74.59 70.28 133.65 70.28 45.28 0 56.7-20.48 56.7-36.65 0-12.72-11-27.16-30.83-35.78"
+              fill="#e00"
+            ></path>
+          </svg>
+          <ul>
+            <li>Inline svg</li>
+            <li>No title or img role</li>
+            <li>Has aria-labelledby: <br /><em id="svglabel">Red Hat</em></li>
+            <li>Not hidden from assistive tech</li>
+            <li>Should <strong>pass</strong></li>
+          </ul>
+        </div>
+      </div>
+      <h3>Non-shadow JPG &lt;img&gt; elements</h3>
+      <div class="cards">
+        <div>
+          <img src="testimg.jpg?test=img01" />
+          <ul>
+            <li>Has no alt</li>
+            <li>Not hidden from assistive tech</li>
+            <li>No hidden parent</li>
+            <li>Should <strong>fail</strong></li>
+          </ul>
+        </div>
+        <div>
+          <span aria-hidden="true"><img src="testimg.jpg?test=img02" /></span>
+          <ul>
+            <li>Has no alt</li>
+            <li>Not hidden from assistive tech</li>
+            <li>Has hidden parent</li>
+            <li>Should <strong>pass</strong></li>
+          </ul>
+        </div>
+        <div>
+          <img src="testimg.jpg?test=img03" alt />
+          <ul>
+            <li>Has alt (null)</li>
+            <li>Not hidden from assistive tech</li>
+            <li>No hidden parent</li>
+            <li>Should <strong>pass</strong></li>
+          </ul>
+        </div>
+        <div>
+          <img src="testimg.jpg?test=img04" alt="People computing" />
+          <ul>
+            <li>Has alt (with value)</li>
+            <li>Not hidden from assistive tech</li>
+            <li>No hidden parent</li>
+            <li>Should <strong>pass</strong></li>
+          </ul>
+        </div>
+        <div>
+          <img src="testimg.jpg?test=img05" role="presentation" />
+          <ul>
+            <li>Has no alt</li>
+            <li>role="presentation"</li>
+            <li>No hidden parent</li>
+            <li>Should <strong>pass</strong></li>
+          </ul>
+        </div>
+      </div>
+      <h3>Non-shadow SVG &lt;img&gt; elements</h3>
+      <div class="cards">
+        <div>
+          <img src="testsvg.svg?test=svg01" />
+          <ul>
+            <li>Has no alt</li>
+            <li>Not hidden from assistive tech</li>
+            <li>No hidden parent</li>
+            <li>Should <strong>fail</strong></li>
+          </ul>
+        </div>
+        <div>
+          <span aria-hidden="true"><img src="testsvg.svg?test=svg02" /></span>
+          <ul>
+            <li>Has no alt</li>
+            <li>Not hidden from assistive tech</li>
+            <li>assistive tech-hidden parent</li>
+            <li>Should <strong>pass</strong></li>
+          </ul>
+        </div>
+        <div>
+          <img src="testsvg.svg?test=svg03" alt />
+          <ul>
+            <li>Has alt (null)</li>
+            <li>Not hidden from assistive tech</li>
+            <li>No hidden parent</li>
+            <li>Should <strong>pass</strong></li>
+          </ul>
+        </div>
+        <div>
+          <img src="testsvg.svg?test=svg04" alt="People computing" />
+          <ul>
+            <li>Has alt (with value)</li>
+            <li>Not hidden from assistive tech</li>
+            <li>No hidden parent</li>
+            <li>Should <strong>pass</strong></li>
+          </ul>
+        </div>
+        <div>
+          <img src="testsvg.svg?test=svg05" role="presentation" />
+          <ul>
+            <li>Has no alt</li>
+            <li>role="presentation"</li>
+            <li>No hidden parent</li>
+            <li>Should <strong>pass</strong></li>
+          </ul>
+        </div>
+      </div>
+      <h3>Shadow &lt;img&gt; elements</h3>
+      <div class="cards">
+        <div>
+          <wc-img></wc-img>
+          <ul>
+            <li>Image component</li>
+            <li>Has no alt</li>
+            <li>Not hidden from assistive tech</li>
+            <li>No hidden parent</li>
+            <li>Should <strong>fail</strong></li>
+          </ul>
+        </div>
+        <div>
+          <wc-div></wc-div>
+          <ul>
+            <li>Image component...</li>
+            <li>Nested in component...</li>
+            <li>In another component</li>
+            <li>Has no alt</li>
+            <li>Not hidden from assistive tech</li>
+            <li>No hidden parent</li>
+            <li>Should <strong>fail</strong></li>
+          </ul>
+        </div>
+      </div>
+      <h3>Background image</h3>
+      <div class="cards">
+        <div>
+          <p class="bg-image"></p>
+          <p style="height: 10rem; background-image: url(testbgimg.jpg)"></p>
+          <ul>
+            <li>Should not be tested</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </body>
 </html>
