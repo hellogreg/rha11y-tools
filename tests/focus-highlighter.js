@@ -31,6 +31,7 @@ javascript: (() => {
 
   function highlightFocusableItems(element) {
     //https://zellwk.com/blog/keyboard-focusable-elements/
+    // https://piccalil.li/quick-tip/load-all-focusable-elements-with-javascript/
 
     function getKeyboardFocusableElements(element) {
       let allItems = element.querySelectorAll(
