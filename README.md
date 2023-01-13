@@ -1,6 +1,6 @@
 # rha11y-tools bookmarklets
 
-Note: this project branded to RHa11y, Red Hat's accessibility volunteer group.
+This project is branded to **RHa11y**, Red Hat's accessibility volunteer group.
 
 ## Overview
 
