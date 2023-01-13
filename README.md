@@ -16,7 +16,7 @@ When run, the bookmarklet returns accessibility information three ways:
 
 ## Demo and latest version
 
-**[View the demo page, where you can install the bookmarklet.](https://rha11y-img.netlify.app/)**
+**[View the demo page, where you can install the bookmarklet.](https://rha11y-tools.netlify.app/)**
 
 ## Features
 
