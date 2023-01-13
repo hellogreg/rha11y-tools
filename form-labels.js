@@ -152,7 +152,7 @@ javascript: (() => {
     let h2, ul, p;
 
     h2 = document.createElement("h2");
-    h2.appendChild(document.createTextNode("Do form elements have labels?"));
+    h2.appendChild(document.createTextNode("Do the form elements have labels?"));
     dialog.appendChild(h2);
 
     ul = document.createElement("ul");

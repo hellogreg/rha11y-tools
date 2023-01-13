@@ -33,11 +33,29 @@
         and opens a modal listing whether each has an associated (or enclosing) label.
       </p>
       <h2>Test content</h2>
+      <p>In the following form...</p>
+      <ul>
+        <li>The first name field has an associated label (<strong>pass</strong>)</li>
+        <li>
+          The last name field <em>does not</em> have an associated label (<strong>fail</strong>)
+        </li>
+        <li>The subscribe checkbox is enclosed within a label (<strong>pass</strong>)</li>
+      </ul>
+
       <form method="post" action="#">
-        <label for="firstname">First name: </label>
-        <input type="text" name="firstname" id="firstname" /><br />
-        <input type="checkbox" name="subscribe" id="subscribe" />
-        <label for="subscribe">Subscribe to newsletter</label>
+        <p>
+          <label for="firstname">First name: </label>
+          <input type="text" name="firstname" id="firstname" />
+        </p>
+        <p>
+          Last name:
+          <input type="text" name="lastname" id="lastname" />
+        </p>
+        <p>
+          <label
+            ><input type="checkbox" name="subscribe" id="subscribe" /> Subscribe to our newsletter
+          </label>
+        </p>
       </form>
     </div>
     <!--script src="img-checker.js"></script-->
