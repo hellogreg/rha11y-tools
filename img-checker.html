@@ -5,18 +5,16 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>rha11y-img Image Bookmarklets</title>
+    <title>rha11y-img-checker bookmarklet demo</title>
     <link rel="stylesheet" href="rha11y-tools.css" rel="stylesheet" />
     <script src="img-components.js"></script>
   </head>
   <body>
-    <div class="page">
-      <h1>Testing images with the <span style="color: #e00">rha11y-tools</span> bookmarklets</h1>
+    <div class="demo-page">
+      <h1>Testing images with the <span class="rh-text">rha11y-tools</span> bookmarklets</h1>
       <p>These scripts are branded to RHa11y, Red Hat's accessibility volunteer group.</p>
       <a href="https://github.com/hellogreg/rha11y-img">View this project at GitHub</a>
-      <h2>
-        <span style="color: #e00">rha11y-img</span>: check the accessibility of all page images
-      </h2>
+      <h2><span class="rh-text">rha11y-img</span>: check the accessibility of all page images</h2>
       <p>
         To get the rha11y-img bookmarklet, drag the following link to your bookmarks bar. You may
         also click the link directly to use it on this page for testing. (Refresh the page to reset
@@ -25,8 +23,8 @@
       <p>
         <strong
           ><a
-            style="display: inline-block; outline: #aaa dotted 2px; padding: 0.25rem"
-            href='javascript: (function () {var bookletCode = document.createElement("script");bookletCode.setAttribute("src", "https://rha11y-tools.netlify.app/img-checker.js");document.body.appendChild(bookletCode);})();'
+            class="book-link"
+            href='javascript: (function () {var booklink = document.createElement("script");booklink.setAttribute("src", "https://rha11y-tools.netlify.app/img-checker.js");document.body.appendChild(booklink);})();'
             >rha11y-img</a
           ></strong
         >
@@ -50,7 +48,7 @@
           Detailed accessibility test processes and results are displayed in the browser console.
         </li>
       </ul>
-      <h2><span style="color: #e00">rha11y-img-hide</span>: hide all images on a page</h2>
+      <h2><span class="rh-text">rha11y-img-hide</span>: hide all images on a page</h2>
       <p>
         To get the rha11y-img-hide bookmarklet, drag the following link to your bookmarks bar. You
         may also click the link directly to use it on this page for testing. (Refresh the page to
@@ -59,8 +57,8 @@
       <p>
         <strong
           ><a
-            style="display: inline-block; outline: #aaa dotted 2px; padding: 0.25rem"
-            href='javascript:!function(){var bookletCode=document.createElement("script");bookletCode.setAttribute("src","https://rha11y-tools.netlify.app/img-hide.js"),document.body.appendChild(bookletCode)}();'
+            class="book-link"
+            href='javascript:!function(){var booklink=document.createElement("script");booklink.setAttribute("src","https://rha11y-tools.netlify.app/img-hide.js"),document.body.appendChild(booklink)}();'
             >rha11y-img-hide</a
           ></strong
         >
