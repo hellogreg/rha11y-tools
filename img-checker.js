@@ -249,7 +249,6 @@ javascript: (() => {
   //
   function fadeBackgroundImages(node) {
     node = getTestableElement(node);
-    dir(node);
 
     // Only fade images with a url/var value, not colors/gradients
     const styleBackground = window.getComputedStyle(node).background;
