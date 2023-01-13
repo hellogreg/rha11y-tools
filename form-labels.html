@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- https://rha11y-tools.netlify.app/ -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rha11y-form-labels bookmarklet demo</title>
+    <link rel="stylesheet" href="rha11y-tools.css" rel="stylesheet" />
+    <script src="img-components.js"></script>
+  </head>
+  <body>
+    <div class="demo-page">
+      <h1><span class="rh-text">rha11y-form-labels</span> demo</h1>
+      <p><a href="index.html">Return to the rha11y-tools homepage</a></p>
+      <h2>Getting the bookmarklet</h2>
+      <p>
+        To get the rha11y-form-labels bookmarklet, drag the following link to your bookmarks bar.
+        You may also click the link directly to use it on this page for testing. (Refresh the page
+        to reset it.)
+      </p>
+      <p>
+        <strong
+          ><a
+            class="book-link"
+            href='javascript: (function () {var booklink = document.createElement("script");booklink.setAttribute("src", "https://rha11y-tools.netlify.app/form-labels.js");document.body.appendChild(booklink);})();'
+            >rha11y-form-labels</a
+          ></strong
+        >
+      </p>
+      <p>
+        The rha11y-form-labels bookmarklet checks all non-button, non-hidden form inputs on a page
+        and opens a modal listing whether each has an associated (or enclosing) label.
+      </p>
+      <h2>Test content</h2>
+      <form method="post" action="#">
+        <label for="firstname">First name: </label>
+        <input type="text" name="firstname" id="firstname" /><br />
+        <input type="checkbox" name="subscribe" id="subscribe" />
+        <label for="subscribe">Subscribe to newsletter</label>
+      </form>
+    </div>
+    <!--script src="img-checker.js"></script-->
+  </body>
+</html>
