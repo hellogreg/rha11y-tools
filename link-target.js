@@ -20,7 +20,7 @@ javascript: (() => {
   }
 
   function isLink(element) {
-    return element.nodeName.toLowerCase() === "a";
+    return element.nodeName.toLowerCase() === "a" && !!element.href;
   }
 
   // Returns an element we can use, whether in the shadow DOM or not
@@ -53,7 +53,7 @@ javascript: (() => {
         // Test target
         const href = element.href || null;
         const target = element.target || null;
-        const opensNewWindow = !!target && !!target !== "_self";
+        const opensNewWindow = !!target && target !== "_self";
         log("Link: " + element.outerHTML);
         log("Link href: " + href);
         log("Link target: " + target);

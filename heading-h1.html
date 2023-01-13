@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- https://rha11y-tools.netlify.app/ -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rha11y-heading-h1 bookmarklet demo</title>
+    <link rel="stylesheet" href="rha11y-tools.css" rel="stylesheet" />
+    <script src="img-components.js"></script>
+  </head>
+  <body>
+    <div class="demo-page">
+      <h1><span class="rh-text">rha11y-heading-h1</span> demo</h1>
+      <p><a href="index.html">Return to the rha11y-tools homepage</a></p>
+      <h2>Getting the bookmarklet</h2>
+      <p>
+        To get the rha11y-heading-h1 bookmarklet, drag the following link to your bookmarks bar. You
+        may also click the link directly to use it on this page for testing. (Refresh the page to
+        reset it.)
+      </p>
+      <p>
+        <strong
+          ><a
+            class="book-link"
+            href='javascript: (function () {var booklink = document.createElement("script");booklink.setAttribute("src", "https://rha11y-tools.netlify.app/heading-h1.js");document.body.appendChild(booklink);})();'
+            >rha11y-heading-h1</a
+          ></strong
+        >
+      </p>
+      <p>
+        The rha11y-heading-h1 bookmarklet helps you verify that your page has only a single
+        &lt;h1&gt; tag. When run, the script opens a modal that lists (and counts) all the page's
+        &lt;h1&gt; elements.
+      </p>
+      <h2>Test content</h2>
+      <h1>This is a second &lt;h1&gt; and should not exist on this page!</h1>
+    </div>
+    <!--script src="img-checker.js"></script-->
+  </body>
+</html>

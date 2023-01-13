@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- https://rha11y-tools.netlify.app/ -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rha11y-link-target bookmarklet demo</title>
+    <link rel="stylesheet" href="rha11y-tools.css" rel="stylesheet" />
+    <script src="img-components.js"></script>
+  </head>
+  <body>
+    <div class="demo-page">
+      <h1><span class="rh-text">rha11y-link-target</span> demo</h1>
+      <p><a href="index.html">Return to the rha11y-tools homepage</a></p>
+      <h2>Getting the bookmarklet</h2>
+      <p>
+        To get the rha11y-link-target bookmarklet, drag the following link to your bookmarks bar.
+        You may also click the link directly to use it on this page for testing. (Refresh the page
+        to reset it.)
+      </p>
+      <p>
+        <strong
+          ><a
+            class="book-link"
+            href='javascript: (function () {var booklink = document.createElement("script");booklink.setAttribute("src", "https://rha11y-tools.netlify.app/link-target.js");document.body.appendChild(booklink);})();'
+            >rha11y-link-target</a
+          ></strong
+        >
+      </p>
+      <p>
+        The rha11y-link-target bookmarklet checks all &lt;a&gt; tags with href attributes and makes
+        sure they don't have a target set to open in a new window. (Note: this bookmarklet only
+        checks the page source and won't catch JavaScripts that open new windows.)
+      </p>
+      <h2>Test content</h2>
+      <p><a>&lt;a&gt; with no href</a> (should be ignored)</p>
+      <p><a href="https://www.redhat.com/">Link with no target attribute</a> (should pass)</p>
+      <p>
+        <a href="https://www.redhat.com/" target="_self">Link with target="_self"</a> (should pass)
+      </p>
+      <p>
+        <a href="https://www.redhat.com/" target="_blank">Link with target="_blank"</a> (should
+        fail)
+      </p>
+      <p>
+        <a href="https://www.redhat.com/" target="randomtext">Link with target="randomtext"</a>
+        (should fail)
+      </p>
+    </div>
+    <!--script src="img-checker.js"></script-->
+  </body>
+</html>

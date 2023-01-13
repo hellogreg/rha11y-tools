@@ -1,9 +1,22 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-size: 100%;
+}
+
 body {
   background: #fbfbfb;
   color: #111;
   font-family: system-ui, -apple-system, sans-serif;
   font-size: 1rem;
-  line-height: 1.35;
+  line-height: 1.4;
+  min-height: 100vh;
+  scroll-behavior: smooth;
 }
 
 h2 {
