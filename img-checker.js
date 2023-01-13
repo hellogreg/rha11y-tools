@@ -307,7 +307,7 @@ javascript: (() => {
 
   (function init() {
     log();
-    log("Initiating rha11y-img bookmarklet");
+    log("Initiating rha11y-tools bookmarklet");
     log();
 
     // By default, we want to test all elements in the document body.

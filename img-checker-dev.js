@@ -249,7 +249,6 @@ javascript: (() => {
   //
   function fadeBackgroundImages(node) {
     node = getTestableElement(node);
-    dir(node);
 
     // Only fade images with a url/var value, not colors/gradients
     const styleBackground = window.getComputedStyle(node).background;
@@ -308,7 +307,7 @@ javascript: (() => {
 
   (function init() {
     log();
-    log("Initiating rha11y-img bookmarklet");
+    log("Initiating rha11y-tools bookmarklet");
     log();
 
     // By default, we want to test all elements in the document body.
