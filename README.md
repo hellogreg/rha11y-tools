@@ -1,7 +1,5 @@
 # rha11y-tools bookmarklets
 
-This project is branded to **RHa11y**, Red Hat's accessibility volunteer group.
-
 ## Overview
 
 These bookmarklets form a collection of unitaskers originally designed to help automate page QA testing processes at Red Hat.
@@ -18,3 +16,7 @@ The collection currently comprises the following tools:
 ## Demos and latest versions
 
 **[View the demo site, where you can demo and install the bookmarklets.](https://rha11y-tools.netlify.app/)**
+
+## Why "rha11y"?
+
+This project is branded to **RHa11y**, Red Hat's accessibility volunteer group.
