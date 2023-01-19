@@ -30,8 +30,10 @@
       </p>
       <p>
         The rha11y-link-target bookmarklet checks all &lt;a&gt; tags with href attributes and makes
-        sure they don't have a target set to open in a new window. (Note: this bookmarklet only
-        checks the page source and won't catch JavaScripts that open new windows.)
+        sure they don't have a target set to open in a new window. When run, all links on the page
+        that pass this check are outlined in blue, and links that fail are outlined in orange.
+        (Note: this bookmarklet only checks the page source and won't catch JavaScripts that open
+        new windows.)
       </p>
       <h2>Test content</h2>
       <p><a>&lt;a&gt; with no href</a> (should be ignored)</p>
