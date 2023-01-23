@@ -15,7 +15,7 @@ javascript: (() => {
         elements.push(element);
       }
 
-      // If the node has a shadowRoot, get the nodes within it.
+      // If node has shadowRoot, re-call this function to get its child nodes.
       if (node.shadowRoot) {
         getElements(node.shadowRoot);
       }
