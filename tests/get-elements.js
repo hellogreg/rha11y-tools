@@ -9,7 +9,7 @@ javascript: (() => {
       const element =
         node.nodeType === Node.DOCUMENT_FRAGMENT_NODE ? node.getRootNode().host : node;
 
-      // If this is truly an element, add it to the elements[] array.
+      // If this node (or its host) is an element, add it to the elements[] array.
       if (element.nodeType === Node.ELEMENT_NODE) {
         elements.push(element);
       }
