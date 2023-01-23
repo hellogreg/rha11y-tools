@@ -50,7 +50,7 @@ javascript: (() => {
         addResult("<h1>" + getCleanText(element) + "</h1>");
       }
 
-      // If the node has shadowRoot, re-run this functino for it.
+      // If the node has shadowRoot, re-run this function for it.
       if (!!node.shadowRoot) {
         const shadowNode = node.shadowRoot;
         testH1Headings(shadowNode);

@@ -62,7 +62,7 @@ javascript: (() => {
         log();
       }
 
-      // If the node has shadowRoot, re-run this functino for it.
+      // If the node has shadowRoot, re-run this function for it.
       if (!!node.shadowRoot) {
         const shadowNode = node.shadowRoot;
         testImageFilesizes(shadowNode);
