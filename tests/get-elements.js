@@ -1,17 +1,16 @@
 javascript: (() => {
-  let elements = [];
-
   function getElements(root) {
     const nodes = root.querySelectorAll("*");
 
     for (const node of nodes) {
-      // Assign a value to the element variable.
-      // If the current node is a document fragment, assign its host element.
-      // Otherwise, just assign the current node.
-      const element =
-        node.nodeType === Node.DOCUMENT_FRAGMENT_NODE ? node.getRootNode().host : node;
+      let element;
 
-      // If this node (or its host) is truly an element, add it to the elements[] array.
+      if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+        element = node.getRootNode().host;
+      } else {
+        element = node;
+      }
+
       if (element.nodeType === Node.ELEMENT_NODE) {
         elements.push(element);
       }
@@ -23,6 +22,7 @@ javascript: (() => {
     }
   }
 
+  let elements = [];
   getElements(document.body);
   console.dir(elements);
 })();
