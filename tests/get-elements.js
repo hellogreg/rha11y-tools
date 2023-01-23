@@ -6,8 +6,8 @@ javascript: (() => {
 
     for (const node of nodes) {
       // Assign a value to the element variable.
-      // If the node is a document fragment, assign its host element.
-      // Otherwise, just assign the node to element.
+      // If the current node is a document fragment, assign its host element.
+      // Otherwise, just assign the current node.
       const element =
         node.nodeType === Node.DOCUMENT_FRAGMENT_NODE ? node.getRootNode().host : node;
 
