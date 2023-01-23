@@ -5,7 +5,9 @@ javascript: (() => {
     const nodes = root.querySelectorAll("*");
 
     for (const node of nodes) {
-      // If the node is a document fragment, get its host element.
+      // Assign a value to the element variable.
+      // If the node is a document fragment, assign its host element.
+      // Otherwise, just assign the node to element.
       const element =
         node.nodeType === Node.DOCUMENT_FRAGMENT_NODE ? node.getRootNode().host : node;
 
