@@ -1,0 +1,1 @@
+javascript: (function () {  var bookletCode = document.createElement("script");  bookletCode.setAttribute("src", "http://127.0.0.1:5500/tests/get-elements.js");  document.body.appendChild(bookletCode);})();
