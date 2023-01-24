@@ -17,7 +17,7 @@ javascript: (() => {
     let h2, p;
 
     h2 = document.createElement("h2");
-    h2.appendChild(document.createTextNode("Your current motion preference"));
+    h2.appendChild(document.createTextNode("Current motion preference"));
     dialog.appendChild(h2);
 
     p = document.createElement("p");
