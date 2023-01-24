@@ -15,7 +15,7 @@ The collection currently comprises the following tools:
 
 ## Demos and latest versions
 
-**[View the demo site, where you can demo and install the bookmarklets.](https://rha11y-tools.netlify.app/)**
+**[View the demo site, where you can try out and install the bookmarklets.](https://rha11y-tools.netlify.app/)**
 
 ## Why "rha11y"?
 
