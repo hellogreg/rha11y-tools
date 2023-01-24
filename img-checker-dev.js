@@ -4,7 +4,7 @@ javascript: (() => {
   let outputMessagesDefault = true;
   let outputMessages = outputMessagesDefault;
 
-  // Custom log() and dir() functions, so we don't have to prepend with console
+  // Custom log(), dir(), group(), and groupEnd() functions, so we don't have to prepend with console
   //
   function log(m) {
     if (outputMessages) {
@@ -17,6 +17,14 @@ javascript: (() => {
     if (outputMessages && m) {
       console.dir(m);
     }
+  }
+
+  function group() {
+    console.group();
+  }
+
+  function groupEnd() {
+    console.groupEnd();
   }
 
   // Display the test results: outline around image and data-a11y attribute in element
@@ -229,7 +237,7 @@ javascript: (() => {
 
     // Check if the SVG has an accessible name...
     log("Checking if inline <svg> has an accessible name");
-    hasImgRole(svg); // Not currently required, but still worth checking.
+    hasImgRole(svg); // TODO: Will we start requiring?
     isAccessible = isAccessible || !!hasTitleElement(svg);
     isAccessible = isAccessible || !!hasAriaLabel(svg);
     isAccessible = isAccessible || !!hasAriaLabelledby(svg);
@@ -259,50 +267,50 @@ javascript: (() => {
         styleBackgroundImage.match("url") ||
         styleBackgroundImage.match("var"))
     ) {
+      group();
       log("Background image found. They are not tested.");
       //node.style.setProperty("background-image", "none");
       node.style.setProperty("background-color", "#fffd");
       node.style.setProperty("background-blend-mode", "color");
+      groupEnd();
     }
   }
 
-  let rootLevel = 0;
   function findAndTestImages(root) {
+    group();
+    let nodeName = root.getRootNode().host ? root.getRootNode().host.nodeName : null;
+    if (nodeName) {
+      log(`<${nodeName.toLowerCase()}>`);
+    }
+
     const nodes = root.querySelectorAll("*");
 
     for (const node of nodes) {
       if (isImg(node)) {
-        log();
+        group();
         log("Located an <img>");
         log(node.outerHTML);
         checkImgA11y(node);
+        groupEnd();
       }
 
       if (isSvg(node)) {
-        log();
+        group();
         log("Located an <svg>");
         log(node.outerHTML);
         checkSvgA11y(node);
+        groupEnd();
       }
 
       if (hasShadowRoot(node)) {
         const shadowNode = node.shadowRoot;
-        const rootName = shadowNode.getRootNode().host.nodeName || "[unspecified]";
-        rootLevel += 1;
-        log("Entering " + rootName + " shadowRoot at nesting level " + rootLevel);
         findAndTestImages(shadowNode);
       }
 
       fadeBackgroundImages(node);
     }
 
-    let nodeName = root.getRootNode().host ? root.getRootNode().host.nodeName : null;
-    if (rootLevel > 0 && nodeName) {
-      log();
-      log("Exiting " + nodeName + " shadowRoot at nesting level " + rootLevel);
-      rootLevel -= 1;
-    }
-    log();
+    groupEnd();
   }
 
   (function init() {

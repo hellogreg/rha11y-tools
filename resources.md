@@ -14,3 +14,4 @@ Helpful lists of links used in researching this project.
 - [Getting keyboard-focusable elements](https://zellwk.com/blog/keyboard-focusable-elements/)
 - [List of focusable elements, per Andy Bell](https://piccalil.li/quick-tip/load-all-focusable-elements-with-javascript/)
 - [W3C tutorial on forms and labels](https://www.w3.org/WAI/tutorials/forms/labels/)
+- [MDN page on the img role](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/img_role)
