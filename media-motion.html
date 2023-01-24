@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- https://rha11y-tools.netlify.app/ -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rha11y-link-target bookmarklet demo</title>
+    <link rel="stylesheet" href="rha11y-tools.css" rel="stylesheet" />
+    <script src="img-components.js"></script>
+  </head>
+  <body>
+    <div class="demo-page">
+      <h1><span class="rh-text">rha11y-media-motion</span> demo</h1>
+      <p><a href="index.html">Return to the rha11y-tools homepage</a></p>
+      <h2>Getting the bookmarklet</h2>
+      <p>
+        To get the rha11y-media-motion bookmarklet, drag the following link to your bookmarks bar.
+        You may also click the link directly to use it on this page for testing. (Refresh the page
+        to reset it.)
+      </p>
+      <p>
+        <strong
+          ><a
+            class="book-link"
+            href='javascript: (function () {var booklink = document.createElement("script");booklink.setAttribute("src", "https://rha11y-tools.netlify.app/media-motion.js");document.body.appendChild(booklink);})();'
+            >rha11y-media-motion</a
+          ></strong
+        >
+      </p>
+      <p>
+        The rha11y-media-motion bookmarklet doesn't check anything on the page you're visiting. It
+        just quickly tells you whether you have a reduced motion preference enabled on your machine
+        and lets you verify that the browser can determine that setting. It can be useful for
+        testing pages with animations, so you can make sure your setting reflects what the site is
+        presenting to you.
+      </p>
+      <p>
+        When you click the link above or run the bookmarklet, a modal will appear and announce
+        whether you have reduced motion turned off or on.
+      </p>
+    </div>
+    <!--script src="img-checker.js"></script-->
+  </body>
+</html>

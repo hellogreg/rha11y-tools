@@ -12,7 +12,7 @@ The collection currently comprises the following tools:
 - **rha11y-heading-h1:** lists a page's &lt;h1&gt; elements
 - **rha11y-link-target:** ensures links don't target new windows
 - **rha11y-form-labels:** checks all form inputs for associated/enclosing labels
-- **rha11y-media-reduced-motion:** checks your motion preferences
+- **rha11y-media-motion:** checks your motion preferences
 
 ## Demos and latest versions
 
