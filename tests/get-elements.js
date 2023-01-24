@@ -12,7 +12,11 @@ javascript: (() => {
       }
 
       if (element.nodeType === Node.ELEMENT_NODE) {
-        elements.push(element);
+        //
+        // DO WHATEVER WE NEED TO DO WITH EACH ELEMENT:
+        // PUSH TO AN ARRAY, ETC.
+        //
+        console.dir(element);
       }
 
       // If node has shadowRoot, re-call this function to get its child nodes.
@@ -22,7 +26,5 @@ javascript: (() => {
     }
   }
 
-  let elements = [];
   getElements(document.body);
-  console.dir(elements);
 })();
