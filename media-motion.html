@@ -8,6 +8,42 @@
     <title>rha11y-link-target bookmarklet demo</title>
     <link rel="stylesheet" href="rha11y-tools.css" rel="stylesheet" />
     <script src="img-components.js"></script>
+    <style>
+      .animation {
+        background: black;
+        border-radius: 50%;
+        margin: 2rem;
+        height: 2rem;
+        width: 2rem;
+
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+        transform: scale(1);
+        animation: pulse 2s linear infinite both;
+      }
+
+      @media (prefers-reduced-motion) {
+        .animation {
+          animation: none;
+        }
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(0.95);
+          box-shadow: 0 0 0 0 rgba(0, 0, 55, 0.9);
+        }
+
+        70% {
+          transform: scale(1);
+          box-shadow: 0 0 0 1rem rgba(0, 0, 0, 0);
+        }
+
+        100% {
+          transform: scale(0.95);
+          box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+        }
+      }
+    </style>
   </head>
   <body>
     <div class="demo-page">
@@ -39,6 +75,8 @@
         When you click the link above or run the bookmarklet, a modal will appear and announce
         whether you have reduced motion turned off or on.
       </p>
+<p>If you have reduced motion <strong>off</strong>, the circle below should be sending off a visible pulse. If you have reduced motion <strong>on</strong>, the circle should be static and not pulsing.</p>
+      <p><div class="animation" role="img" aria-label="pulsing image to test prefers-reduced-motion"></div></p>
       <p>
         Mozilla's MDN Web Docs site has
         <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion"
