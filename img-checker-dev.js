@@ -267,50 +267,60 @@ javascript: (() => {
         styleBackgroundImage.match("url") ||
         styleBackgroundImage.match("var"))
     ) {
-      group();
       log("Background image found. They are not tested.");
       //node.style.setProperty("background-image", "none");
       node.style.setProperty("background-color", "#fffd");
       node.style.setProperty("background-blend-mode", "color");
-      groupEnd();
     }
   }
 
-  function findAndTestImages(root) {
-    group();
-    let nodeName = root.getRootNode().host ? root.getRootNode().host.nodeName : null;
-    if (nodeName) {
-      log(`<${nodeName.toLowerCase()}>`);
-    }
-
-    const nodes = root.querySelectorAll("*");
-
-    for (const node of nodes) {
-      if (isImg(node)) {
-        group();
+  function findAndTestImages(elements) {
+    for (const element of elements) {
+      if (isImg(element)) {
         log("Located an <img>");
-        log(node.outerHTML);
-        checkImgA11y(node);
-        groupEnd();
+        log(element.outerHTML);
+        checkImgA11y(element);
       }
 
-      if (isSvg(node)) {
-        group();
+      if (isSvg(element)) {
         log("Located an <svg>");
-        log(node.outerHTML);
-        checkSvgA11y(node);
-        groupEnd();
+        log(element.outerHTML);
+        checkSvgA11y(element);
       }
 
-      if (hasShadowRoot(node)) {
-        const shadowNode = node.shadowRoot;
-        findAndTestImages(shadowNode);
-      }
+      fadeBackgroundImages(element);
+    }
+  }
 
-      fadeBackgroundImages(node);
+  function getAllElements(root) {
+    function getElements(root) {
+      const nodes = root.querySelectorAll("*");
+
+      for (const node of nodes) {
+        let element;
+
+        if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+          element = node.getRootNode().host;
+        } else {
+          element = node;
+        }
+
+        if (element.nodeType === Node.ELEMENT_NODE) {
+          allElements.push(element);
+        }
+
+        // If node has shadowRoot, re-call this function to get its child nodes.
+        if (node.shadowRoot) {
+          getElements(node.shadowRoot);
+        }
+      }
     }
 
-    groupEnd();
+    let allElements = [];
+    if (root) {
+      getElements(root);
+    }
+    return allElements;
   }
 
   (function init() {
@@ -320,6 +330,8 @@ javascript: (() => {
 
     // By default, we want to test all elements in the document body.
     const root = document.body;
-    findAndTestImages(root);
+    const elements = getAllElements(root);
+    dir(elements);
+    findAndTestImages(elements);
   })();
 })();
