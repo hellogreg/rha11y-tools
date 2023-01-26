@@ -19,8 +19,12 @@ javascript: (() => {
     }
   }
 
-  function group() {
-    console.group();
+  function group(m) {
+    if (m) {
+      console.group(m);
+    } else {
+      console.group();
+    }
   }
 
   function groupEnd() {
@@ -267,25 +271,30 @@ javascript: (() => {
         styleBackgroundImage.match("url") ||
         styleBackgroundImage.match("var"))
     ) {
-      log("Background image found. They are not tested.");
+      group("Background image located");
+      log("Background images don't require accessibility testing.");
+      log("Fading out background image.");
       //node.style.setProperty("background-image", "none");
       node.style.setProperty("background-color", "#fffd");
       node.style.setProperty("background-blend-mode", "color");
+      groupEnd();
     }
   }
 
   function findAndTestImages(elements) {
     for (const element of elements) {
       if (isImg(element)) {
-        log("Located an <img>");
+        group("<img> located");
         log(element.outerHTML);
         checkImgA11y(element);
+        groupEnd();
       }
 
       if (isSvg(element)) {
-        log("Located an <svg>");
+        group("<svg> located");
         log(element.outerHTML);
         checkSvgA11y(element);
+        groupEnd();
       }
 
       fadeBackgroundImages(element);
@@ -324,14 +333,12 @@ javascript: (() => {
   }
 
   (function init() {
-    log();
-    log("Initiating rha11y-tools bookmarklet");
-    log();
+    group("rha11y-img-checker results");
 
-    // By default, we want to test all elements in the document body.
-    const root = document.body;
-    const elements = getAllElements(root);
-    dir(elements);
+    // By default, test all elements in the document body.
+    const elements = getAllElements(document.body);
     findAndTestImages(elements);
+
+    groupEnd();
   })();
 })();
