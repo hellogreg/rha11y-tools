@@ -226,7 +226,7 @@ javascript: (() => {
 
     // TODO: We're currently returning true if there's an aria-labelledby attribute at all.
     // But we should check to make sure it has a valid id and value.
-    // Once hasAriaLabelledbyValue() can check shadowRoots, use the following:
+    // Once hasAriaLabelledbyValue() can check shadowRoots (e.g., via elements array), use the following:
     // return !!hasAriaLabelledbyValue;
     // But for now, we're using this:
     return !!hasAriaLabelledby;
