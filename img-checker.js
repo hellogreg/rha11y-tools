@@ -249,7 +249,7 @@ javascript: (() => {
       isAccessible = isElementOrParentHidden(img);
     }
 
-    log("%c<img> is accessible: " + isAccessible, "font-weight:bold;");
+    log("%c<img> is accessible: " + isAccessible, "font-weight:bold;color:#900;");
     outputA11yResults(img, isAccessible);
   }
 
@@ -274,7 +274,7 @@ javascript: (() => {
       isAccessible = isElementOrParentHidden(svg);
     }
 
-    log("<svg> is accessible: " + isAccessible);
+    log("%c<svg> is accessible: " + isAccessible, "font-weight:bold;color:#900;");
     outputA11yResults(svg, isAccessible);
   }
 

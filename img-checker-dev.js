@@ -274,7 +274,7 @@ javascript: (() => {
       isAccessible = isElementOrParentHidden(svg);
     }
 
-    log("<svg> is accessible: " + isAccessible);
+    log("%c<svg> is accessible: " + isAccessible, "font-weight:bold;");
     outputA11yResults(svg, isAccessible);
   }
 
