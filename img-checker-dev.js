@@ -82,11 +82,9 @@ javascript: (() => {
   // Test all the ways an element can be hidden from assistive tech.
   function isElementHidden(element) {
     let isHidden = false;
-    //element = getTestableElement(element);
 
     const elementName = element.nodeName;
     groupCollapsed("Checking if " + elementName.toLowerCase() + " is hidden");
-    //dir(element);
 
     // Check for hidden attribute
     const hasHiddenAttr = !!element.hidden;
@@ -105,7 +103,7 @@ javascript: (() => {
     isHidden = isHidden || isAriaHidden;
     log("aria-hidden: " + isAriaHidden);
 
-    // role="presentation" is only tested on the image itself
+    // role="presentation" is only tested on the image itself -- not on parent elements
     if (isImg(element) || isSvg(element)) {
       const hasRolePresentation = element.getAttribute("role") === "presentation";
       isHidden = isHidden || hasRolePresentation;
@@ -151,7 +149,7 @@ javascript: (() => {
 
     groupEnd();
 
-    log("Either element or a parent is hidden: " + !!isHidden);
+    log("Either element or a parent is hidden from assistive tech: " + !!isHidden);
     return !!isHidden;
   }
 
