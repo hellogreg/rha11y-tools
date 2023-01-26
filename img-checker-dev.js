@@ -220,6 +220,8 @@ javascript: (() => {
   function checkImgA11y(img) {
     let isAccessible = false;
 
+    log(img.outerHTML);
+
     // Check if the img has an accessible name...
     log("Checking if <img> has an alt attribute");
     isAccessible = isAccessible || hasAltAttribute(img);
@@ -238,6 +240,8 @@ javascript: (() => {
   //
   function checkSvgA11y(svg) {
     let isAccessible = false;
+
+    log(svg.outerHTML);
 
     // Check if the SVG has an accessible name...
     log("Checking if inline <svg> has an accessible name");
@@ -285,14 +289,12 @@ javascript: (() => {
     for (const element of elements) {
       if (isImg(element)) {
         group("<img> located");
-        log(element.outerHTML);
         checkImgA11y(element);
         groupEnd();
       }
 
       if (isSvg(element)) {
         group("<svg> located");
-        log(element.outerHTML);
         checkSvgA11y(element);
         groupEnd();
       }
