@@ -24,7 +24,7 @@ javascript: (() => {
   }
 
   function group(m) {
-    if (m) {
+    if (outputMessages && m) {
       console.group(m);
     } else {
       console.group();
@@ -32,7 +32,7 @@ javascript: (() => {
   }
 
   function groupCollapsed(m) {
-    if (m) {
+    if (outputMessages && m) {
       console.groupCollapsed(m);
     } else {
       console.groupCollapsed();
@@ -40,7 +40,9 @@ javascript: (() => {
   }
 
   function groupEnd() {
-    console.groupEnd();
+    if (outputMessages) {
+      console.groupEnd();
+    }
   }
 
   // Display the test results: outline around image and data-a11y attribute in element
@@ -68,11 +70,6 @@ javascript: (() => {
 
   function isSvg(element) {
     return element.nodeName.toLowerCase() === "svg";
-  }
-
-  // Returns whether a node is in the shadow DOM
-  function hasShadowRoot(node) {
-    return !!node.shadowRoot;
   }
 
   // Returns an element we can use, whether in the shadow DOM or not
@@ -159,6 +156,7 @@ javascript: (() => {
   }
 
   // Test whether an <img> element has an alt attribute, even if it's null
+  //
   function hasAltAttribute(img) {
     const hasAlt = !!img.hasAttribute("alt");
     log("Has alt attribute: " + hasAlt);
@@ -170,6 +168,7 @@ javascript: (() => {
   }
 
   // Test whether an <svg> element has a <title> as its first child element
+  //
   function hasTitleElement(svg) {
     const hasTitle =
       svg.firstElementChild.tagName === "title" && !!svg.firstElementChild.textContent;
@@ -181,6 +180,7 @@ javascript: (() => {
   }
 
   // Test whether an element has role="img"
+  //
   function hasImgRole(element) {
     const hasImgRole = element.getAttribute("role") === "img";
     log("Has role=img (not required/sufficient on its own): " + !!hasImgRole);
@@ -188,6 +188,7 @@ javascript: (() => {
   }
 
   // Test whether an element has an aria-label
+  //
   function hasAriaLabel(element) {
     const ariaLabel = element.ariaLabel || element.getAttribute("aria-label");
     const hasAriaLabel = !!ariaLabel;
@@ -199,6 +200,7 @@ javascript: (() => {
   }
 
   // Get an element's aria-labelledby value from its target
+  //
   function getAriaLabelledbyValue(id) {
     // See if we can locate the aria-labelledby's target element in regular DOM.
     let labelTarget = document.getElementById(id);
@@ -209,6 +211,7 @@ javascript: (() => {
   }
 
   // Test whether an element has an aria-labelledby attribute
+  //
   function hasAriaLabelledby(element) {
     const ariaLabelledbyId = element.ariaLabelledby || element.getAttribute("aria-labelledby");
     const hasAriaLabelledby = !!ariaLabelledbyId;
@@ -225,7 +228,7 @@ javascript: (() => {
     }
 
     // TODO: We're currently returning true if there's an aria-labelledby attribute at all.
-    // But we should check to make sure it has a valid id and value.
+    // But we should check to make sure it has a _valid_ id and value.
     // Once hasAriaLabelledbyValue() can check shadowRoots (e.g., via elements array), use the following:
     // return !!hasAriaLabelledbyValue;
     // But for now, we're using this:
@@ -295,7 +298,6 @@ javascript: (() => {
       group("Background image located");
       log("Background images don't require accessibility testing.");
       log("Fading out background image.");
-      //node.style.setProperty("background-image", "none");
       node.style.setProperty("background-color", "#fffd");
       node.style.setProperty("background-blend-mode", "color");
       groupEnd();
