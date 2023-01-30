@@ -120,6 +120,7 @@ javascript: (() => {
   // Run up the DOM to check if the element or any parents are hidden
   //
   function isElementOrParentHidden(element) {
+    // Stop testing parents when we get to document/body/html
     function continueTesting(el) {
       return (
         !!el &&
