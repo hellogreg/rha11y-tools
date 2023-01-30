@@ -103,7 +103,7 @@ javascript: (() => {
     isHidden = isHidden || isAriaHidden;
     log("aria-hidden: " + isAriaHidden);
 
-    // role="presentation" is only tested on the image itself -- not on parent elements
+    // role="presentation" is only tested on the <img> itself -- not on parent elements
     // TODO: Can we use this on SVGs, too? Answer used to be no, but should re-check.
     if (isImg(element)) {
       const hasRolePresentation = element.getAttribute("role") === "presentation";
