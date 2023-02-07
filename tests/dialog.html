@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- https://rha11y-tools.netlify.app/ -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dialog tests</title>
+    <link rel="stylesheet" href="../rha11y-tools.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="page">
+      <h1 id="pagetop">&lt;dialog&gt; modal tests</h1>
+      <p>
+        The ARIA Authoring Practices Guide states that "<a
+          href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/"
+          >Windows under a modal dialog [should be] inert. That is, users cannot interact with
+          content outside an active dialog window.</a
+        >"
+      </p>
+      <p>
+        However, it is possible to have some interaction with the underlying content when a
+        &lt;dialog&gt; modal is opened. Mouse users can click outside the modal and scroll up and
+        down the page. And both mouse and keyboard users can follow links within the modal that
+        point to in-page anchors on the underlying page.
+      </p>
+      <h2>Activate dialog</h2>
+      <dialog id="theDialog">
+        <p>
+          <a href="#destination"
+            >This link points to an underlying area down the page, outside of the modal.</a
+          >
+        </p>
+        <p>
+          If you are using a mouse and click outside the modal, you may also be able to scroll down
+          the page.
+        </p>
+        <p>
+          Press [esc] to close this modal or use the following button: <br /><button
+            id="closeDialog"
+          >
+            Close this dialog
+          </button>
+        </p>
+      </dialog>
+      <p>
+        <button id="showDialog">Open modal dialog</button>
+      </p>
+      <p>
+        .<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />
+      </p>
+      <h2 id="destination">In-page link destination</h2>
+      <p>
+        When the modal is opened, users shouldn't be able to get down here--via the the link in the
+        modal, scrolling, etc.
+      </p>
+      <p>
+        <a href="#pagetop">Return to the top of this page.</a>
+      </p>
+    </div>
+  </body>
+  <script>
+    const showButton = document.getElementById("showDialog");
+    const closeButton = document.getElementById("closeDialog");
+    const theDialog = document.getElementById("theDialog");
+
+    showButton.addEventListener("click", () => {
+      theDialog.showModal();
+    });
+
+    showButton.addEventListener("click", () => {
+      theDialog.showModal();
+    });
+
+    closeButton.addEventListener("click", () => {
+      theDialog.close();
+    });
+  </script>
+</html>
