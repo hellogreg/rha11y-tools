@@ -60,8 +60,11 @@
       <p>
         When the modal is opened, users shouldn't be able to interact with this form. However,
         screen reader users may be able to navigate to it, even if they then can't enter content or
-        submit. (e.g., If you activate VoiceOver and choose to navigate by Form Controls, the
-        following input and button are listed as available.)
+        submit.
+      </p>
+      <p>
+        For example, if you activate VoiceOver and choose to navigate by Form Controls, the
+        following input and button are listed as available, even when the modal is open.
       </p>
       <form id="testForm">
         <label for="testInput">Test input:</label> <input type="text" id="testInput" />
@@ -72,8 +75,8 @@
       </p>
       <h2 id="destination">In-page link destination</h2>
       <p>
-        When the modal is opened, users shouldn't be able to get down here--via the the link in the
-        modal, scrolling, etc.
+        When the modal is opened, mouse users can scroll here, and any in-modal links to this part
+        of the page are still active.
       </p>
       <p>
         <a href="#pagetop">Return to the top of this page.</a>
