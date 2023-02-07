@@ -19,11 +19,21 @@
         >"
       </p>
       <p>
-        However, it is possible to have some interaction with the underlying content when a
-        &lt;dialog&gt; modal is opened. Mouse users can click outside the modal and scroll up and
-        down the page. And both mouse and keyboard users can follow links within the modal that
-        point to in-page anchors on the underlying page.
+        However, it is possible to have <em>some</em> interaction with the underlying content when a
+        &lt;dialog&gt; modal is opened. For example:
       </p>
+      <ul>
+        <li>Mouse users can click outside the modal and scroll up and down the page.</li>
+        <li>
+          Both mouse and keyboard users can follow links within the modal that point to in-page
+          anchors on the underlying page.
+        </li>
+        <li>
+          Screen reader users navigating by form controls may be able to navigate to those items
+          (even if they then can't interact fully with them). To avoid this, you can put an
+          aria-hidden="true" attribute on underlying elements when the modal is shown.
+        </li>
+      </ul>
       <h2>Activate dialog</h2>
       <dialog id="theDialog">
         <p>
@@ -46,7 +56,18 @@
       <p>
         <button id="showDialog">Open modal dialog</button>
       </p>
+      <h2>Form</h2>
       <p>
+        When the modal is opened, users shouldn't be able to interact with this form. However,
+        screen reader users may be able to navigate to it, even if they then can't enter content or
+        submit. (e.g., If you activate VoiceOver and choose to navigate by Form Controls, the
+        following input and button are listed as available.)
+      </p>
+      <form id="testForm">
+        <label for="testInput">Test input:</label> <input type="text" id="testInput" />
+        <button>test button</button>
+      </form>
+      <p aria-hidden="true">
         .<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />.<br />
       </p>
       <h2 id="destination">In-page link destination</h2>
@@ -63,17 +84,16 @@
     const showButton = document.getElementById("showDialog");
     const closeButton = document.getElementById("closeDialog");
     const theDialog = document.getElementById("theDialog");
+    const testForm = document.getElementById("testForm");
 
     showButton.addEventListener("click", () => {
       theDialog.showModal();
-    });
-
-    showButton.addEventListener("click", () => {
-      theDialog.showModal();
+      //testForm.setAttribute("aria-hidden", "true");
     });
 
     closeButton.addEventListener("click", () => {
       theDialog.close();
+      //testForm.setAttribute("aria-hidden", "false");
     });
   </script>
 </html>
