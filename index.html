@@ -9,7 +9,9 @@
       name="description"
       content="These bookmarklets form a collection of unitaskers originally designed to help automate accessibility QA testing processes at Red Hat. They are branded to RHa11y, Red Hat's accessibility volunteer group."
     />
-    <title>rha11y-tools bookmarklets</title>
+    <title>
+      rha11y-tools bookmarklets: tools by Red Hat for quick accessibility-related checks
+    </title>
     <link rel="stylesheet" href="rha11y-tools.css" rel="stylesheet" />
   </head>
   <body>
@@ -43,6 +45,10 @@
         </li>
         <li>
           <a href="#rha11y-media-motion">rha11y-media-motion</a>: checks your motion preferences
+        </li>
+        <li>
+          <a href="#rha11y-page-info">rha11y-page-info</a>: gets page title, language, and
+          description
         </li>
       </ul>
 
@@ -209,6 +215,28 @@
         checks your machine to see whether you have a reduced motion preference enabled and verifies
         that your browser can determine that setting. It can be useful for testing pages with
         animations, so you can make sure your setting reflects what the site is presenting to you.
+      </p>
+
+      <h2 id="rha11y-page-info">
+        <span class="rh-text">rha11y-page-info</span>: gets page title, language, and description
+      </h2>
+      <p>
+        Drag this link to your bookmarks bar to install:
+        <strong
+          ><a
+            class="book-link"
+            href='javascript: (function () {var booklink = document.createElement("script");booklink.setAttribute("src", "https://rha11y-tools.netlify.app/page-info.js");document.body.appendChild(booklink);})();'
+            >rha11y-page-info</a
+          ></strong
+        >
+      </p>
+      <p>
+        <a href="page-info.html" class="demo-link">View the rha11y-page-info demo</a>
+      </p>
+      <p>
+        The rha11y-page-info 3-in-1 bookmarklet gathers some basic information about the current
+        page. When run, the script opens a modal that displays the page's title, language setting,
+        and meta description.
       </p>
 
       <h2>Colophon</h2>

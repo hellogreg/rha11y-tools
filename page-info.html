@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- https://rha11y-tools.netlify.app/ -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="This is the meta description for the rha11y-page-info bookmarklet. Thanks for trying it out!"
+    />
+    <title>rha11y-page-info bookmarklet demo</title>
+    <link rel="stylesheet" href="rha11y-tools.css" rel="stylesheet" />
+    <script src="img-components.js"></script>
+  </head>
+  <body>
+    <div class="demo-page">
+      <h1><span class="rh-text">rha11y-page-info</span> demo</h1>
+      <p><a href="index.html">Return to the rha11y-tools homepage</a></p>
+      <h2>Getting the bookmarklet</h2>
+      <p>
+        To get the rha11y-page-info bookmarklet, drag the following link to your bookmarks bar. You
+        may also click the link directly to use it on this page for testing. (Refresh the page to
+        reset it.)
+      </p>
+      <p>
+        <strong
+          ><a
+            class="book-link"
+            href='javascript: (function () {var booklink = document.createElement("script");booklink.setAttribute("src", "https://rha11y-tools.netlify.app/page-info.js");document.body.appendChild(booklink);})();'
+            >rha11y-page-info</a
+          ></strong
+        >
+      </p>
+      <p>
+        The rha11y-page-info 3-in-1 bookmarklet gathers some basic information about the current
+        page. When run, the script opens a modal that displays the page's title, language setting,
+        and meta description.
+      </p>
+      <h2>Demo</h2>
+      <p>Click the bookmarklet link above to test the info modal.</p>
+      <p></p>
+    </div>
+
+    <!--script src="img-checker.js"></script-->
+  </body>
+</html>
