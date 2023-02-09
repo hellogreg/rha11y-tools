@@ -42,28 +42,34 @@ javascript: (() => {
     h2.appendChild(document.createTextNode("Open Graph meta values"));
     dialog.appendChild(h2);
 
-    ul = document.createElement("ul");
-    ul.style.marginBottom = "2rem";
-    for (const meta of metas) {
-      const metaProperty = meta.attributes.property.value;
-      const metaContent = meta.attributes.content.value;
+    if (metas.length > 0) {
+      ul = document.createElement("ul");
+      ul.style.marginBottom = "2rem";
+      for (const meta of metas) {
+        const metaProperty = meta.attributes.property.value;
+        const metaContent = meta.attributes.content.value;
 
-      li = document.createElement("li");
-      li.style.margin = "0 0 1rem 0";
-      li.style.padding = "0";
+        li = document.createElement("li");
+        li.style.margin = "0 0 1rem 0";
+        li.style.padding = "0";
 
-      div = document.createElement("div");
-      div.style.fontWeight = "700";
-      div.appendChild(document.createTextNode(metaProperty));
-      li.appendChild(div);
+        div = document.createElement("div");
+        div.style.fontWeight = "700";
+        div.appendChild(document.createTextNode(metaProperty));
+        li.appendChild(div);
 
-      div = document.createElement("div");
-      div.appendChild(document.createTextNode(metaContent));
-      li.appendChild(div);
+        div = document.createElement("div");
+        div.appendChild(document.createTextNode(metaContent));
+        li.appendChild(div);
 
-      ul.appendChild(li);
+        ul.appendChild(li);
+      }
+      dialog.appendChild(ul);
+    } else {
+      p = document.createElement("p");
+      p.appendChild(document.createTextNode("No Open Graph meta tags detected in page source."));
+      dialog.appendChild(p);
     }
-    dialog.appendChild(ul);
 
     p = document.createElement("p");
     p.appendChild(document.createTextNode(" "));
