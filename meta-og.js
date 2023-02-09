@@ -36,7 +36,7 @@ javascript: (() => {
     const dialog = document.createElement("dialog");
     document.body.appendChild(dialog);
 
-    let h2, ul, li, p, div;
+    let h2, ul, li, p, div, img;
 
     h2 = document.createElement("h2");
     h2.appendChild(document.createTextNode("Open Graph meta info"));
@@ -61,6 +61,16 @@ javascript: (() => {
         div = document.createElement("div");
         div.appendChild(document.createTextNode(metaContent));
         li.appendChild(div);
+
+        if (metaProperty.includes("image")) {
+          img = document.createElement("img");
+          img.style.width = "300px";
+          img.style.maxWidth = "75%";
+          img.style.maxHeight = "auto";
+          img.setAttribute("src", metaContent);
+          img.setAttribute("alt", "og:image thumbnail");
+          li.appendChild(img);
+        }
 
         ul.appendChild(li);
       }
