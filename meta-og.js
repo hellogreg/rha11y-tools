@@ -19,92 +19,52 @@ javascript: (() => {
     }
   }
 
-  function getDocumentInfo() {
-    /*
-    // 1) Get page title
-    const pageTitle = document.title;
-    const hasPageTitle = !!pageTitle;
-    log(`Page has title: ${hasPageTitle}`);
-    log(`Page title: ${pageTitle}`);
+  function getOgMetas() {
+    const metas = document.getElementsByTagName("meta");
+    let ogMetas = [];
 
-    // 2) Get page language
-    const pageLang = document.documentElement.lang;
-    const hasPageLang = !!pageLang;
-    log(`Page has language specified: ${hasPageLang}`);
-    log(`Page language: ${pageLang}`);
+    for (const meta of metas) {
+      if (meta.getAttribute("property") && meta.getAttribute("property").includes("og:")) {
+        ogMetas.push(meta);
+      }
+    }
 
-    // 3) Get page meta description
-    const metaDescription = document.querySelector("meta[name='description']");
-    const pageDescription = metaDescription ? metaDescription.content : false;
-    const hasPageDescription = !!pageDescription;
-    log(`Page has meta description: ${hasPageDescription}`);
-    log(`Page meta description: ${pageDescription}`);
-
-    return {
-      title: pageTitle,
-      lang: pageLang,
-      description: pageDescription
-    };
-    */
+    return ogMetas;
   }
 
-  function outputResults(info) {
+  function outputResults(metas) {
     const dialog = document.createElement("dialog");
     document.body.appendChild(dialog);
 
-    let h2, h3, ul, li, p;
-    const title = info.title;
-    const lang = info.lang;
-    const description = info.description;
+    let h2, ul, li, p, div;
 
     h2 = document.createElement("h2");
-    h2.appendChild(document.createTextNode("Basic page info"));
+    h2.appendChild(document.createTextNode("Open Graph meta values"));
     dialog.appendChild(h2);
 
-    h3 = document.createElement("h3");
-    h3.appendChild(document.createTextNode("Title"));
-    dialog.appendChild(h3);
-
     ul = document.createElement("ul");
     ul.style.marginBottom = "2rem";
-    li = document.createElement("li");
-    if (!!title) {
-      li.appendChild(document.createTextNode(title));
-    } else {
-      li.appendChild(document.createTextNode("[No title found]"));
+    for (const meta of metas) {
+      const metaProperty = meta.attributes.property.value;
+      const metaContent = meta.attributes.content.value;
+
+      li = document.createElement("li");
+      li.style.margin = "0 0 1rem 0";
+      li.style.padding = "0";
+
+      div = document.createElement("div");
+      div.style.fontWeight = "700";
+      div.appendChild(document.createTextNode(metaProperty));
+      li.appendChild(div);
+
+      div = document.createElement("div");
+      div.appendChild(document.createTextNode(metaContent));
+      li.appendChild(div);
+
+      ul.appendChild(li);
     }
-    ul.appendChild(li);
     dialog.appendChild(ul);
 
-    h3 = document.createElement("h3");
-    h3.appendChild(document.createTextNode("Language"));
-    dialog.appendChild(h3);
-
-    ul = document.createElement("ul");
-    ul.style.marginBottom = "2rem";
-    li = document.createElement("li");
-    if (!!lang) {
-      li.appendChild(document.createTextNode(lang));
-    } else {
-      li.appendChild(document.createTextNode("[No language found]"));
-    }
-    ul.appendChild(li);
-    dialog.appendChild(ul);
-
-    h3 = document.createElement("h3");
-    h3.appendChild(document.createTextNode("Meta Description"));
-    dialog.appendChild(h3);
-
-    ul = document.createElement("ul");
-    ul.style.marginBottom = "3rem";
-    li = document.createElement("li");
-    if (!!description) {
-      li.appendChild(document.createTextNode(description));
-    } else {
-      li.appendChild(document.createTextNode("[No description found]"));
-    }
-    ul.appendChild(li);
-    dialog.appendChild(ul);
     p = document.createElement("p");
     p.appendChild(document.createTextNode(" "));
     dialog.appendChild(p);
@@ -118,8 +78,8 @@ javascript: (() => {
 
   (function init() {
     log();
-    const info = getDocumentInfo();
-    outputResults(info);
+    const metas = getOgMetas();
+    outputResults(metas);
     log();
   })();
 })();
