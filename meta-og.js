@@ -39,7 +39,7 @@ javascript: (() => {
     let h2, ul, li, p, div;
 
     h2 = document.createElement("h2");
-    h2.appendChild(document.createTextNode("Open Graph meta values"));
+    h2.appendChild(document.createTextNode("Open Graph meta info"));
     dialog.appendChild(h2);
 
     if (metas.length > 0) {
