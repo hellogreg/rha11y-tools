@@ -19,7 +19,7 @@ javascript: (() => {
     }
   }
 
-  function getDocumentInfo(root) {
+  function getDocumentInfo() {
     // 1) Get page title
     const pageTitle = document.title;
     const hasPageTitle = !!pageTitle;
