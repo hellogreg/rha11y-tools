@@ -43,7 +43,7 @@ javascript: (() => {
     element.style.setProperty("filter", "initial", "important");
   }
 
-  function testImageFilesizes(root) {
+  function testLinkTargets(root) {
     const nodes = root.querySelectorAll("*");
 
     for (const node of nodes) {
@@ -65,13 +65,13 @@ javascript: (() => {
       // If the node has shadowRoot, re-run this function for it.
       if (!!node.shadowRoot) {
         const shadowNode = node.shadowRoot;
-        testImageFilesizes(shadowNode);
+        testLinkTargets(shadowNode);
       }
     }
   }
 
   (function init() {
     const root = document.body;
-    testImageFilesizes(root);
+    testLinkTargets(root);
   })();
 })();
