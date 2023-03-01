@@ -24,6 +24,61 @@ javascript: (() => {
   // APP FUNCTIONS
   //
 
+  function isLink(element) {
+    return element.nodeName.toLowerCase() === "a" && !!element.href;
+  }
+
+  function outputResults(element, validLink) {
+    // Outline the image with the pass/fail color.
+    // (Must reset filters on image, too, to ensure proper outlining)
+    //
+    const colorPass = "#09fd";
+    const colorFail = "#f90d";
+    const outlineColor = !!validLink ? colorFail : colorPass;
+    element.style.setProperty("outline", outlineColor + " solid 8px", "important");
+    element.style.setProperty("outline-offset", "-4px", "important");
+    element.style.setProperty("border-radius", "2px", "important");
+    element.style.setProperty("filter", "initial", "important");
+  }
+
+  function checkAllLinks(elements) {
+    for (const element of elements) {
+      if (isLink(element)) {
+        // Test target
+        const href = element.href || null;
+        //outputResults(element, opensNewWindow);
+
+        const linkRequest = new Request(href);
+        //dir(linkRequest);
+
+        try {
+          fetch(linkRequest, {}).then((response) => {
+            log("Link: " + element.outerHTML);
+            log("Link href: " + href);
+            log(response.status); // returns 200
+            log();
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    }
+  }
+
+  function outputElements(elements) {
+    for (const el of elements) {
+      dir(el);
+    }
+  }
+
+  //
+  //////////////////////////////////////
+
+  //////////////////////////////////////
+  //
+  // INIT AND GETALLELEMENTS FUNCTIONS
+  //
+
   function getAllElements(root) {
     let elements = [];
 
@@ -54,20 +109,6 @@ javascript: (() => {
     return elements;
   }
 
-  function outputElements(elements) {
-    for (const el of elements) {
-      dir(el);
-    }
-  }
-
-  //
-  //////////////////////////////////////
-
-  //////////////////////////////////////
-  //
-  // INIT FUNCTION
-  //
-
   (function init() {
     //
     // The root can be the document, its body, or whatever we want to test.
@@ -75,6 +116,9 @@ javascript: (() => {
     const elements = getAllElements(root);
 
     // Once we have the elements, we can run our tests on them.
-    outputElements(elements);
+    checkAllLinks(elements);
   })();
+
+  //
+  //////////////////////////////////////
 })();
