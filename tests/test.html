@@ -5,16 +5,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>aria test</title>
+    <style>
+      .visually-hidden:not(:focus):not(:active):not(:focus-within) {
+        clip-path: inset(50%);
+        height: 1px;
+        overflow: hidden;
+        position: absolute;
+        white-space: nowrap;
+        width: 1px;
+      }
+    </style>
   </head>
   <body>
+    <h1>Tests</h1>
     <div>
-      <header id="header-el">
-        <h3 id="h3-el">Red Hat OpenShift</h3>
-        <p id="p-el">Some text about Openshift...</p>
-      </header>
-      <p>
-        <a href="#" aria-describedby="h3-el">Get started</a>
-      </p>
+      <div>
+        <button
+          onclick="document.getElementById('announcement').innerHTML = 'You may now reselect and update your solution challenge selections'"
+        >
+          Switch to edit mode
+        </button>
+        <p id="announcement" class="aavisually-hidden" aria-live="polite"></p>
+      </div>
     </div>
   </body>
 </html>
