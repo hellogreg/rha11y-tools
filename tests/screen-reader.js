@@ -100,16 +100,14 @@ javascript: (() => {
     const isAriaHidden = !!element.ariaHidden || element.getAttribute("aria-hidden") === "true";
     isHidden = isHidden || isAriaHidden;
 
-    // role="presentation" is only tested on the image itself
-    // TODO: Break this out into its own thing, since the role isn't inherited by children.
-    // How do we hide/remove this -- but not its children?
-    /*
-    if (isImg(element) || isSvg(element)) {
-      const hasRolePresentation = element.getAttribute("role") === "presentation";
+    const hasRolePresentation = element.getAttribute("role") === "presentation";
+    if (hasRolePresentation && element.childNodes.length === 0) {
       isHidden = isHidden || hasRolePresentation;
-      log("role=presentation: " + hasRolePresentation);
+    } else if (hasRolePresentation) {
+      // TODO: How to handle role="presentation" on elements with children, so
+      // the element is hidden, but the children are not.
+      log("Element has role='presentation' and kids.");
     }
-    */
 
     // TODO: Any other ways it could be hidden?
 
@@ -187,8 +185,6 @@ javascript: (() => {
   function convertImg(img) {
     let isAccessible = false;
 
-    log(img.outerHTML);
-
     // Check if the img has an accessible name...
     // TODO: If so, get it returned to use here!
 
@@ -197,12 +193,8 @@ javascript: (() => {
     groupEnd();
 
     if (!isAccessible) {
-      const txt = document.createElement("span");
-      txt.innerHTML = "[INACCESSIBLE IMAGE]";
-      img.parentNode.insertBefore(txt, img.nextSibling);
-      img.remove();
+      outputReplacementText(img, "[INACCESSIBLE IMAGE]");
     }
-
     outputA11yResults(img, isAccessible);
   }
 
@@ -210,8 +202,6 @@ javascript: (() => {
   //
   function convertSvg(svg) {
     let isAccessible = false;
-
-    log(svg.outerHTML);
 
     // Check if the SVG has an accessible name...
     group("Checking if inline <svg> has an accessible name");
@@ -223,19 +213,16 @@ javascript: (() => {
     groupEnd();
 
     if (!isAccessible) {
-      const txt = document.createElement("span");
-      txt.innerHTML = "[INACCESSIBLE INLINE SVG]";
-      svg.parentNode.insertBefore(txt, svg.nextSibling);
-      svg.remove();
+      outputReplacementText(svg, "[INACCESSIBLE SVG]");
     }
     outputA11yResults(svg, isAccessible);
   }
 
-  function outputImageText(element, message) {
+  function outputReplacementText(element, message) {
     if (element && message) {
       const span = document.createElement("span");
       span.innerHTML = message;
-      element.parentNode.insertBefore(element, svg.nextSibling);
+      element.parentNode.insertBefore(span, element.nextSibling);
       element.remove();
     }
   }
@@ -255,9 +242,36 @@ javascript: (() => {
     }
   }
 
-  function hideElement(element) {
+  function removeElement(element) {
     log("Removing element: " + element.tagName);
     element.remove();
+  }
+
+  // We don't want/need to remove HTML elements that are display:none by default.
+  function isHtmlElementDisplayNone(element) {
+    // List from here: https://www.w3.org/TR/2014/REC-html5-20141028/rendering.html#hidden-elements
+    const DisplayNoneElements = [
+      "area",
+      "base",
+      "basefont",
+      "datalist",
+      "head",
+      "link",
+      "meta",
+      "noembed",
+      "noframes",
+      "noscript",
+      "param",
+      "rp",
+      "script",
+      "source",
+      "style",
+      "template",
+      "track",
+      "title"
+    ];
+    let isDisplayNone = DisplayNoneElements.includes(element.tagName.toLowerCase());
+    return isDisplayNone;
   }
 
   function convertContent(elements) {
@@ -266,20 +280,27 @@ javascript: (() => {
     groupEnd();
 
     for (let element of elements) {
-      if (isElementHidden(element)) {
-        hideElement(element);
+      let shouldRemove = false;
+
+      if (!isHtmlElementDisplayNone(element)) {
+        shouldRemove = isElementHidden(element);
+      }
+
+      if (shouldRemove) {
+        outputReplacementText(element, "[REMOVED HIDDEN ELEMENT]");
+        //removeElement(element);
       } else {
         cleanDefaultStyles(element);
 
         if (isImg(element)) {
           //group("<img> located");
-          //convertImg(element);
+          convertImg(element);
           //groupEnd();
         }
 
         if (isSvg(element)) {
           //group("<svg> located");
-          //convertSvg(element);
+          convertSvg(element);
           //groupEnd();
         }
       }
