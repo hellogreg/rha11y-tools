@@ -115,14 +115,15 @@ javascript: (() => {
   }
 
   // Test whether an <img> element has an alt attribute, even if it's null
-  function hasAltAttribute(img) {
+  function getAltAttribute(img) {
     const hasAlt = !!img.hasAttribute("alt");
+    let altValue = false;
     log("Has alt attribute: " + hasAlt);
     if (hasAlt) {
-      const altValue = img.getAttribute("alt") || "[decorative]";
+      altValue = img.getAttribute("alt") || "[decorative]";
       log("Image alt value: " + altValue);
     }
-    return !!hasAlt;
+    return altValue;
   }
 
   // Test whether an <svg> element has a <title> as its first child element
@@ -184,18 +185,18 @@ javascript: (() => {
   //
   function convertImg(img) {
     let isAccessible = false;
-
-    // Check if the img has an accessible name...
-    // TODO: If so, get it returned to use here!
+    let imageMessage = "[INACCESSIBLE IMAGE]";
 
     groupCollapsed("Checking if <img> has an alt attribute");
-    isAccessible = isAccessible || hasAltAttribute(img);
+    const altValue = getAltAttribute(img);
+    if (!!altValue) {
+      isAccessible = true;
+      imageMessage = altValue;
+    }
     groupEnd();
 
-    if (!isAccessible) {
-      outputReplacementText(img, "[INACCESSIBLE IMAGE]");
-    }
-    outputA11yResults(img, isAccessible);
+    outputReplacementText(img, altValue);
+    //outputA11yResults(img, isAccessible);
   }
 
   // Test if an svg is accessible (has an accessible name/role or is hidden)
@@ -293,15 +294,11 @@ javascript: (() => {
         cleanDefaultStyles(element);
 
         if (isImg(element)) {
-          //group("<img> located");
           convertImg(element);
-          //groupEnd();
         }
 
         if (isSvg(element)) {
-          //group("<svg> located");
           convertSvg(element);
-          //groupEnd();
         }
       }
     }
