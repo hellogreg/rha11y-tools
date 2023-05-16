@@ -6,53 +6,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>rha11y-img-checker bookmarklet demo</title>
-    <link rel="stylesheet" href="rha11y-tools.css" rel="stylesheet" />
-    <script src="img-components.js"></script>
+    <link rel="stylesheet" href="../rha11y-tools.css" rel="stylesheet" />
+    <script src="../img-components.js"></script>
   </head>
   <body>
     <div class="demo-page">
-      <h1><span class="rh-text">rha11y-img-checker</span> demo</h1>
-      <p><a href="index.html">Return to the rha11y-tools homepage</a></p>
+      <h1><span class="rh-text">rha11y-screen-reader</span> demo</h1>
       <h2>Getting the bookmarklet</h2>
       <p>
-        To get the rha11y-img-checker bookmarklet, drag the following link to your bookmarks bar.
-        You may also click the link directly to use it on this page for testing. (Refresh the page
-        to reset it.)
+        To get the rha11y-screen-reader bookmarklet locally, drag the following link to your bookmarks bar.
       </p>
       <p>
         <strong
           ><a
             class="book-link"
-            href='javascript: (function () {var booklink = document.createElement("script");booklink.setAttribute("src", "https://rha11y-tools.netlify.app/img-checker.js");document.body.appendChild(booklink);})();'
-            >rha11y-img-checker</a
+            href='javascript: (function () {var booklink = document.createElement("script");booklink.setAttribute("src", "http://127.0.0.1:5500/tests/screen-reader.js");document.body.appendChild(booklink);})();'
+            >rha11y-screen-reader</a
           ></strong
         >
       </p>
-      <p>
-        When run, the rha11y-img-checker bookmarklet identifies all images on a page (including
-        inline SVGs and images in the shadow DOM) and returns accessibility information in the
-        following ways:
-      </p>
 
-      <ol>
-        <li>
-          All identified and tested images on the page are given 8px outlines:
-          <ul>
-            <li>
-              Blue outline = image passed accessibility checks or is hidden from accessible tech
-            </li>
-            <li>
-              Orange outline = image failed accessibility checks and is not hidden from accessible
-              tech
-            </li>
-            <li>No outline = image was not successfully identified</li>
-            <li>Background images are faded to white, as they don't require testing</li>
-          </ul>
-        </li>
-        <li>
-          Detailed accessibility test processes and results are displayed in the browser console.
-        </li>
-      </ol>
       <h2>Test images</h2>
       <h3>Inline SVGs</h3>
       <div class="cards">
@@ -182,7 +155,7 @@
       <h3>Non-shadow JPG &lt;img&gt; elements</h3>
       <div class="cards">
         <div>
-          <img src="testimg.jpg?test=img01" />
+          <img src="../testimg.jpg?test=img01" />
           <ul>
             <li>Has no alt</li>
             <li>Not hidden from screen readers</li></li>
@@ -191,7 +164,7 @@
           </ul>
         </div>
         <div>
-          <span aria-hidden="true"><img src="testimg.jpg?test=img02" /></span>
+          <span aria-hidden="true"><img src="../testimg.jpg?test=img02" /></span>
           <ul>
             <li>Has no alt</li>
             <li>Not hidden from screen readers</li></li>
@@ -200,7 +173,7 @@
           </ul>
         </div>
         <div>
-          <img src="testimg.jpg?test=img03" alt />
+          <img src="../testimg.jpg?test=img03" alt />
           <ul>
             <li>Has alt (null)</li>
             <li>Not hidden from screen readers</li></li>
@@ -209,7 +182,7 @@
           </ul>
         </div>
         <div>
-          <img src="testimg.jpg?test=img04" alt="People computing" />
+          <img src="../testimg.jpg?test=img04" alt="People computing" />
           <ul>
             <li>Has alt (with value)</li>
             <li>Not hidden from screen readers</li></li>
@@ -218,7 +191,7 @@
           </ul>
         </div>
         <div>
-          <img src="testimg.jpg?test=img05" role="presentation" />
+          <img src="../testimg.jpg?test=img05" role="presentation" />
           <ul>
             <li>Has no alt</li>
             <li>role="presentation"</li>
@@ -230,7 +203,7 @@
       <h3>Non-shadow SVG &lt;img&gt; elements</h3>
       <div class="cards">
         <div>
-          <img src="testsvg.svg?test=svg01" />
+          <img src="../testsvg.svg?test=svg01" />
           <ul>
             <li>Has no alt</li>
             <li>Not hidden from screen readers</li></li>
@@ -239,16 +212,16 @@
           </ul>
         </div>
         <div>
-          <span aria-hidden="true"><img src="testsvg.svg?test=svg02" /></span>
+          <span aria-hidden="true"><img src="../testsvg.svg?test=svg02" /></span>
           <ul>
             <li>Has no alt</li>
             <li>Not hidden from screen readers</li></li>
-            <li>Has hidden parent</li>
+            <li>assistive tech-hidden parent</li>
             <li>Should <strong>pass</strong></li>
           </ul>
         </div>
         <div>
-          <img src="testsvg.svg?test=svg03" alt />
+          <img src="../testsvg.svg?test=svg03" alt />
           <ul>
             <li>Has alt (null)</li>
             <li>Not hidden from screen readers</li></li>
@@ -257,7 +230,7 @@
           </ul>
         </div>
         <div>
-          <img src="testsvg.svg?test=svg04" alt="People computing" />
+          <img src="../testsvg.svg?test=svg04" alt="People computing" />
           <ul>
             <li>Has alt (with value)</li>
             <li>Not hidden from screen readers</li></li>
@@ -266,7 +239,7 @@
           </ul>
         </div>
         <div>
-          <img src="testsvg.svg?test=svg05" role="presentation" />
+          <img src="../testsvg.svg?test=svg05" role="presentation" />
           <ul>
             <li>Has no alt</li>
             <li>role="presentation"</li>

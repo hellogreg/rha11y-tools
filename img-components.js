@@ -42,7 +42,7 @@
             width: 10rem;
           }
         </style>
-        <img src="testimg.jpg" />
+        <img src="../testimg.jpg" />
         `;
         super();
         this.attachShadow({ mode: "open" }).appendChild(template.content.cloneNode(true));
