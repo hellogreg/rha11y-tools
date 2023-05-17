@@ -1,3 +1,9 @@
+// TODO: Don't REMOVE() items. Hide them, in case they need to return
+// - Except maybe for images!
+// - e.g., add a class to all aria-hidden items. remove it when they are no longer hidden
+//
+// CSS can influence screen readers: https://benmyers.dev/blog/css-can-influence-screenreaders/
+
 javascript: (() => {
   //
   // outputMessages toggles whether log() and dir() output anything
@@ -43,25 +49,6 @@ javascript: (() => {
     console.groupEnd();
   }
 
-  // Display the test results: outline around image and data-a11y attribute in element
-  //
-  function outputA11yResults(element, accessible) {
-    // The data-a11y attribute lists test results for someone inspecting the element.
-    // TODO: Add more detail to the results.
-    element.setAttribute("data-a11y", "Accessible: " + !!accessible);
-
-    // Outline the image with the pass/fail color.
-    // (Must reset filters on image, too, to ensure proper outlining)
-    //
-    const colorPass = "#09fd";
-    const colorFail = "#f90d";
-    const outlineColor = !!accessible ? colorPass : colorFail;
-    element.style.setProperty("outline", outlineColor + " solid 8px", "important");
-    element.style.setProperty("outline-offset", "-4px", "important");
-    element.style.setProperty("border-radius", "2px", "important");
-    element.style.setProperty("filter", "initial", "important");
-  }
-
   function isImg(element) {
     return element.nodeName.toLowerCase() === "img";
   }
@@ -70,12 +57,11 @@ javascript: (() => {
     return element.nodeName.toLowerCase() === "svg";
   }
 
-  // Returns whether a node is in the shadow DOM
   function hasShadowRoot(node) {
     return !!node.shadowRoot;
   }
 
-  // Returns an element we can use, whether in the shadow DOM or not
+  // Returns an element we can use, whether shadow DOM or not
   function getUsableElement(element) {
     element =
       element.nodeType === Node.DOCUMENT_FRAGMENT_NODE ? element.getRootNode().host : element;
@@ -85,7 +71,7 @@ javascript: (() => {
   // Test all the ways an element can be hidden from assistive tech.
   function isElementHidden(element) {
     let isHidden = false;
-    element = getUsableElement(element);
+    //element = getUsableElement(element);
 
     // Check for hidden attribute
     const hasHiddenAttr = !!element.hidden;
@@ -106,7 +92,7 @@ javascript: (() => {
     } else if (hasRolePresentation) {
       // TODO: How to handle role="presentation" on elements with children, so
       // the element is hidden, but the children are not.
-      log("Element has role='presentation' and kids.");
+      log(`${element} element has role='presentation' and child nodes.`);
     }
 
     // TODO: Any other ways it could be hidden?
@@ -118,19 +104,10 @@ javascript: (() => {
   function getAltAttribute(img) {
     const hasAlt = !!img.hasAttribute("alt");
     let altValue = false;
-    log("Has alt attribute: " + hasAlt);
     if (hasAlt) {
-      altValue = img.getAttribute("alt") || "[decorative]";
-      log("Image alt value: " + altValue);
+      altValue = img.getAttribute("alt") || "DECORATIVE";
     }
     return altValue;
-  }
-
-  // Test whether an <svg> element has a <title> as its first child element
-  function hasTitleElement(svg) {
-    const hasTitle =
-      svg.firstElementChild.tagName === "title" && !!svg.firstElementChild.textContent;
-    return !!hasTitle;
   }
 
   // Test whether an element has role="img"
@@ -139,38 +116,29 @@ javascript: (() => {
     return !!hasImgRole;
   }
 
-  // Test whether an element has an aria-label
-  function hasAriaLabel(element) {
-    const ariaLabel = element.ariaLabel || element.getAttribute("aria-label");
-    const hasAriaLabel = !!ariaLabel;
-    log("Has aria-label: " + hasAriaLabel);
-    if (hasAriaLabel) {
-      log("aria-label: " + ariaLabel);
+  // Test whether an <svg> element has a <title> as its first child element
+  function getTitleValue(svg) {
+    let titleValue = false;
+    if (svg.firstElementChild.tagName === "title") {
+      titleValue = svg.firstElementChild.textContent || false;
     }
-    return !!hasAriaLabel;
+    return titleValue;
+  }
+
+  // Test whether an element has an aria-label
+  function getAriaLabelValue(element) {
+    const ariaLabelValue = element.ariaLabel || element.getAttribute("aria-label") || false;
+    return ariaLabelValue;
   }
 
   // Get an element's aria-labelledby value from its target
-  function getAriaLabelledbyValue(id) {
-    let labelTarget = document.getElementById(id);
-    let labelValue = labelTarget ? labelTarget.textContent : null;
-    return labelValue;
-  }
-
-  // Test whether an element has an aria-labelledby attribute
-  function hasAriaLabelledby(element) {
+  function getAriaLabelledbyValue(element) {
     const ariaLabelledbyId = element.ariaLabelledby || element.getAttribute("aria-labelledby");
-    const hasAriaLabelledby = !!ariaLabelledbyId;
-    log("Has aria-labelledby: " + hasAriaLabelledby);
+    let ariaLabelledbyValue = false;
 
-    // Get the label value if the element has aria-labelledby attribute.
-    let ariaLabelledbyValue;
-    let hasAriaLabelledbyValue = null;
-    if (hasAriaLabelledby) {
-      ariaLabelledbyValue = getAriaLabelledbyValue(ariaLabelledbyId);
-      hasAriaLabelledbyValue = !!ariaLabelledbyValue;
-      log("aria-labelledby id: " + ariaLabelledbyId);
-      log("aria-labelledby value: " + ariaLabelledbyValue);
+    if (!!ariaLabelledbyId) {
+      let labelTarget = document.getElementById(ariaLabelledbyId);
+      ariaLabelledbyValue = labelTarget ? labelTarget.textContent.trim() : false;
     }
 
     // TODO: We're currently returning true if there's an aria-labelledby attribute at all.
@@ -178,53 +146,67 @@ javascript: (() => {
     // Once hasAriaLabelledbyValue() can check shadowRoots, use the following:
     // return !!hasAriaLabelledbyValue;
     // But for now, we're using this:
-    return !!hasAriaLabelledby;
+    return ariaLabelledbyValue;
   }
 
   // Test if an image is accessible (has alt or is hidden)
+  // TODO: aria-label and aria-lbelledby would also be okay.
   //
-  function convertImg(img) {
+  function replaceImg(img) {
     let isAccessible = false;
     let imageMessage = "[INACCESSIBLE IMAGE]";
 
-    groupCollapsed("Checking if <img> has an alt attribute");
     const altValue = getAltAttribute(img);
     if (!!altValue) {
       isAccessible = true;
-      imageMessage = altValue;
+      imageMessage = `[IMAGE: ${altValue}]`;
     }
-    groupEnd();
 
-    outputReplacementText(img, altValue);
-    //outputA11yResults(img, isAccessible);
+    removeHiddenElement(img, imageMessage);
   }
 
   // Test if an svg is accessible (has an accessible name/role or is hidden)
   //
-  function convertSvg(svg) {
+  function replaceSvg(svg) {
     let isAccessible = false;
+    let svgMessage = "[INACCESSIBLE SVG]";
 
     // Check if the SVG has an accessible name...
-    group("Checking if inline <svg> has an accessible name");
     hasImgRole(svg); // TODO: Will we start requiring?
-    isAccessible = isAccessible || !!hasTitleElement(svg);
-    isAccessible = isAccessible || !!hasAriaLabel(svg);
-    isAccessible = isAccessible || !!hasAriaLabelledby(svg);
-    // TODO: Any other ways for an svg to be accessible?
-    groupEnd();
 
-    if (!isAccessible) {
-      outputReplacementText(svg, "[INACCESSIBLE SVG]");
+    const titleValue = getTitleValue(svg);
+    if (!!titleValue) {
+      isAccessible = true;
+      svgMessage = `[IMAGE: ${titleValue}]`;
     }
-    outputA11yResults(svg, isAccessible);
+
+    const ariaLabelledbyValue = getAriaLabelledbyValue(svg);
+    if (!!ariaLabelledbyValue) {
+      isAccessible = true;
+      svgMessage = `[IMAGE: ${ariaLabelledbyValue}]`;
+    }
+
+    const ariaLabelValue = getAriaLabelValue(svg);
+    if (!!ariaLabelValue) {
+      isAccessible = true;
+      svgMessage = `[IMAGE: ${ariaLabelValue}]`;
+    }
+
+    // TODO: Any other ways for an svg to be accessible? <text> without role="img"?
+
+    removeHiddenElement(svg, svgMessage);
   }
 
-  function outputReplacementText(element, message) {
-    if (element && message) {
-      const span = document.createElement("span");
-      span.innerHTML = message;
-      element.parentNode.insertBefore(span, element.nextSibling);
-      element.remove();
+  function removeHiddenElement(element, message) {
+    if (element) {
+      if (message) {
+        const span = document.createElement("span");
+        span.classList.add("new-screen-reader-content");
+        span.innerHTML = message;
+        element.parentNode.insertBefore(span, element.nextSibling);
+      }
+      //element.remove();
+      element.classList.add("hide-everywhere");
     }
   }
 
@@ -232,7 +214,7 @@ javascript: (() => {
   //
   function cleanDefaultStyles(element) {
     if (element.style) {
-      //node.style.setProperty("all", "unset");
+      //element.style.setProperty("all", "unset");
       element.style.setProperty("background-image", "none");
       element.style.setProperty("background", "none");
       element.style.setProperty("color", "revert");
@@ -241,11 +223,6 @@ javascript: (() => {
       element.style.setProperty("font-family", "system-ui, -apple-system, sans-serif");
       element.style.setProperty("line-height", "1.4");
     }
-  }
-
-  function removeElement(element) {
-    log("Removing element: " + element.tagName);
-    element.remove();
   }
 
   // We don't want/need to remove HTML elements that are display:none by default.
@@ -276,31 +253,42 @@ javascript: (() => {
   }
 
   function convertContent(elements) {
-    groupCollapsed("Cleaning body styles...");
+    log("Cleaning body styles...");
     cleanDefaultStyles(document.body);
-    groupEnd();
 
     for (let element of elements) {
-      let shouldRemove = false;
+      element = getUsableElement(element);
 
       if (!isHtmlElementDisplayNone(element)) {
-        shouldRemove = isElementHidden(element);
-      }
+        if (isElementHidden(element)) {
+          removeHiddenElement(element, "[REMOVED HIDDEN ELEMENT]");
+        } else {
+          if (isImg(element)) {
+            replaceImg(element);
+          }
 
-      if (shouldRemove) {
-        outputReplacementText(element, "[REMOVED HIDDEN ELEMENT]");
-        //removeElement(element);
-      } else {
-        cleanDefaultStyles(element);
+          if (isSvg(element)) {
+            replaceSvg(element);
+          }
 
-        if (isImg(element)) {
-          convertImg(element);
-        }
-
-        if (isSvg(element)) {
-          convertSvg(element);
+          cleanDefaultStyles(element);
         }
       }
+    }
+  }
+
+  // If this isn't the first time we've run this app, restore the original state.
+  function refreshApp(elements) {
+    for (let element of elements) {
+      element = getUsableElement(element);
+
+      // Get rid of newly-added elements
+      if (element.classList.contains("new-screen-reader-content")) {
+        element.remove();
+      }
+
+      // Restore hidden elements
+      element.classList.remove("hide-everywhere");
     }
   }
 
@@ -335,13 +323,21 @@ javascript: (() => {
     return allElements;
   }
 
-  (function init() {
-    group("rha11y-screen-reader results");
+  function addStylesheet(href) {
+    const head = document.head;
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = href;
+    head.appendChild(link);
+  }
 
+  (function init() {
+    addStylesheet("screen-reader.css?v=1");
+    group("rha11y-screen-reader results");
     // By default, get all elements in the document body.
     const elements = getAllElements(document.body);
+    refreshApp(elements);
     convertContent(elements);
-
     groupEnd();
   })();
 })();
