@@ -3,6 +3,8 @@
 // - e.g., add a class to all aria-hidden items. remove it when they are no longer hidden
 //
 // CSS can influence screen readers: https://benmyers.dev/blog/css-can-influence-screenreaders/
+//
+// How to inject a CSS file into all shadowroots...
 
 javascript: (() => {
   //
@@ -141,11 +143,6 @@ javascript: (() => {
       ariaLabelledbyValue = labelTarget ? labelTarget.textContent.trim() : false;
     }
 
-    // TODO: We're currently returning true if there's an aria-labelledby attribute at all.
-    // But we should check to make sure it has a valid id and value.
-    // Once hasAriaLabelledbyValue() can check shadowRoots, use the following:
-    // return !!hasAriaLabelledbyValue;
-    // But for now, we're using this:
     return ariaLabelledbyValue;
   }
 
@@ -172,7 +169,8 @@ javascript: (() => {
     let svgMessage = "[INACCESSIBLE SVG]";
 
     // Check if the SVG has an accessible name...
-    hasImgRole(svg); // TODO: Will we start requiring?
+
+    const imgRole = hasImgRole(svg); // TODO: Will we start requiring?
 
     const titleValue = getTitleValue(svg);
     if (!!titleValue) {
@@ -292,6 +290,15 @@ javascript: (() => {
     }
   }
 
+  function addStylesheet(root) {
+    if (root) {
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = "screen-reader.css?v=1";
+      root.appendChild(link);
+    }
+  }
+
   function getAllElements(root) {
     function getElements(root) {
       const nodes = root.querySelectorAll("*");
@@ -309,8 +316,11 @@ javascript: (() => {
           allElements.push(element);
         }
 
-        // If node has shadowRoot, re-call this function to get its child nodes.
+        // If node has shadowRoot...
+        // 1) Inject our stylesheet .css into it.
+        // 2) Re-call this function to get its child nodes.
         if (node.shadowRoot) {
+          addStylesheet(node.shadowRoot);
           getElements(node.shadowRoot);
         }
       }
@@ -323,16 +333,8 @@ javascript: (() => {
     return allElements;
   }
 
-  function addStylesheet(href) {
-    const head = document.head;
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = href;
-    head.appendChild(link);
-  }
-
   (function init() {
-    addStylesheet("screen-reader.css?v=1");
+    addStylesheet(document.head);
     group("rha11y-screen-reader results");
     // By default, get all elements in the document body.
     const elements = getAllElements(document.body);
