@@ -4,7 +4,8 @@
 //
 // CSS can influence screen readers: https://benmyers.dev/blog/css-can-influence-screenreaders/
 //
-// How to inject a CSS file into all shadowroots...
+// Maybe apply all aria-label, labelledby, and describedby before doing anything else
+//
 
 javascript: (() => {
   //
@@ -199,18 +200,20 @@ javascript: (() => {
     if (element) {
       if (message) {
         const span = document.createElement("span");
-        span.classList.add("new-screen-reader-content");
+        span.classList.add("rha11y-new-content");
         span.innerHTML = message;
         element.parentNode.insertBefore(span, element.nextSibling);
       }
       //element.remove();
-      element.classList.add("hide-everywhere");
+      element.classList.add("rha11y-hide-all");
     }
   }
 
   // Fade out background images to indicate they are not tested
   //
   function cleanDefaultStyles(element) {
+    element.classList.add("rha11y-reset");
+    /*
     if (element.style) {
       //element.style.setProperty("all", "unset");
       element.style.setProperty("background-image", "none");
@@ -221,12 +224,13 @@ javascript: (() => {
       element.style.setProperty("font-family", "system-ui, -apple-system, sans-serif");
       element.style.setProperty("line-height", "1.4");
     }
+    */
   }
 
   // We don't want/need to remove HTML elements that are display:none by default.
   function isHtmlElementDisplayNone(element) {
     // List from here: https://www.w3.org/TR/2014/REC-html5-20141028/rendering.html#hidden-elements
-    const DisplayNoneElements = [
+    const displayNoneElements = [
       "area",
       "base",
       "basefont",
@@ -246,7 +250,7 @@ javascript: (() => {
       "track",
       "title"
     ];
-    let isDisplayNone = DisplayNoneElements.includes(element.tagName.toLowerCase());
+    let isDisplayNone = displayNoneElements.includes(element.tagName.toLowerCase());
     return isDisplayNone;
   }
 
@@ -281,12 +285,13 @@ javascript: (() => {
       element = getUsableElement(element);
 
       // Get rid of newly-added elements
-      if (element.classList.contains("new-screen-reader-content")) {
+      if (element.classList.contains("rha11y-new-content")) {
         element.remove();
       }
 
-      // Restore hidden elements
-      element.classList.remove("hide-everywhere");
+      // Restore hidden/adjusted elements
+      element.classList.remove("rha11y-hide-all");
+      element.classList.remove("rha11y-reset");
     }
   }
 

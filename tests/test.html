@@ -6,13 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>aria test</title>
     <style>
-      .visually-hidden:not(:focus):not(:active):not(:focus-within) {
-        clip-path: inset(50%);
+      mark::before,
+      mark::after {
+        clip-path: inset(100%);
+        clip: rect(1px, 1px, 1px, 1px);
         height: 1px;
         overflow: hidden;
         position: absolute;
         white-space: nowrap;
         width: 1px;
+      }
+
+      mark::before {
+        content: attr(data-prefix);
+      }
+
+      mark::after {
+        content: attr(data-suffix);
       }
     </style>
   </head>
@@ -20,12 +30,15 @@
     <h1>Tests</h1>
     <div>
       <div>
-        <button
-          onclick="document.getElementById('announcement').innerHTML = 'You may now reselect and update your solution challenge selections'"
+        <p>
+          <a href="#">Some link</a>
+        </p>
+        Unmarked text.
+        <mark data-prefix="start highlighting" data-suffix="end highlighting"
+          >highlighted stuff.</mark
         >
-          Switch to edit mode
-        </button>
-        <p id="announcement" class="aavisually-hidden" aria-live="polite"></p>
+        More unmarked text.
+        <p></p>
       </div>
     </div>
   </body>

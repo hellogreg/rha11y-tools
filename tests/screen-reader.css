@@ -1,3 +1,15 @@
-.hide-everywhere {
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+.rha11y-hide-all {
   display: none !important;
+}
+
+.rha11y-reset {
+  background-image: none !important;
+  background: none !important;
+  color: revert !important;
+  background-color: revert !important;
+  font: revert !important;
+  font-family: "IBM Plex Mono", monospace !important;
+  line-height: 1.4 !important;
 }
