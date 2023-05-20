@@ -11,6 +11,10 @@
 // In fact, revert all properties like position, etc.that don't apply to screen readers
 // However, we can keep styles that make things look nice for visual users!
 // Show announcements like "highlighted / end highlighted" for <mark> tags
+//
+// How to validate labelledby and describedby ids...
+// Find root parent of element and then check children for ids and text content?
+// Need to ensure id is valid in same root context, and not in, say, a separate shadowRoot.
 
 javascript: (() => {
   //
@@ -63,6 +67,12 @@ javascript: (() => {
 
   function isSvg(element) {
     return element.nodeName.toLowerCase() === "svg";
+  }
+
+  // Test whether an element has role="img"
+  function hasImgRole(element) {
+    const hasImgRole = element.getAttribute("role") === "img";
+    return !!hasImgRole;
   }
 
   function hasShadowRoot(node) {
@@ -118,12 +128,6 @@ javascript: (() => {
     return altValue;
   }
 
-  // Test whether an element has role="img"
-  function hasImgRole(element) {
-    const hasImgRole = element.getAttribute("role") === "img";
-    return !!hasImgRole;
-  }
-
   // Test whether an <svg> element has a <title> as its first child element
   function getTitleValue(svg) {
     let titleValue = false;
@@ -170,15 +174,27 @@ javascript: (() => {
   //
   function replaceImg(img) {
     let isAccessible = false;
-    let imageMessage = "[INACCESSIBLE IMAGE]";
+    let imgMessage = "[INACCESSIBLE IMAGE]";
 
     const altValue = getAltAttribute(img);
     if (!!altValue) {
       isAccessible = true;
-      imageMessage = `[IMAGE: ${altValue}]`;
+      imgMessage = `[IMAGE: ${altValue}]`;
     }
 
-    removeHiddenElement(img, imageMessage);
+    const ariaLabelValue = getAriaLabelValue(img);
+    if (!!ariaLabelValue) {
+      isAccessible = true;
+      imgMessage = `[IMAGE: ${ariaLabelValue}]`;
+    }
+
+    const ariaLabelledbyValue = getAriaLabelledbyValue(img);
+    if (!!ariaLabelledbyValue) {
+      isAccessible = true;
+      imgMessage = `[IMAGE: ${ariaLabelledbyValue}]`;
+    }
+
+    removeHiddenElement(img, imgMessage);
   }
 
   // Test if an svg is accessible (has an accessible name/role or is hidden)
@@ -197,16 +213,16 @@ javascript: (() => {
       svgMessage = `[IMAGE: ${titleValue}]`;
     }
 
-    const ariaLabelledbyValue = getAriaLabelledbyValue(svg);
-    if (!!ariaLabelledbyValue) {
-      isAccessible = true;
-      svgMessage = `[IMAGE: ${ariaLabelledbyValue}]`;
-    }
-
     const ariaLabelValue = getAriaLabelValue(svg);
     if (!!ariaLabelValue) {
       isAccessible = true;
       svgMessage = `[IMAGE: ${ariaLabelValue}]`;
+    }
+
+    const ariaLabelledbyValue = getAriaLabelledbyValue(svg);
+    if (!!ariaLabelledbyValue) {
+      isAccessible = true;
+      svgMessage = `[IMAGE: ${ariaLabelledbyValue}]`;
     }
 
     // TODO: Any other ways for an svg to be accessible? <text> without role="img"?
@@ -223,7 +239,7 @@ javascript: (() => {
         element.parentNode.insertBefore(span, element.nextSibling);
       }
       //element.remove();
-      element.classList.add("rha11y-hide-all");
+      element.classList.add("rha11y-hide-everywhere");
     }
   }
 
@@ -234,13 +250,6 @@ javascript: (() => {
     /*
     if (element.style) {
       //element.style.setProperty("all", "unset");
-      element.style.setProperty("background-image", "none");
-      element.style.setProperty("background", "none");
-      element.style.setProperty("color", "revert");
-      element.style.setProperty("background-color", "revert");
-      element.style.setProperty("font", "revert");
-      element.style.setProperty("font-family", "system-ui, -apple-system, sans-serif");
-      element.style.setProperty("line-height", "1.4");
     }
     */
   }
@@ -289,9 +298,16 @@ javascript: (() => {
   function applyAriaDescribedby(element) {
     const ariaDescribedbyValue = getAriaDescribedbyValue(element);
     if (!!ariaDescribedbyValue) {
+      dir(element);
+      /*
       let text = element.textContent;
       text = text.concat(" ", ariaDescribedbyValue);
       element.textContent = text;
+      */
+      const span = document.createElement("span");
+      span.classList.add("rha11y-new-content");
+      span.innerHTML = ` ${ariaDescribedbyValue}`;
+      element.parentNode.insertBefore(span, element.nextSibling);
     }
   }
 
@@ -306,10 +322,10 @@ javascript: (() => {
         if (isElementHidden(element)) {
           removeHiddenElement(element, "[REMOVED HIDDEN ELEMENT]");
         } else {
-          if (isImg(element)) {
-            replaceImg(element);
-          } else if (isSvg(element)) {
+          if (isSvg(element)) {
             replaceSvg(element);
+          } else if (isImg(element) || hasImgRole(element)) {
+            replaceImg(element);
           } else {
             applyAriaLabel(element);
             applyAriaLabelledby(element);
@@ -333,7 +349,7 @@ javascript: (() => {
       }
 
       // Restore hidden/adjusted elements
-      element.classList.remove("rha11y-hide-all");
+      element.classList.remove("rha11y-hide-everywhere");
       element.classList.remove("rha11y-reset");
     }
   }
