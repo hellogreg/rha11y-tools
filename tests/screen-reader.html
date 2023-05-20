@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>rha11y-screen-reader bookmarklet demo</title>
-    <link rel="stylesheet" href="../rha11y-tools.css" rel="stylesheet" />
+    <link rel="stylesheet" href="tests.css" rel="stylesheet" />
     <script src="../img-components.js"></script>
   </head>
   <body>
@@ -22,7 +22,24 @@
           ></strong
         >
       </p>
-
+      <h2>Test content</h2>
+      <p>
+        Visually-hidden text:<br /><span class="visually-hidden">Visually hidden span text.</span>
+      </p>
+      <p>
+        aria-label text:<br />
+        <span aria-label="Replacement aria-label text">This will be replaced.</span>
+      </p>
+      <p>
+        aria-labelledby text (<span id="labelledbyText">Replacement aria-labelledby text</span
+        >):<br />
+        <span aria-labelledby="labelledbyText">This will be replaced.</span>
+      </p>
+      <p>
+        aria-describedby text (<span id="describedbyText">Additional aria-describedby text</span
+        >):<br />
+        <span aria-describedby="describedbyText">This will receive additional text.</span>
+      </p>
       <h2>Test images</h2>
       <h3>Inline SVGs</h3>
       <div class="cards">

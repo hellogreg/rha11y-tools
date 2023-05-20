@@ -4,12 +4,35 @@
   display: none !important;
 }
 
+body.rha11y-reset {
+  background-color: #fbfbfb !important;
+  color: #111 !important;
+  margin: 0 auto !important;
+  max-width: 72rem !important;
+  max-height: revert !important;
+  min-height: 100vh !important;
+  scroll-behavior: smooth !important;
+  width: 96vw !important;
+}
+
 .rha11y-reset {
-  background-image: none !important;
   background: none !important;
-  color: revert !important;
   background-color: revert !important;
+  background-image: none !important;
+  color: revert;
   font: revert !important;
   font-family: "IBM Plex Mono", monospace !important;
   line-height: 1.4 !important;
+
+  max-width: revert !important;
+  max-height: revert !important;
+
+  /* Display visually hidden content */
+  position: revert !important;
+  overflow: revert !important;
+  clip: revert !important;
+  clip-path: revert !important;
+  width: revert !important;
+  height: revert !important;
+  white-space: revert !important;
 }

@@ -4,8 +4,13 @@
 //
 // CSS can influence screen readers: https://benmyers.dev/blog/css-can-influence-screenreaders/
 //
-// Maybe apply all aria-label, labelledby, and describedby before doing anything else
+// Maybe apply all aria-label, labelledby, and describedby before doing anything else.
+// Replace text with aria-label/led by.
 //
+// To do: show visually hidden items.
+// In fact, revert all properties like position, etc.that don't apply to screen readers
+// However, we can keep styles that make things look nice for visual users!
+// Show announcements like "highlighted / end highlighted" for <mark> tags
 
 javascript: (() => {
   //
@@ -147,6 +152,19 @@ javascript: (() => {
     return ariaLabelledbyValue;
   }
 
+  // Get an element's aria-describedby value from its target
+  function getAriaDescribedbyValue(element) {
+    const ariaDescribedbyId = element.ariaDescribedby || element.getAttribute("aria-describedby");
+    let ariaDescribedbyValue = false;
+
+    if (!!ariaDescribedbyId) {
+      let labelTarget = document.getElementById(ariaDescribedbyId);
+      ariaDescribedbyValue = labelTarget ? labelTarget.textContent.trim() : false;
+    }
+
+    return ariaDescribedbyValue;
+  }
+
   // Test if an image is accessible (has alt or is hidden)
   // TODO: aria-label and aria-lbelledby would also be okay.
   //
@@ -254,6 +272,29 @@ javascript: (() => {
     return isDisplayNone;
   }
 
+  function applyAriaLabel(element) {
+    const ariaLabelValue = getAriaLabelValue(element);
+    if (!!ariaLabelValue) {
+      element.textContent = ariaLabelValue;
+    }
+  }
+
+  function applyAriaLabelledby(element) {
+    const ariaLabelledbyValue = getAriaLabelledbyValue(element);
+    if (!!ariaLabelledbyValue) {
+      element.textContent = ariaLabelledbyValue;
+    }
+  }
+
+  function applyAriaDescribedby(element) {
+    const ariaDescribedbyValue = getAriaDescribedbyValue(element);
+    if (!!ariaDescribedbyValue) {
+      let text = element.textContent;
+      text = text.concat(" ", ariaDescribedbyValue);
+      element.textContent = text;
+    }
+  }
+
   function convertContent(elements) {
     log("Cleaning body styles...");
     cleanDefaultStyles(document.body);
@@ -267,10 +308,12 @@ javascript: (() => {
         } else {
           if (isImg(element)) {
             replaceImg(element);
-          }
-
-          if (isSvg(element)) {
+          } else if (isSvg(element)) {
             replaceSvg(element);
+          } else {
+            applyAriaLabel(element);
+            applyAriaLabelledby(element);
+            applyAriaDescribedby(element);
           }
 
           cleanDefaultStyles(element);
@@ -299,7 +342,7 @@ javascript: (() => {
     if (root) {
       const link = document.createElement("link");
       link.rel = "stylesheet";
-      link.href = "screen-reader.css?v=1";
+      link.href = "screen-reader.css";
       root.appendChild(link);
     }
   }
