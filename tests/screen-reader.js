@@ -12,9 +12,12 @@
 // However, we can keep styles that make things look nice for visual users!
 // Show announcements like "highlighted / end highlighted" for <mark> tags
 //
-// How to validate labelledby and describedby ids...
-// Find root parent of element and then check children for ids and text content?
-// Need to ensure id is valid in same root context, and not in, say, a separate shadowRoot.
+// Can we visually hide an element, but not its children?
+// (e.g., something with role = "presentation")
+// https://www.reddit.com/r/css/comments/gz570r/child_element_can_still_be_visually_visible_even/
+//
+// Anything focusable won't be hidden, even with role="presentation".
+// https://piccalil.li/quick-tip/load-all-focusable-elements-with-javascript/
 
 javascript: (() => {
   //
@@ -89,7 +92,6 @@ javascript: (() => {
   // Test all the ways an element can be hidden from assistive tech.
   function isElementHidden(element) {
     let isHidden = false;
-    //element = getUsableElement(element);
 
     // Check for hidden attribute
     const hasHiddenAttr = !!element.hidden;
@@ -149,7 +151,8 @@ javascript: (() => {
     let ariaLabelledbyValue = false;
 
     if (!!ariaLabelledbyId) {
-      let labelTarget = document.getElementById(ariaLabelledbyId);
+      const rootElement = getUsableElement(element.getRootNode());
+      let labelTarget = rootElement.getElementById(ariaLabelledbyId);
       ariaLabelledbyValue = labelTarget ? labelTarget.textContent.trim() : false;
     }
 
@@ -162,7 +165,8 @@ javascript: (() => {
     let ariaDescribedbyValue = false;
 
     if (!!ariaDescribedbyId) {
-      let labelTarget = document.getElementById(ariaDescribedbyId);
+      const rootElement = getUsableElement(element.getRootNode());
+      let labelTarget = rootElement.getElementById(ariaDescribedbyId);
       ariaDescribedbyValue = labelTarget ? labelTarget.textContent.trim() : false;
     }
 
@@ -170,8 +174,6 @@ javascript: (() => {
   }
 
   // Test if an image is accessible (has alt or is hidden)
-  // TODO: aria-label and aria-lbelledby would also be okay.
-  //
   function replaceImg(img) {
     let isAccessible = false;
     let imgMessage = "[INACCESSIBLE IMAGE]";
@@ -298,12 +300,6 @@ javascript: (() => {
   function applyAriaDescribedby(element) {
     const ariaDescribedbyValue = getAriaDescribedbyValue(element);
     if (!!ariaDescribedbyValue) {
-      dir(element);
-      /*
-      let text = element.textContent;
-      text = text.concat(" ", ariaDescribedbyValue);
-      element.textContent = text;
-      */
       const span = document.createElement("span");
       span.classList.add("rha11y-new-content");
       span.innerHTML = ` ${ariaDescribedbyValue}`;
@@ -316,11 +312,9 @@ javascript: (() => {
     cleanDefaultStyles(document.body);
 
     for (let element of elements) {
-      element = getUsableElement(element);
-
       if (!isHtmlElementDisplayNone(element)) {
         if (isElementHidden(element)) {
-          removeHiddenElement(element, "[REMOVED HIDDEN ELEMENT]");
+          //removeHiddenElement(element, "[REMOVED HIDDEN ELEMENT]");
         } else {
           if (isSvg(element)) {
             replaceSvg(element);
@@ -341,8 +335,6 @@ javascript: (() => {
   // If this isn't the first time we've run this app, restore the original state.
   function refreshApp(elements) {
     for (let element of elements) {
-      element = getUsableElement(element);
-
       // Get rid of newly-added elements
       if (element.classList.contains("rha11y-new-content")) {
         element.remove();
@@ -368,13 +360,7 @@ javascript: (() => {
       const nodes = root.querySelectorAll("*");
 
       for (const node of nodes) {
-        let element;
-
-        if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-          element = node.getRootNode().host;
-        } else {
-          element = node;
-        }
+        const element = getUsableElement(node);
 
         if (element.nodeType === Node.ELEMENT_NODE) {
           allElements.push(element);

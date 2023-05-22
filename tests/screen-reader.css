@@ -1,19 +1,33 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
-.rha11y-hide-everywhere,
-[aria-hidden="true"],
-[role="presentation"]:empty {
-  display: none !important;
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box !important;
+}
+
+html {
+  background-color: #dddddd;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+html:focus-within {
+  scroll-behavior: auto;
 }
 
 body.rha11y-reset {
   background-color: #fbfbfb !important;
   color: #111 !important;
-  margin: 0 auto !important;
-  max-width: 72rem !important;
+  margin: 0 0 0 0 !important;
+  max-width: 60rem !important;
   max-height: revert !important;
   min-height: 100vh !important;
+  padding: 1rem;
   scroll-behavior: smooth !important;
+
+  text-rendering: optimizeSpeed !important;
   width: 96vw !important;
 }
 
@@ -25,7 +39,6 @@ body.rha11y-reset {
   font: revert !important;
   font-family: "IBM Plex Mono", monospace !important;
   line-height: 1.4 !important;
-
   max-width: revert !important;
   max-height: revert !important;
 
@@ -37,4 +50,35 @@ body.rha11y-reset {
   width: revert !important;
   height: revert !important;
   white-space: revert !important;
+}
+
+body.rha11y-reset,
+body.rha11y-reset > *,
+h1.rha11y-reset,
+h2.rha11y-reset,
+h3.rha11y-reset,
+h4.rha11y-reset,
+p.rha11y-reset,
+figure.rha11y-reset,
+blockquote.rha11y-reset,
+dl.rha11y-reset,
+dd.rha11y-reset {
+  margin-top: 0 !important;
+}
+
+a.rha11y-reset {
+  text-decoration-skip-ink: auto !important;
+}
+
+input.rha11y-reset,
+button.rha11y-reset,
+textarea.rha11y-reset,
+select.rha11y-reset {
+  font: inherit !important;
+}
+
+.rha11y-hide-everywhere,
+[aria-hidden="true"],
+[role="presentation"]:empty {
+  display: none !important;
 }
