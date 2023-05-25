@@ -173,6 +173,18 @@ javascript: (() => {
     return ariaDescribedbyValue;
   }
 
+  function convertElementTag(element, tagName) {
+    const newElement = document.createElement(tagName);
+    newElement.append(...element.childNodes);
+
+    for (const attribute of element.attributes) {
+      newElement.setAttribute(attribute.name, attribute.value);
+    }
+
+    element.replaceWith(newElement);
+    return newElement;
+  }
+
   // Test if an image is accessible (has alt or is hidden)
   function replaceImg(img) {
     let isAccessible = false;
