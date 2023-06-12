@@ -23,7 +23,7 @@
         <strong
           ><a
             class="book-link"
-            href='javascript: (function () {var booklink = document.createElement("script");booklink.setAttribute("src", "https://rha11y-tools.netlify.app/heading-h1.js");document.body.appendChild(booklink);})();'
+            href='javascript:(()=>{let e=!0;function t(t){e&&(t=void 0!==t?t:" ",console.log(t))}function o(t){e&&t&&console.dir(t)}function n(e){return e=e.nodeType===Node.DOCUMENT_FRAGMENT_NODE?e.getRootNode().host:e}function l(e){let t=e.textContent||"[empty]";return(t=t.replace(/(\r\n|\n|\r)/gm,"")).trim()}let d=0,r=[];function a(e){d=r.push(e)}function p(e){let t=e.querySelectorAll("*");for(let o of t){let d=n(o);if("h1"===d.nodeName.toLowerCase()&&a("<h1>"+l(d)+"</h1>"),o.shadowRoot){let r=o.shadowRoot;p(r)}}}function i(){let e=document.createElement("dialog");document.body.appendChild(e);let t,o,n;for(let l of((t=document.createElement("h2")).appendChild(document.createTextNode("H1 elements on this page")),e.appendChild(t),o=document.createElement("ul"),r)){let a=document.createElement("li");a.appendChild(document.createTextNode(l)),o.appendChild(a)}e.appendChild(o),(n=document.createElement("p")).appendChild(document.createTextNode("Number of H1 elements: "+d)),e.appendChild(n),(n=document.createElement("p")).appendChild(document.createTextNode("Press [esc] or refresh to close")),e.appendChild(n),e.showModal()}!function e(){t();let o=document.body;p(o),i(),t()}()})();'
             >rha11y-heading-h1</a
           ></strong
         >

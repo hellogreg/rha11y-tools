@@ -293,7 +293,7 @@ javascript: (() => {
         styleBackgroundImage.match("var"))
     ) {
       group("Background image located");
-      log("Background images don't require accessibility testing.");
+      log("Background images do not require accessibility testing.");
       log("Fading out background image.");
       //node.style.setProperty("background-image", "none");
       node.style.setProperty("background-color", "#fffd");
