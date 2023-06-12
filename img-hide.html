@@ -23,7 +23,7 @@
         <strong
           ><a
             class="book-link"
-            href='javascript: (function () {var booklink = document.createElement("script");booklink.setAttribute("src", "https://rha11y-tools.netlify.app/img-hide.js");document.body.appendChild(booklink);})();'
+            href='javascript:(()=>{let o=!0;function e(e){o&&(e=void 0!==e?e:" ",console.log(e))}function t(e){o&&e&&console.dir(e)}function n(o){return"img"===o.nodeName.toLowerCase()}function i(o){return"svg"===o.nodeName.toLowerCase()}function r(o){return o=o.nodeType===Node.DOCUMENT_FRAGMENT_NODE?o.getRootNode().host:o}function l(o){let e=o.querySelectorAll("*");for(let t of e){let d=r(t);if((n(d)||i(d))&&(d.style.visibility="hidden"),d.style&&d.style.setProperty("background-image","none"),t.shadowRoot){let u=t.shadowRoot;l(u)}}}!function o(){let e=document.body;l(e)}()})();'
             >rha11y-img-hide</a
           ></strong
         >
