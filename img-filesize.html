@@ -23,7 +23,7 @@
         <strong
           ><a
             class="book-link"
-            href='javascript: (function () {var booklink = document.createElement("script");booklink.setAttribute("src", "https://rha11y-tools.netlify.app/img-filesize.js");document.body.appendChild(booklink);})();'
+            href='javascript:(()=>{let t=!0;function e(e){t&&(e=void 0!==e?e:" ",console.log(e))}function o(e){t&&e&&console.dir(e)}function n(t){return"img"===t.nodeName.toLowerCase()}function r(t){return"svg"===t.nodeName.toLowerCase()}function i(t){return t=t.nodeType===Node.DOCUMENT_FRAGMENT_NODE?t.getRootNode().host:t}function l(t){let e=-1;var o=new XMLHttpRequest;return o.open("HEAD",t,!1),o.send(null),200===o.status&&(e=o.getResponseHeader("content-length")),e}function s(t,e){t.style.setProperty("outline",(e?"#09fd":"#f90d")+" solid 8px","important"),t.style.setProperty("outline-offset","-4px","important"),t.style.setProperty("border-radius","2px","important"),t.style.setProperty("filter","initial","important")}function u(t){let o=t.querySelectorAll("*");for(let r of o){let f=i(r);if(n(f)){let d=f.src,a=l(d),p=a<2e5;e("Image: "+d),e("Filesize: "+a),e("Under 200k: "+p),s(f,p),e()}if(r.shadowRoot){let $=r.shadowRoot;u($)}}}!function t(){let e=document.body;u(e)}()})();'
             >rha11y-img-filesize</a
           ></strong
         >
