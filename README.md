@@ -6,13 +6,15 @@ These bookmarklets form a collection of unitaskers originally designed to help a
 
 The collection currently comprises the following tools:
 
-- **rha11y-img-checker:** tests the accessibility of all page images
-- **rha11y-img-hide:** hides all images on a page
-- **rha11y-img-filesize:** ensures images aren't too large
-- **rha11y-heading-h1:** lists a page's &lt;h1&gt; elements
-- **rha11y-link-target:** ensures links don't target new windows
-- **rha11y-form-labels:** checks all form inputs for associated/enclosing labels
-- **rha11y-media-motion:** checks your motion preferences
+- rha11y-img-checker: tests the accessibility of all page images
+- rha11y-img-hide: hides all images on a page
+- rha11y-img-filesize: ensures images aren't too large
+- rha11y-heading-h1: lists a page's <h1> elements
+- rha11y-link-target: ensures links don't target new windows
+- rha11y-form-labels: checks all form inputs for associated/enclosing labels
+- rha11y-media-motion: checks your motion preferences
+- rha11y-page-info: gets page title, language, and description
+- rha11y-meta-og: gets Open Graph meta tag info
 
 ## Demos and latest versions
 
