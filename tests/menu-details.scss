@@ -1,0 +1,73 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: #fff;
+  font-family: system-ui, sans-serif;
+  height: 100vh;
+}
+
+.page {
+  min-height: 100vh;
+  margin: 0 auto;
+  max-width: 30rem;
+  padding: 1rem;
+  width: 96vw;
+
+  & > * + * {
+    margin-top: 1rem;
+  }
+}
+
+.menu {
+  summary {
+    background-color: #23233d;
+    color: #fff;
+    cursor: pointer;
+    padding: 0.5rem;
+    text-align: left;
+  }
+  ul {
+    list-style: none;
+    width: 100%;
+
+    li {
+      background-color: #23233d;
+      margin-top: 1px;
+      padding: 0.5rem;
+    }
+    a {
+      color: #fff;
+    }
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  .menu {
+    .ios::after {
+      content: " button collapsed";
+    }
+  }
+
+  .menu[open] {
+    ios::after {
+      content: " button expanded";
+    }
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  white-space: nowrap;
+}
