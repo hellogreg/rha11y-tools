@@ -26,6 +26,9 @@
       </p>
       <ul>
         <li>
+          <a href="#rha11y-grayscaler">rha11y-grayscaler</a>: toggles color off/on for entire page
+        </li>
+        <li>
           <a href="#rha11y-img-checker">rha11y-img-checker</a>: tests the accessibility of all page
           images
         </li>
@@ -53,6 +56,27 @@
         </li>
         <li><a href="#rha11y-meta-og">rha11y-meta-og</a>: gets Open Graph meta tag info</li>
       </ul>
+
+      <h2 id="rha11y-grayscaler">
+        <span class="rh-text">rha11y-grayscaler</span>: toggle color saturation on a page
+      </h2>
+      <p>
+        Drag this link to your bookmarks bar to install:
+        <strong
+          ><a
+            class="book-link"
+            href='javascript:(()=>{function t(){if(!document.getElementById("graystyle")){let t=document.createElement("style");t.setAttribute("id","graystyle"),t.textContent=".grayscale { -webkit-filter: grayscale(100%) !important; filter: grayscale(100%) !important; -moz-filter: grayscale(100%) !important;}",document.head.appendChild(t)}document.documentElement.classList.toggle("grayscale")}t()})();'
+            >grayscaler</a
+          ></strong
+        >
+      </p>
+      <p><a href="grayscaler.html" class="demo-link">View the rha11y-grayscaler demo</a></p>
+      <p>
+        When run, the grayscaler bookmarklet toggles the desaturation of all colors on a page. This
+        bookmarklet is useful for ensuring that you incorporate non-color cues for users. Can you
+        still read everything? Can you still identify links and buttons and other interactive
+        elements because of context, styling, or decoration?
+      </p>
 
       <h2 id="rha11y-img-checker">
         <span class="rh-text">rha11y-img-checker</span>: test the accessibility of all page images
