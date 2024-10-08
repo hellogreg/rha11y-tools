@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- https://rha11y-tools.netlify.app/ -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>a11y-scoring-helper bookmarklet demo</title>
+    <link rel="stylesheet" href="rha11y-tools.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="demo-page">
+      <h1><span class="rh-text">a11y-scoring-helper</span> demo</h1>
+      <p><a href="index.html">Return to the rha11y-tools homepage</a></p>
+      <h2>Getting the bookmarklet</h2>
+      <p>
+        To get the a11y-scoring-helper bookmarklet, drag the following link to your bookmarks bar.
+        You may also click the link directly to use it on this page for testing. (Refresh the page
+        to reset it.)
+      </p>
+      <p>
+        <strong
+          ><a
+            class="book-link"
+            href='javascript:(()=>{let e=!0;function t(t){e&&(t=void 0!==t?t:" ",console.log(t))}function a(t){e&&t&&console.dir(t)}function l(){let e=document.title,a=!!e;t(`Page has title: ${a}`),t(`Page title: ${e}`);let l=document.documentElement.lang,n=!!l;return t(`Page has language specified: ${n}`),t(`Page language: ${l}`),{pageTitle:e,hasPageTitle:a,pageLang:l,hasPageLang:n}}function n(e){let t=document.createElement("dialog");document.body.appendChild(t);let a,l,n,d,i,p=e.pageTitle,h=e.hasPageTitle,r=e.pageLang,c=e.hasPageLang;(a=document.createElement("h2")).appendChild(document.createTextNode("Basic page info")),t.appendChild(a),(i=document.createElement("p")).style.fontStyle="italic",i.appendChild(document.createTextNode("Press [esc] or refresh the page to close this window.")),t.appendChild(i),(l=document.createElement("h3")).appendChild(document.createTextNode("Title")),t.appendChild(l),(n=document.createElement("ul")).style.marginBottom="2rem",(d=document.createElement("li")).appendChild(document.createTextNode("Title present: "+h)),n.appendChild(d),d=document.createElement("li"),h&&d.appendChild(document.createTextNode("Page title: "+p)),n.appendChild(d),t.appendChild(n),(l=document.createElement("h3")).appendChild(document.createTextNode("Language")),t.appendChild(l),(n=document.createElement("ul")).style.marginBottom="2rem",(d=document.createElement("li")).appendChild(document.createTextNode("Language specified: "+c)),n.appendChild(d),d=document.createElement("li"),c&&d.appendChild(document.createTextNode("Page language: "+r)),n.appendChild(d),t.appendChild(n),(i=document.createElement("p")).appendChild(document.createTextNode(" ")),t.appendChild(i),(i=document.createElement("p")).style.fontStyle="italic",i.appendChild(document.createTextNode("Press [esc] or refresh the page to close this window.")),t.appendChild(i),t.showModal()}!function e(){t();let a=l();n(a),t()}()})();'
+            >a11y-scoring-helper</a
+          ></strong
+        >
+      </p>
+      <p>
+        The a11y-scoring-helper bookmarklet gathers some basic information about the current page.
+        When run, the script currently opens a modal that displays the page's title and language
+        setting.
+      </p>
+      <h2>Demo</h2>
+      <p>Click the bookmarklet link above to test the info modal.</p>
+      <p></p>
+    </div>
+  </body>
+</html>
