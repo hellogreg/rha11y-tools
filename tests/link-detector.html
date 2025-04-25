@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- https://rha11y-tools.netlify.app/ -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rha11y-link-detector bookmarklet demo</title>
+    <link rel="stylesheet" href="/rha11y-tools.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="demo-page">
+      <h1><span class="rh-text">rha11y-link-detector</span> demo</h1>
+      <p><a href="/index.html">Return to the rha11y-tools homepage</a></p>
+      <h2>Getting the bookmarklet</h2>
+      <p>
+        To get the rha11y-link-detector bookmarklet, drag the following link to your bookmarks bar.
+        You may also click the link directly to use it on this page for testing. (Refresh the page
+        to reset it.)
+      </p>
+      <p>
+        <strong
+          ><!--a
+            class="book-link"
+            href='javascript:(()=>{let t=!0;function e(e){t&&(e=void 0!==e?e:" ",console.log(e))}function o(e){t&&e&&console.dir(e)}function n(t){return"a"===t.nodeName.toLowerCase()&&!!t.href}function r(t){return t=t.nodeType===Node.DOCUMENT_FRAGMENT_NODE?t.getRootNode().host:t}function i(t,e){t.style.setProperty("outline",(e?"#f90d":"#09fd")+" solid 8px","important"),t.style.setProperty("outline-offset","-4px","important"),t.style.setProperty("border-radius","2px","important"),t.style.setProperty("filter","initial","important")}function l(t){let o=t.querySelectorAll("*");for(let f of o){let s=r(f);if(n(s)){let u=s.href||null,d=s.target||null,a=!!d&&"_self"!==d;e("Link: "+s.outerHTML),e("Link href: "+u),e("Link target: "+d),e("Opens new window: "+a),i(s,a),e()}if(f.shadowRoot){let p=f.shadowRoot;l(p)}}}!function t(){let e=document.body;l(e)}()})();'
+            >rha11y-link-detector</a
+      -->
+          <a
+            class="book-link"
+            href='javascript: (function () {
+        var booklink = document.createElement("script");
+        booklink.setAttribute("src", "link-detector.js");
+        document.body.appendChild(booklink);
+          })();'
+            >detect</a
+          >
+        </strong>
+      </p>
+      <p>
+        The rha11y-link-detector bookmarklet discerns whether links should be underlined or
+        not--currently just by making sure they're in paragraphs.
+      </p>
+      <h2>Test content</h2>
+      <p><a>&lt;a&gt; with no href</a> (should be ignored)</p>
+      <p><a href="#">Link in paragraph</a> (should pass)</p>
+      <div><a href="#">Link in div</a> (should fail)</div>
+    </div>
+    <!--script src="img-checker.js"></script-->
+  </body>
+</html>
