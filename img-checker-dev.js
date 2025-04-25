@@ -97,7 +97,7 @@ javascript: (() => {
 
     const hasVisibilityHidden = getComputedStyle(element).visibility === "hidden";
     isHidden = isHidden || hasVisibilityHidden;
-    log("visbility:hidden: " + hasVisibilityHidden);
+    log("visibility:hidden: " + hasVisibilityHidden);
 
     const isAriaHidden = !!element.ariaHidden || element.getAttribute("aria-hidden") === "true";
     isHidden = isHidden || isAriaHidden;
