@@ -34,13 +34,16 @@ javascript: (() => {
     // Outline the image with the pass/fail color.
     // (Must reset filters on image, too, to ensure proper outlining)
     //
-    const colorPass = "#09fb";
-    const colorFail = "#f90b";
+    const colorPass = "#09ce";
+    const colorFail = "#f60e";
     const outlineColor = !!getsUnderline ? colorPass : colorFail;
-    element.style.setProperty("outline", outlineColor + " solid 8px", "important");
-    element.style.setProperty("outline-offset", "-4px", "important");
-    element.style.setProperty("border-radius", "2px", "important");
+    const bgColor = !!getsUnderline ? "#0cfe" : "#fc0e";
+    element.style.setProperty("outline", outlineColor + " solid 4px", "important");
+    element.style.setProperty("outline-offset", "3px", "important");
+    element.style.setProperty("border-radius", "3px", "important");
     element.style.setProperty("filter", "initial", "important");
+    element.style.setProperty("background-color", bgColor, "important");
+    element.style.setProperty("color", "#039", "important");
   }
 
   function testLinkTargets(root) {
@@ -69,7 +72,8 @@ javascript: (() => {
   }
 
   (function init() {
-    const root = document.body;
+    //const root = document.getElementById("test-content"); // For testing only
+    const root = document.body; // The real deal
     testLinkTargets(root);
   })();
 })();

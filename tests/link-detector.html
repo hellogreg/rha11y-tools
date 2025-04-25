@@ -40,10 +40,12 @@
         The rha11y-link-detector bookmarklet discerns whether links should be underlined or
         not--currently just by making sure they're in paragraphs.
       </p>
-      <h2>Test content</h2>
-      <p><a>&lt;a&gt; with no href</a> (should be ignored)</p>
-      <p><a href="#">Link in paragraph</a> (should pass)</p>
-      <div><a href="#">Link in div</a> (should fail)</div>
+      <div id="test-content">
+        <h2>Test content</h2>
+        <p><a>&lt;a&gt; with no href</a> (should be ignored)</p>
+        <p><a href="#">Link in paragraph</a> (should pass)</p>
+        <div><a href="#">Link in div</a> (should fail)</div>
+      </div>
     </div>
     <!--script src="img-checker.js"></script-->
   </body>
