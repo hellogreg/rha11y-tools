@@ -11,33 +11,37 @@ javascript: (() => {
 
     style.innerHTML = `
 
-      /* These links will be ignored altogether. */
+      :is(main, [role=main]) {
 
-      :is(main, [role=main]) a[href] {
-        background-color: #efe !important;
-        color: #039 !important;
-        border-radius: 4px !important;
-        filter: initial !important;
-        outline: #6a6e dotted 4px !important;
-        outline-offset: 3px !important;
-      }
+        /* First, we are just identifying all links. */
 
-      /* First, add underlines to these links. */
+        a[href] {
+          background-color: #efe !important;
+          color: #039 !important;
+          border-radius: 4px !important;
+          filter: initial !important;
+          outline: #6a6e dotted 4px !important;
+          outline-offset: 3px !important;
+        }
 
-      :is(main, [role=main]) :is(p a[href]) {
-        background-color: #0cfe !important;
-        color: #039 !important;
-        outline-color: #06ce !important;
-        outline-style: solid !important;
-      }
+        /* Add underlines to these links. */
 
-      /* Then, remove underlines from the exceptions. Would rather not have exceptions, though! */
+        p a[href] {
+          background-color: #0cfe !important;
+          color: #039 !important;
+          outline-color: #06ce !important;
+          outline-style: solid !important;
+        }
 
-      :is(main, [role=main]) :is(p rh-cta a[href]) {
-        background-color: #fd0 !important;
-        color: #039 !important;
-        outline-color: #f60e !important;
-        outline-style: dashed !important;
+        /* Do not add underlines to these links that meet some success criteria. */
+
+        p rh-cta a[href] {
+          background-color: #fd0 !important;
+          color: #039 !important;
+          outline-color: #f60e !important;
+          outline-style: dashed !important;
+        }
+
       }
     `;
 
