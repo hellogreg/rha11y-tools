@@ -46,12 +46,52 @@ javascript: (() => {
     element.style.setProperty("color", "#039", "important");
   }
 
+  function createLinkStylesheet(root) {
+    const style = document.createElement("style");
+
+    style.innerHTML = `
+      a {
+        background-color: #fc0e !important;
+        color: #039 !important;
+        border-radius: 3px !important;
+        filter: initial !important;
+        outline: #f60e solid 3px !important;
+        outline-offset: 3px !important;
+      }
+
+      /* First, add underlines to these links. */
+
+      :is(main, [role=main]) :is(p a) {
+        background-color: #0cfe !important;
+        color: #039 !important;
+        outline-color: #09ce !important;
+      }
+
+      /* Then, remove underlines from the exceptions.
+       * Would rather not do this!
+       */
+
+      :is(main, [role=main]) :is(p rh-cta a) {
+        background-color: #fff !important;
+        color: #fff !important;
+        outline-color: #f00 !important;
+      }
+    `;
+
+    if (root === "page") {
+      document.head.appendChild(style);
+    } else {
+      root.appendChild(style);
+    }
+  }
+
   function testLinkTargets(root) {
     const nodes = root.querySelectorAll("*");
 
     for (const node of nodes) {
       const element = getElement(node);
 
+      /*
       if (isLink(element)) {
         log("Link: " + element.textContent);
         log("Link href: " + element.href);
@@ -62,6 +102,7 @@ javascript: (() => {
         outputResults(element, getsUnderline);
         log();
       }
+      */
 
       // If the node has shadowRoot, re-run this function for it.
       if (!!node.shadowRoot) {
@@ -74,6 +115,7 @@ javascript: (() => {
   (function init() {
     //const root = document.getElementById("test-content"); // For testing only
     const root = document.body; // The real deal
+    createLinkStylesheet(root);
     testLinkTargets(root);
   })();
 })();
