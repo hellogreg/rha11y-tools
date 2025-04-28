@@ -71,7 +71,7 @@ javascript: (() => {
         outline-style: solid !important;
       }
 
-      /* Then, remove underlines from the exceptions. Would rather not do this! */
+      /* Then, remove underlines from the exceptions. Would rather not have exceptions, though! */
 
       :is(main, [role=main]) :is(p rh-cta a) {
         background-color: #fd0 !important;
