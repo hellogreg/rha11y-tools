@@ -1,8 +1,8 @@
-javascript:(()=>{let t=!0;function o(o){t&&(o=void 0!==o?o:" ",console.log(o))}function e(o){t&&o&&console.dir(o)}function r(t){return"a"===t.nodeName.toLowerCase()&&!!t.href}function n(t){return t=t.nodeType===Node.DOCUMENT_FRAGMENT_NODE?t.getRootNode().host:t}function i(t,o){t.style.setProperty("outline",(o?"#09ce":"#f60e")+" solid 4px","important"),t.style.setProperty("outline-offset","3px","important"),t.style.setProperty("border-radius","3px","important"),t.style.setProperty("filter","initial","important"),t.style.setProperty("background-color",o?"#0cfe":"#fc0e","important"),t.style.setProperty("color","#039","important")}function l(t){let o=document.createElement("style");o.innerHTML=`
+javascript:(()=>{function o(o){return o=o.nodeType===Node.DOCUMENT_FRAGMENT_NODE?o.getRootNode().host:o}function t(o){let t=document.createElement("style");t.innerHTML=`
 
   /* These links will be ignored altogether. */
 
-  :is(main, [role=main]) a {
+  :is(main, [role=main]) a[href] {
     background-color: #efe !important;
     color: #039 !important;
     border-radius: 4px !important;
@@ -13,7 +13,7 @@ javascript:(()=>{let t=!0;function o(o){t&&(o=void 0!==o?o:" ",console.log(o))}f
 
   /* First, add underlines to these links. */
 
-  :is(main, [role=main]) :is(p a) {
+  :is(main, [role=main]) :is(p a[href]) {
     background-color: #0cfe !important;
     color: #039 !important;
     outline-color: #06ce !important;
@@ -22,10 +22,10 @@ javascript:(()=>{let t=!0;function o(o){t&&(o=void 0!==o?o:" ",console.log(o))}f
 
   /* Then, remove underlines from the exceptions. Would rather not have exceptions, though! */
 
-  :is(main, [role=main]) :is(p rh-cta a) {
+  :is(main, [role=main]) :is(p rh-cta a[href]) {
     background-color: #fd0 !important;
     color: #039 !important;
     outline-color: #f60e !important;
     outline-style: dashed !important;
   }
-`,"page"===t?document.head.appendChild(o):t.appendChild(o)}function a(t){let o=t.querySelectorAll("*");for(let e of o)if(n(e),e.shadowRoot){let r=e.shadowRoot;a(r)}}!function t(){let o=document.body;l(o),a(o)}()})();
+`,"page"===o?document.head.appendChild(t):o.appendChild(t)}function e(t){let e=t.querySelectorAll("*");for(let n of e)o(n),n.shadowRoot&&n.shadowRoot}!function o(){let n=document.body;t(n),e(n)}()})();
