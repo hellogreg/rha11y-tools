@@ -50,12 +50,15 @@ javascript: (() => {
     const style = document.createElement("style");
 
     style.innerHTML = `
-      a {
-        background-color: #fc0e !important;
+
+      /* These links will be ignored altogether. */
+
+      :is(main, [role=main]) a {
+        background-color: #efe !important;
         color: #039 !important;
-        border-radius: 3px !important;
+        border-radius: 4px !important;
         filter: initial !important;
-        outline: #f60e solid 3px !important;
+        outline: #6a6e dotted 4px !important;
         outline-offset: 3px !important;
       }
 
@@ -64,17 +67,17 @@ javascript: (() => {
       :is(main, [role=main]) :is(p a) {
         background-color: #0cfe !important;
         color: #039 !important;
-        outline-color: #09ce !important;
+        outline-color: #06ce !important;
+        outline-style: solid !important;
       }
 
-      /* Then, remove underlines from the exceptions.
-       * Would rather not do this!
-       */
+      /* Then, remove underlines from the exceptions. Would rather not do this! */
 
       :is(main, [role=main]) :is(p rh-cta a) {
-        background-color: #fff !important;
-        color: #fff !important;
-        outline-color: #f00 !important;
+        background-color: #fd0 !important;
+        color: #039 !important;
+        outline-color: #f60e !important;
+        outline-style: dashed !important;
       }
     `;
 
