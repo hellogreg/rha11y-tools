@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/rha11y-tools.css" rel="stylesheet" />
   </head>
   <body>
-    <div class="demo-page">
+    <main class="demo-page">
       <h1><span class="rh-text">rha11y-link-detector</span> demo</h1>
       <p><a href="/index.html">Return to the rha11y-tools homepage</a></p>
       <h2>Getting the bookmarklet</h2>
@@ -20,19 +20,40 @@
       </p>
       <p>
         <strong
-          ><!--a
+          ><a
             class="book-link"
-            href='javascript:(()=>{let t=!0;function e(e){t&&(e=void 0!==e?e:" ",console.log(e))}function o(e){t&&e&&console.dir(e)}function n(t){return"a"===t.nodeName.toLowerCase()&&!!t.href}function r(t){return t=t.nodeType===Node.DOCUMENT_FRAGMENT_NODE?t.getRootNode().host:t}function i(t,e){t.style.setProperty("outline",(e?"#f90d":"#09fd")+" solid 8px","important"),t.style.setProperty("outline-offset","-4px","important"),t.style.setProperty("border-radius","2px","important"),t.style.setProperty("filter","initial","important")}function l(t){let o=t.querySelectorAll("*");for(let f of o){let s=r(f);if(n(s)){let u=s.href||null,d=s.target||null,a=!!d&&"_self"!==d;e("Link: "+s.outerHTML),e("Link href: "+u),e("Link target: "+d),e("Opens new window: "+a),i(s,a),e()}if(f.shadowRoot){let p=f.shadowRoot;l(p)}}}!function t(){let e=document.body;l(e)}()})();'
+            href='javascript:(()=>{let t=!0;function o(o){t&&(o=void 0!==o?o:" ",console.log(o))}function e(o){t&&o&&console.dir(o)}function r(t){return"a"===t.nodeName.toLowerCase()&&!!t.href}function n(t){return t=t.nodeType===Node.DOCUMENT_FRAGMENT_NODE?t.getRootNode().host:t}function i(t,o){t.style.setProperty("outline",(o?"#09ce":"#f60e")+" solid 4px","important"),t.style.setProperty("outline-offset","3px","important"),t.style.setProperty("border-radius","3px","important"),t.style.setProperty("filter","initial","important"),t.style.setProperty("background-color",o?"#0cfe":"#fc0e","important"),t.style.setProperty("color","#039","important")}function l(t){let o=document.createElement("style");o.innerHTML=`
+
+            /* These links will be ignored altogether. */
+          
+            :is(main, [role=main]) a {
+              background-color: #efe !important;
+              color: #039 !important;
+              border-radius: 4px !important;
+              filter: initial !important;
+              outline: #6a6e dotted 4px !important;
+              outline-offset: 3px !important;
+            }
+          
+            /* First, add underlines to these links. */
+          
+            :is(main, [role=main]) :is(p a) {
+              background-color: #0cfe !important;
+              color: #039 !important;
+              outline-color: #06ce !important;
+              outline-style: solid !important;
+            }
+          
+            /* Then, remove underlines from the exceptions. Would rather not have exceptions, though! */
+          
+            :is(main, [role=main]) :is(p rh-cta a) {
+              background-color: #fd0 !important;
+              color: #039 !important;
+              outline-color: #f60e !important;
+              outline-style: dashed !important;
+            }
+          `,"page"===t?document.head.appendChild(o):t.appendChild(o)}function a(t){let o=t.querySelectorAll("*");for(let e of o)if(n(e),e.shadowRoot){let r=e.shadowRoot;a(r)}}!function t(){let o=document.body;l(o),a(o)}()})();'
             >rha11y-link-detector</a
-      -->
-          <a
-            class="book-link"
-            href='javascript: (function () {
-        var booklink = document.createElement("script");
-        booklink.setAttribute("src", "link-detector.js");
-        document.body.appendChild(booklink);
-          })();'
-            >detect</a
           >
         </strong>
       </p>
@@ -46,7 +67,7 @@
         <p><a href="#">Link in paragraph</a> (should pass)</p>
         <div><a href="#">Link in div</a> (should fail)</div>
       </div>
-    </div>
+    </main>
     <!--script src="img-checker.js"></script-->
   </body>
 </html>
