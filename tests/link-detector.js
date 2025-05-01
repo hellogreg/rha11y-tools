@@ -28,8 +28,10 @@ javascript: (() => {
         /*
          * In production, can start chaining :not,
          * when we have our full list of exceptions, like this:
-         * p a[href]:not(rh-cta a[href]):not(something-else a[href])
-         * 
+         *
+         *  p a[href]:not(rh-cta a):not(something-else a)
+         *
+         * (No need to keep using [href] in the :not pseudo-classes)
          */
 
         p a[href] {
