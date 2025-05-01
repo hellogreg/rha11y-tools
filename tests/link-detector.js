@@ -25,6 +25,12 @@ javascript: (() => {
         }
 
         /* Add underlines to these links. */
+        /*
+         * In production, can start chaining :not,
+         * when we have our full list of exceptions, like this:
+         * p a[href]:not(rh-cta a[href]):not(something-else a[href])
+         * 
+         */
 
         p a[href] {
           background-color: #0cfe !important;
@@ -34,14 +40,14 @@ javascript: (() => {
         }
 
         /* Do not add underlines to these links that meet some success criteria. */
-
+/*
         p rh-cta a[href] {
           background-color: #fd0 !important;
           color: #039 !important;
           outline-color: #f60e !important;
           outline-style: dashed !important;
         }
-
+*/
       }
     `;
 
