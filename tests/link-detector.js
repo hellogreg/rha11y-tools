@@ -25,11 +25,10 @@ javascript: (() => {
         }
 
         /* Add underlines to these links. */
-        /*
-         * In production, can start chaining :not,
-         * when we have our full list of exceptions, like this:
          *
-         *  p a[href]:not(rh-cta a):not(something-else a)
+         * In production, can start chaining when we have our full list of exceptions, like this:
+         *
+         *  p a[href]:not(rh-cta a, something-else a)
          *
          * (No need to keep using [href] in the :not pseudo-classes)
          */
@@ -41,15 +40,18 @@ javascript: (() => {
           outline-style: solid !important;
         }
 
-        /* Do not add underlines to these links that meet some success criteria. */
-/*
+        /*
+         * Do not add underlines to these links that meet some success criteria.
+         * In production, we won't use this directly. We'll add them to the above selector with :not
+         * p a[href]:not(rh-cta a, something-else a)
+         */
+        
         p rh-cta a[href] {
           background-color: #fd0 !important;
           color: #039 !important;
           outline-color: #f60e !important;
           outline-style: dashed !important;
         }
-*/
       }
     `;
 
