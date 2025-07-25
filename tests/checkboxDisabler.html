@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>checkbox disabler</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        padding: 1rem;
+      }
+
+      fieldset {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        width: 15rem;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="productList">
+      <fieldset>
+        <legend>Choose up to three products</legend>
+        <label><input type="checkbox" id="rhel10" name="products" value="rhel10" /> RHEL 10</label>
+        <label><input type="checkbox" id="rhel9" name="products" value="rhel9" /> RHEL 9</label>
+        <label><input type="checkbox" id="rhel8" name="products" value="rhel8" /> RHEL 8</label>
+        <label><input type="checkbox" id="rhel7" name="products" value="rhel7" /> RHEL 7</label>
+        <label><input type="checkbox" id="rhel6" name="products" value="rhel6" /> RHEL 6</label>
+      </fieldset>
+      <button id="save-button">save (0 of 3)</button>
+    </form>
+
+    <script>
+      const products = document.getElementsByName("products");
+      const saveButton = document.getElementById("save-button");
+      let selectedProducts = 0;
+      const maxProducts = 3;
+      let maxedOut = false;
+
+      function disableUnchecked() {
+        products.forEach((product) => {
+          if (!product.checked) {
+            product.setAttribute("aria-disabled", "true");
+          }
+        });
+      }
+
+      function enableUnchecked() {
+        products.forEach((product) => {
+          if (!product.checked) {
+            product.removeAttribute("aria-disabled");
+          }
+        });
+      }
+
+      function handleCheck(e) {
+        if (maxedOut && e.target.checked === true) {
+          // Don't allow selections when max is reached.
+          e.preventDefault();
+        } else if (e.target.checked === true) {
+          // Increment if not maxed out before click.
+          // If maxed out after click, set maxedOut = true and disable unchecked boxes.
+          selectedProducts++;
+          if (selectedProducts === maxProducts) {
+            maxedOut = true;
+            disableUnchecked();
+          }
+        }
+
+        if (e.target.checked === false) {
+          // Decrement when unchecked.
+          // If was maxed out before click, set maxedOut = false and enable unchecked boxes.
+          selectedProducts--;
+          console.log(selectedProducts);
+          if (selectedProducts === maxProducts - 1) {
+            maxedOut = false;
+            enableUnchecked();
+          }
+        }
+
+        saveButton.textContent = "save (" + selectedProducts + " of " + maxProducts + ")";
+      }
+
+      products.forEach(function (productCheck, index) {
+        productCheck.addEventListener("click", handleCheck, false);
+      });
+    </script>
+  </body>
+</html>

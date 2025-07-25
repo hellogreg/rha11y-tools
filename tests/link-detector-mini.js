@@ -1,40 +1,16 @@
-javascript:(()=>{function t(t){return t=t.nodeType===Node.DOCUMENT_FRAGMENT_NODE?t.getRootNode().host:t}function o(t){let o=document.createElement("style");o.innerHTML=`
+javascript:(()=>{function t(t){let e=document.createElement("style");e.innerHTML=`
+/* First, identify _all_ links (to underline or not). */
+a[href] {
+  filter: initial !important;
+  outline: #6a6e dotted 4px !important;
+  outline-offset: 3px !important;
+}
 
-  :is(main, [role=main]) {
 
-    /* First, we are just identifying all links. */
-
-    a[href] {
-      background-color: #efe !important;
-      color: #039 !important;
-      border-radius: 4px !important;
-      filter: initial !important;
-      outline: #6a6e dotted 4px !important;
-      outline-offset: 3px !important;
-    }
-
-    /* Add underlines to these links. */
-    /*
-     * In production, can start chaining when we have our full list of exceptions, like this:
-     *
-     *  p a[href]:not(rh-cta a, something-else a)
-     *
-     * (No need to keep using [href] in the :not pseudo-classes)
-     */
-
-    p a[href]:not(rh-cta a) {
-      background-color: #0cfe !important;
-      color: #039 !important;
-      outline-color: #06ce !important;
-      outline-style: solid !important;
-    }
-
-    /* Do not add underlines to these links that meet some success criteria. */
-    p rh-cta a[href] {
-      background-color: #fd0 !important;
-      color: #039 !important;
-      outline-color: #f60e !important;
-      outline-style: dashed !important;
-    }
-  }
-`,"page"===t?document.head.appendChild(o):t.appendChild(o)}function e(o){let n=o.querySelectorAll("*");for(let i of n)if(t(i),i.shadowRoot){let r=i.shadowRoot;e(r)}}!function t(){let n=document.body;o(n),e(n)}()})();
+/* Then, select the links well want to underline */
+p a[href]:not(rh-cta a) {
+  background-color: #fe99 !important;
+  color: #039 !important;
+  outline-color: #06ce !important;
+  outline-style: dashed !important;
+}`,document.head.appendChild(e)}!function e(){let n=document.body;t(n)}()})();
