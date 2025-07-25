@@ -108,11 +108,11 @@ javascript: (() => {
     isHidden = isHidden || isAriaHidden;
     log("aria-hidden: " + isAriaHidden);
 
-    // role="presentation" is only tested on the image itself
-    if (isImg(element) || isSvg(element)) {
+    // role="presentation" is only tested on img files
+    if (isImg(element)) {
       const hasRolePresentation = element.getAttribute("role") === "presentation";
       isHidden = isHidden || hasRolePresentation;
-      log("role=presentation: " + hasRolePresentation);
+      log("role=presentation img: " + hasRolePresentation);
     }
 
     // TODO: Any other ways it could be hidden?
